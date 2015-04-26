@@ -31,16 +31,28 @@ switch true do {
 	case (_return) : {
 		//Enter has been pressed
 		/*
-			reset command history
 			execute current line
 			push curLine to prevLines
 			create new line
 		 */
-		 _temp = _curLine - [_curLine select 0];
-		 _prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
-		 _prevCommandIndex = count _prevCommands;
-		 _prevLines = [_prevLines,_curLine] call Line_fnc_push;
-		 _curLine = ["MASTER: "] call Line_fnc_newLine;
+		_temp = _curLine - [_curLine select 0];
+		_prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
+		_prevCommandIndex = count _prevCommands;
+
+		_cmd = [_curLine] call CommandLine_fnc_getCommand;
+		_exe = [_cmd,_this select 1] call CommandLine_fnc_executeLine;
+		
+		_users = _exe select 1 select 0;
+		_files = _exe select 1 select 1;
+		_currentUser = _exe select 1 select 2;
+		_computerName = _exe select 1 select 3;
+		_state = _exe select 1 select 4;
+		_commandLine = _exe select 1 select 5;
+		
+		_prevLines = [_prevLines,_curLine] call Line_fnc_push;
+		_output = _exe select 0;
+		_prevLines = [_prevLines,[_output]] call Line_fnc_push;
+		_curLine = ["MASTER: "] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
 		//BackSpace has been pressed

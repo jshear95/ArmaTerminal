@@ -12,6 +12,7 @@ class CfgFunctions {
 			class newCommandLine {};
 			class executeLine {};
 			class processUserInput {};
+			class getCommand {};
 		};
 	};
 	class Line {
