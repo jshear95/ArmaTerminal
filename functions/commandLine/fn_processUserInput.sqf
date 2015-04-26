@@ -2,13 +2,16 @@
 	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
 */
 
-private[_return,_backSpace,_up,_down,_userInput,_users,_files,_currentUser,_computerName,_state,_commandLine];
+private[_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_users,_files,_currentUser,_computerName,_state,_commandLine];
 
 _return = _this select 0 select 0;
 _backSpace = _this select 0 select 1;
 _up = _this select 0 select 2;
 _down = _this select 0 select 3;
 _userInput = _this select 0 select 4;
+_scrollUp = _this select 0 select 5;
+_scrollDown = _this select 0 select 6;
+
 _users = _this select 1 select 0;
 _files = _this select 1 select 1;
 _currentUser = _this select 1 select 2;
@@ -20,6 +23,9 @@ _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
 _prevCommands = _commandLine select 3;
 _prevCommandIndex = _commandLine select 4;
+_yOffset = _commandLine select 5;
+
+_lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
 
 switch true do {
 	case (_return) : {
@@ -71,6 +77,12 @@ switch true do {
 		};
 		_curLine;
 	};
+	case (_scrollUp) : {
+		_yOffset = _yOffset + _lineHeight;
+	};
+	case (_scrollDown) : {
+		_yOffset = _yOffset - _lineHeight;
+	};
 	case (!(_userInput == "")) : {
 		//Key has been pressed
 		//push key to curLine
@@ -80,6 +92,6 @@ switch true do {
 	};
 };
 
-_commandLine = [_prevLines, _curLine, _commandLine select 2, _prevCommands, _prevCommandIndex];
+_commandLine = [_prevLines, _curLine, _commandLine select 2, _prevCommands, _prevCommandIndex,_yOffset];
 
 [_users,_files,_currentUser,_computerName,_state,_commandLine];

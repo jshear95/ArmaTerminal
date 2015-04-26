@@ -6,11 +6,10 @@ private [_comp];
 
 _comp = _this select 0;
 _state = _this select 0 select 4;
+_yOffset = _this select 0 select 5 select 5;
 
 _xCord = 0*safeZoneW;
 _yCord = 0*safeZoneH;
-_yOffset = 0;			//offset due to scrolling
-_lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
 
 
 _printText = {											//print [_text] in the terminal

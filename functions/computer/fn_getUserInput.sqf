@@ -12,7 +12,8 @@ _backSpace = false;
 _return = false;
 _up = false;
 _down = false;
-_scroll = false;
+_scrollUp = false;
+_scrollDown = false;
 _userInput = "";
 if(_dikCode == 41)then{_userInput = "`";};
 if(_dikCode == 2)then{_userInput = "1";};
@@ -114,8 +115,8 @@ if(_dikCode == 53 && _shift)then{_userInput = "?";};
 //if(_dikCode == 58)then{_userInput = "";};
 //if(_dikCode == 29)then{_userInput = "";};
 //if(_dikCode == 56)then{_userInput = "";};
-if(_dikCode == 209)then{_yOffset = _yOffset + _lineHeight; _scroll=true;};	//Page Down Key = down
-if(_dikCode == 201)then{_yOffset = _yOffset - _lineHeight; _scroll=true;};	//Page Up Key = Up
+if(_dikCode == 209)then{_scrollUp=true;};									//Page Down Key = down
+if(_dikCode == 201)then{_scrollDown=true;};									//Page Up Key = Up
 if(_dikCode == 57)then{_userInput = " ";};
 //if(_dikCode == 184)then{_userInput = "";};
 //if(_dikCode == 203)then{_userInput = "";};								//Left
@@ -130,5 +131,7 @@ if(_dikCode == 28)then{_return = true;};									//Return
 	_backSpace,
 	_up,
 	_down,
-	_userInput
+	_userInput,
+	_scrollUp,
+	_scrollDown
 ];
