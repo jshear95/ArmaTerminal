@@ -17,7 +17,6 @@ _state = _this select 1 select 4;
 _commandLine = _this select 1 select 5;
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
-_return = [];
 switch true do {
 	case (_return) : {
 		//Enter has been pressed
@@ -27,14 +26,15 @@ switch true do {
 			push curLine to prevLines
 			create new line
 		 */
-		 //_prevLines = [_prevLines] call CommandLine_fnc_push;
-		 //_curLine = ["MASTER: "] call Line_fnc_newLine;
-		 _return;
+		 _prevLines = [_prevLines,_curLine] call CommandLine_fnc_push;
+		 _curLine = ["MASTER: "] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
 		//BackSpace has been pressed
 		//Pop char from curLine
-		_pop = [_curLine] call Line_fnc_pop;
+		if(count _curLine > 1) then {
+			_pop = [_curLine] call Line_fnc_pop;
+		};
 		_curLine = _curLine - [""];
 	};
 	case (_up) : {
@@ -48,12 +48,11 @@ switch true do {
 	case (!(_userInput == "")) : {
 		//Key has been pressed
 		//push key to curLine
-		
 		_curLine = _curLine - [""];
 		_curLine = [_curLine,_userInput] call Line_fnc_push;
+		
 	};
 };
-
 
 _commandLine = [_prevLines, _curLine, _commandLine select 2, _commandLine select 3, _commandLine select 4];
 

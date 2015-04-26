@@ -41,8 +41,7 @@ shift = false;
 			_tempIn = pressedKey;
 			_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
 			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
-			hint "TEST";
-			hint str(_computer select 5 select 1);
+			hint str(_computer);
 			pressedKey = -1;
 	};
 	
