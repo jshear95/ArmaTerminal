@@ -4,6 +4,7 @@ class CfgFunctions {
             class open {};
             class close {};
 			class getUserInput {};
+			class print {};
         };
 	};
 	class CommandLine {

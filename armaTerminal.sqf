@@ -41,10 +41,11 @@ shift = false;
 			_tempIn = pressedKey;
 			_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
 			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
-			hint str(_computer);
+			//hint str(_computer);
+			
 			pressedKey = -1;
 	};
-	
+	_print = [_computer] call Computer_fnc_print;
 	//Executes proper code for current state
 	_state = _computer select 4;
 	if(_state == "COMMANDLINE")then{
