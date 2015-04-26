@@ -98,7 +98,7 @@ if(_dikCode == 36 && _shift)then{_userInput = "J";};
 if(_dikCode == 37 && _shift)then{_userInput = "K";};
 if(_dikCode == 38 && _shift)then{_userInput = "L";};
 if(_dikCode == 39 && _shift)then{_userInput = ":";};
-if(_dikCode == 40 && _shift)then{_userInput = "''";};							//Double quote is two ' because " would over ride string bounds
+if(_dikCode == 40 && _shift)then{_userInput = "''";};						//Double quote is two ' because " would over ride string bounds
 if(_dikCode == 44 && _shift)then{_userInput = "Z";};
 if(_dikCode == 45 && _shift)then{_userInput = "X";};
 if(_dikCode == 46 && _shift)then{_userInput = "C";};
@@ -109,8 +109,8 @@ if(_dikCode == 50 && _shift)then{_userInput = "M";};
 if(_dikCode == 51 && _shift)then{_userInput = "<";};
 if(_dikCode == 52 && _shift)then{_userInput = ">";};
 if(_dikCode == 53 && _shift)then{_userInput = "?";};
-//		if(_dikCode == 54)then{_shift = true;};										//Shift (over ridden in event handler)
-//		if(_dikCode == 42)then{_shift = true;};										//Shift (over ridden in event handler)
+//if(_dikCode == 54)then{_shift = true;};									//Shift (over ridden in event handler)
+//if(_dikCode == 42)then{_shift = true;};									//Shift (over ridden in event handler)
 //if(_dikCode == 58)then{_userInput = "";};
 //if(_dikCode == 29)then{_userInput = "";};
 //if(_dikCode == 56)then{_userInput = "";};
@@ -122,7 +122,7 @@ if(_dikCode == 57)then{_userInput = " ";};
 //if(_dikCode == 205)then{_userInput = "";};								//Right
 if(_dikCode == 200)then{_up = true;};										//Up
 if(_dikCode == 208)then{_down = true;};										//Down
-if(_dikCode == 14)then{_backSpace = true; _userInput = "";};									//BackSpace
+if(_dikCode == 14)then{_backSpace = true; _userInput = "";};				//BackSpace
 if(_dikCode == 28)then{_return = true;};									//Return
 //Return input
 [

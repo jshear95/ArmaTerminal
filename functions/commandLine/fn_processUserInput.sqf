@@ -15,8 +15,12 @@ _currentUser = _this select 1 select 2;
 _computerName = _this select 1 select 3;
 _state = _this select 1 select 4;
 _commandLine = _this select 1 select 5;
+
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
+_prevCommands = _commandLine select 3;
+_prevCommandIndex = _commandLine select 4;
+
 switch true do {
 	case (_return) : {
 		//Enter has been pressed
@@ -26,7 +30,10 @@ switch true do {
 			push curLine to prevLines
 			create new line
 		 */
-		 _prevLines = [_prevLines,_curLine] call CommandLine_fnc_push;
+		 _temp = _curLine - [_curLine select 0];
+		 _prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
+		 _prevCommandIndex = count _prevCommands;
+		 _prevLines = [_prevLines,_curLine] call Line_fnc_push;
 		 _curLine = ["MASTER: "] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
@@ -38,12 +45,31 @@ switch true do {
 		_curLine = _curLine - [""];
 	};
 	case (_up) : {
-		//pop and display prevCommand
-		_return;
+		//display next prevCommand
+		if(_prevCommandIndex > 0)then{
+			_prevCommandIndex = _prevCommandIndex - 1;
+			_temp = _prevCommands select _prevCommandIndex;
+			_curLine = [_curLine select 0];
+			_temp = _temp select 0;
+			{
+				_curLine = [_curLine, _x] call Line_fnc_push;
+			}forEach _temp;
+			
+		};
+		_curLine;
 	};
 	case (_down) : {
-		//pop and display prevScrolledCommand
-		_return;
+		//display previous prevCommand
+		if(_prevCommandIndex < count _prevCommands - 1)then{
+			_prevCommandIndex = _prevCommandIndex + 1;
+			_temp = _prevCommands select _prevCommandIndex;
+			_curLine = [_curLine select 0];
+			_temp = _temp select 0;
+			{
+				_curLine = [_curLine, _x] call Line_fnc_push;
+			}forEach _temp;
+		};
+		_curLine;
 	};
 	case (!(_userInput == "")) : {
 		//Key has been pressed
@@ -54,6 +80,6 @@ switch true do {
 	};
 };
 
-_commandLine = [_prevLines, _curLine, _commandLine select 2, _commandLine select 3, _commandLine select 4];
+_commandLine = [_prevLines, _curLine, _commandLine select 2, _prevCommands, _prevCommandIndex];
 
 [_users,_files,_currentUser,_computerName,_state,_commandLine];
