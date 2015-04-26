@@ -1,0 +1,27 @@
+class CfgFunctions {
+    class Computer {
+        class Computer {
+            class open {};
+            class close {};
+			class getUserInput {};
+        };
+	};
+	class CommandLine {
+		class CommandLine {
+			class newCommandLine {};
+			class scrollUp {};
+			class scrollDown {};
+			class executeLine {};
+			class push {};
+			class resetCommandHistory {};
+			class processUserInput {};
+		};
+	};
+	class Line {
+		class Line {
+			class newLine {};
+			class push {};
+			class pop {};
+		};
+    };
+};
