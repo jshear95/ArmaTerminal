@@ -10,11 +10,7 @@ class CfgFunctions {
 	class CommandLine {
 		class CommandLine {
 			class newCommandLine {};
-			class scrollUp {};
-			class scrollDown {};
 			class executeLine {};
-			class push {};
-			class resetCommandHistory {};
 			class processUserInput {};
 		};
 	};
