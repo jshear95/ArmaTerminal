@@ -12,20 +12,16 @@ _computer = _this select 1;
 
 _output = "The command you entered is not recognised as a command. Type 'HELP' in order to see a list of supported commands.";
 
-hint "TEST";
-
-if(_cmd == "QUIT")then{
-	hint "COMMAND QUIT";
-	_computer set[4,"QUIT"];
-	_output = "";
-	_output;
-};
-if(_cmd == "HELP")then{
-	hint "COMMAND HELP";
-	_output = "Supported Commands:<br/>"+
-		"  HELP    Displays all supported commands.<br/>"+
-		"  QUIT    Exits the terminal.";
-	_output;
+switch true do {
+	case(_cmd == "QUIT"):{
+		_computer set[4,"QUIT"];
+		_output = "";
+	};
+	case(_cmd == "HELP"):{
+		_output = "Supported Commands:<br/>"+
+			"  HELP    Displays all supported commands.<br/>"+
+			"  QUIT    Exits the terminal.";
+	};
 };
 
 [_output,_computer];

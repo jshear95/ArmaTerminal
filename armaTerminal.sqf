@@ -38,25 +38,20 @@ shift = false;
 	//Gets key and logs it
 	_input = -1;
 	if(pressedKey != -1 && pressedKey != 54 && pressedKey != 42)then{
-			_tempIn = pressedKey;
-			_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
+		_tempIn = pressedKey;
+		_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
+		
+		
+		//Executes proper code for current state
+		_state = _computer select 4;
+		if(str(_state) == str("COMMANDLINE"))then{
 			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
-			//hint str(_computer);
-			
-			pressedKey = -1;
+		};
+		if(str(_state) == str("LOGIN"))then{};
+		if(str(_state) == str("EDITOR")) then{};
+		pressedKey = -1;
 	};
 	_print = [_computer] call Computer_fnc_print;
-	//Executes proper code for current state
-	_state = _computer select 4;
-	if(_state == "COMMANDLINE")then{
-		
-	};
-	if(_state == "LOGIN")then{};
-	if(_state == "EDITOR") then{};
-	
-	if(floor(time) mod 20 == 0)then{							//Kills terminal after ~20 seconds
-		_computer set[4,"QUIT"];
-	};
 };
 
 [_target,_caller] call Computer_fnc_close;

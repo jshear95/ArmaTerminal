@@ -47,13 +47,13 @@ _userInput = [_userInput] call _alphaToALPHA;
 _quit = ["Q","U","I","T"];
 _help = ["H","E","L","P"];
 
-
-if(str(_userInput) == str(_quit))then{
-	_output = ["QUIT"];
+switch true do {
+	case(str(_userInput) == str(_quit)):{
+		_output = ["QUIT"];
+	};
+	case(str(_userInput) == str(_help)):{
+		_output = ["HELP"];
+	};
 };
-if(str(_userInput) == str(_help))then{
-	_output = ["HELP"];
-};
-
 
 _output;
