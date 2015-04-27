@@ -72,6 +72,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
+					text="dude";
 					init="nul = [player, ""Super Bad ass UAV intro achieved""] spawn BIS_fnc_establishingShot;";
 					syncId=0;
 					synchronizations[]={1};
@@ -87,19 +88,19 @@ class Mission
 				class Item0
 				{
 					position[]={4990.4692,208.43768,5920.3013};
-					azimut=11.420406;
+					azimut=11.4204;
 					class args
 					{
 						items=4;
 						class Item0
 						{
-							value="";
+							value="dude";
 							parentCls="ModuleCurator_F";
 							typeName="Owner";
 						};
 						class Item1
 						{
-							value="";
+							value="z0";
 							parentCls="ModuleCurator_F";
 							typeName="Name";
 						};

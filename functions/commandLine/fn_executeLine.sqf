@@ -19,9 +19,10 @@ switch true do {
 	};
 	case(_cmd == "HELP"):{
 		_output = "Supported Commands:<br/>"+
-			"  HELP    Displays all supported commands.<br/>"+
+			"  HELP    Displays all supported commands<br/>"+
 			"  TIME    Displays the current date and time   m/d/y hr:min<br/>"+
-			"  QUIT    Exits the terminal.";
+			"  WHOAMI  Displays the current active user's user name <br/>"+
+			"  QUIT    Exits the terminal";
 	};
 	case(_cmd == "TIME"):{
 		_date = date;				// [year, month, day, hour, minute]
@@ -32,6 +33,13 @@ switch true do {
 		_minute = _date select 4;
 		if(_minute < 10)then{ _minute = "0"+str(_minute);};				//Format time right
 		_output = format ["%1/%2/%3  %4:%5",_month,_day,_year,_hour,_minute];
+	};
+	case(_cmd == "WHOAMI"):{
+		_output = "No user currently logged in.";
+		if(_computer select 2 != "PUBLIC")then{
+			_output = _computer select 2;
+		};
+		_output;
 	};
 };
 
