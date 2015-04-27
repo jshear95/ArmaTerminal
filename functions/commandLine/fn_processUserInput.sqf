@@ -90,9 +90,11 @@ switch true do {
 		_curLine;
 	};
 	case (_scrollUp) : {
+		//Scrolls page up
 		_yOffset = _yOffset + _lineHeight;
 	};
 	case (_scrollDown) : {
+		//Scrolls page down
 		_yOffset = _yOffset - _lineHeight;
 	};
 	case (!(_userInput == "")) : {

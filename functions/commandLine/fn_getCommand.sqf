@@ -46,6 +46,7 @@ _userInput = [_userInput] call _alphaToALPHA;
 
 _quit = ["Q","U","I","T"];
 _help = ["H","E","L","P"];
+_time = ["T","I","M","E"];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -53,6 +54,9 @@ switch true do {
 	};
 	case(str(_userInput) == str(_help)):{
 		_output = ["HELP"];
+	};
+	case(str(_userInput)==str(_time)):{
+		_output = ["TIME"];
 	};
 };
 

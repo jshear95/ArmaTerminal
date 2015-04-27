@@ -20,7 +20,18 @@ switch true do {
 	case(_cmd == "HELP"):{
 		_output = "Supported Commands:<br/>"+
 			"  HELP    Displays all supported commands.<br/>"+
+			"  TIME    Displays the current date and time   m/d/y hr:min<br/>"+
 			"  QUIT    Exits the terminal.";
+	};
+	case(_cmd == "TIME"):{
+		_date = date;				// [year, month, day, hour, minute]
+		_year = _date select 0;
+		_month = _date select 1;
+		_day = _date select 2;
+		_hour = _date select 3;
+		_minute = _date select 4;
+		if(_minute < 10)then{ _minute = "0"+str(_minute);};				//Format time right
+		_output = format ["%1/%2/%3  %4:%5",_month,_day,_year,_hour,_minute];
 	};
 };
 
