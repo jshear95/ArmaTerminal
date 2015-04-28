@@ -28,7 +28,6 @@ shift = false;
  * Runs for as long as user doesn't input quit and user is alive
  * Has a switch statement to get the given state and execute the proper commands for that given state (Command line, login, editor)
  */
- hint "Beginning logic loop";
  while{_computer select 4 != "QUIT"}do{
 
 	if(floor(time) mod 9 == 0)then{							//Refreshes black background every 9 seconds

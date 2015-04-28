@@ -22,4 +22,13 @@ class CfgFunctions {
 			class pop {};
 		};
     };
+	class File {
+		class File {
+			class newFolder {};
+			class newDocument {};
+			class changeName {};
+			class deleteItem {};
+			class editContents {};
+		};
+	};
 };

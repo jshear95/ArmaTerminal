@@ -22,6 +22,7 @@ switch true do {
 			"  HELP    Displays all supported commands<br/>"+
 			"  TIME    Displays the current date and time   m/d/y hr:min<br/>"+
 			"  WHOAMI  Displays the current active user's user name <br/>"+
+			"  COLOR   Toggles color of text between green and white<br/>"+
 			"  QUIT    Exits the terminal";
 	};
 	case(_cmd == "TIME"):{
