@@ -54,7 +54,7 @@ switch true do {
 		_prevLines = [_prevLines,_curLine] call Line_fnc_push;
 		_output = _exe select 0;
 		_prevLines = [_prevLines,[_output]] call Line_fnc_push;
-		_curLine = ["MASTER: "] call Line_fnc_newLine;
+		_curLine = [(_commandLine select 2) + ": "] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
 		//BackSpace has been pressed
