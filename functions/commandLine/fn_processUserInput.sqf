@@ -2,7 +2,7 @@
 	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
 */
 
-private[_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_users,_files,_currentUser,_computerName,_state,_commandLine];
+private[_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_users,_files,_currentUser,_computerName,_state,_commandLine,_color];
 
 _return = _this select 0 select 0;
 _backSpace = _this select 0 select 1;
@@ -18,6 +18,7 @@ _currentUser = _this select 1 select 2;
 _computerName = _this select 1 select 3;
 _state = _this select 1 select 4;
 _commandLine = _this select 1 select 5;
+_color = _this select 1 select 6;
 
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
@@ -48,6 +49,7 @@ switch true do {
 		_computerName = _exe select 1 select 3;
 		_state = _exe select 1 select 4;
 		_commandLine = _exe select 1 select 5;
+		_color = _exe select 1 select 6;
 		
 		_prevLines = [_prevLines,_curLine] call Line_fnc_push;
 		_output = _exe select 0;
@@ -108,4 +110,4 @@ switch true do {
 
 _commandLine = [_prevLines, _curLine, _commandLine select 2, _prevCommands, _prevCommandIndex,_yOffset];
 
-[_users,_files,_currentUser,_computerName,_state,_commandLine];
+[_users,_files,_currentUser,_computerName,_state,_commandLine,_color];

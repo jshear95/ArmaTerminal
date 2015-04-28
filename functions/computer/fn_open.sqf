@@ -22,6 +22,7 @@ _currentUser = "PUBLIC";				//UserID or PUBLIC (If no user logged in)
 _computerName = "ION Secure Device";	//Name of the computer
 _state = "COMMANDLINE";					//State that the computer is in (COMMANDLINE, EDITOR, LOGIN, QUIT)
 _commandLine = [] call CommandLine_fnc_newCommandLine;	//Creates the command line for the system
+_color = "#33CC33";						//Text color (by default green) (can be toggled to white)
 
 [
 	_users,		//All users registered on the computer
@@ -29,5 +30,6 @@ _commandLine = [] call CommandLine_fnc_newCommandLine;	//Creates the command lin
 	_currentUser,
 	_computerName,
 	_state,
-	_commandLine
+	_commandLine,
+	_color
 ];

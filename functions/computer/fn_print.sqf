@@ -15,7 +15,7 @@ _yCord = 0*safeZoneH;
 _printText = {											//print [_text] in the terminal
 	private[_text];
 	_text = _this select 0;
-	_txtColor = "#33CC33";
+	_txtColor = _comp select 6;
 	_displayText = "";
 	if(_txtColor == "#33CC33")then{
 		_displayText = format ["<t size='0.55' color='#33CC33' align='left'>%1<br /></t>", _text];

@@ -2,7 +2,7 @@
 	takes in data from key event handler and processes it to get the given command
 */
 
-private ["_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt"];
+private [_ctrl, _dikCode, _shift, _ctrlKey, _alt];
 _ctrl = _this select 0;													//Not used
 _dikCode = _this select 1;
 _shift = _this select 2;
@@ -125,6 +125,7 @@ if(_dikCode == 200)then{_up = true;};										//Up
 if(_dikCode == 208)then{_down = true;};										//Down
 if(_dikCode == 14)then{_backSpace = true; _userInput = "";};				//BackSpace
 if(_dikCode == 28)then{_return = true;};									//Return
+//if(_dikCode == 58)then{};													//Caps Lock
 //Return input
 [
 	_return,

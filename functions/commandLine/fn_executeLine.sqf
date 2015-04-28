@@ -41,6 +41,18 @@ switch true do {
 		};
 		_output;
 	};
+	case(_cmd == "COLOR"):{
+		_color = _computer select 6;
+		if(_color == "#33CC33")then{
+			_color = "#FFFFFF";
+			_output = "Color changed to white";
+		}else{
+			_color = "#33CC33";
+			_output = "Color changed to green";
+		};
+		_computer set [6, _color];
+		_output;
+	};
 };
 
 [_output,_computer];

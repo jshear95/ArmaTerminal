@@ -36,6 +36,8 @@ class Mission
 	randomSeed=2958776;
 	class Intel
 	{
+		briefingName="Arma Terminal Testing Enviornment";
+		overviewText="A safe* enviornment to test the Arma Terminal in. *Safe that is until you start playing with zeus";
 		resistanceWest=0;
 		startWeather=0.47999999;
 		startWind=0.099999994;
