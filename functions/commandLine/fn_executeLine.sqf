@@ -54,6 +54,23 @@ switch true do {
 		_computer set [6, _color];
 		_output;
 	};
+	case(_cmd == "LS"):{
+		_commandLine = _computer select 5;
+		_filePath = _commandLine select 2;
+		_files = _computer select 1;
+		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+		_output = "";
+		_inc = 0;
+		{
+			_inc = _inc + 1;
+			if(_inc != count(_curDir select 1))then{
+				_output = _output + ([_x] call File_fnc_getName) + "<br/>";
+			}else{
+				_output = _output + ([_x] call File_fnc_getName);
+			};
+		}forEach ([_curDir] call File_fnc_getContents);
+		_output;
+	};
 };
 
 [_output,_computer];

@@ -49,6 +49,7 @@ _help = ["H","E","L","P"];
 _time = ["T","I","M","E"];
 _whoami = ["W","H","O","A","M","I"];
 _color = ["C","O","L","O","R"];
+_ls = ["L","S"];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -65,6 +66,9 @@ switch true do {
 	};
 	case(str(_userInput)==str(_color)):{
 		_output = ["COLOR"];
+	};
+	case(str(_userInput) == str(_ls)):{
+		_output = ["LS"];
 	};
 };
 

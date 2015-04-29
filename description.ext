@@ -13,6 +13,7 @@ class CfgFunctions {
 			class executeLine {};
 			class processUserInput {};
 			class getCommand {};
+			class getCurrentDir {};
 		};
 	};
 	class Line {
@@ -26,7 +27,9 @@ class CfgFunctions {
 		class File {
 			class newFolder {};
 			class newDocument {};
-			class changeName {};
+			class getContents {};
+			class getFile {};
+			class getName {};
 			class deleteItem {};
 			class editContents {};
 		};
