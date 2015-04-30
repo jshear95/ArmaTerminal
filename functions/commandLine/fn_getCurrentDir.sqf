@@ -10,7 +10,7 @@ _filePath = _this select 1;
 _progress = true;
 {
 	if(_progress)then{
-		_curFile = _x;
+		_curFile = [_x] call CommandLine_fnc_alphaToAlpha;
 		_found = false;
 		{
 			if(_curFile == ([_x] call File_fnc_getName) && !_found)then{

@@ -4,6 +4,5 @@
 
  private[_file];
  _file = _this select 0;
- 
- _name = _file select 0;
+ _name = [_file select 0] call CommandLine_fnc_alphaToAlpha;
  _name;

@@ -23,6 +23,7 @@ switch true do {
 			"  TIME    Displays the current date and time   m/d/y hr:min<br/>"+
 			"  WHOAMI  Displays the current active user's user name <br/>"+
 			"  COLOR   Toggles color of text between green and white<br/>"+
+			"  LS      Displays all files in current active directory<br/>" +
 			"  QUIT    Exits the terminal";
 	};
 	case(_cmd == "TIME"):{
@@ -62,11 +63,15 @@ switch true do {
 		_output = "";
 		_inc = 0;
 		{
-			_inc = _inc + 1;
+			_inc = _inc + 1;				//To account for last line not needing a br
+			_fileName = str(_x select 0);	//Converts from errorString to string with extra ""
+			_fileName = _fileName select [1,(count _fileName - 2)];	//Removes extra ""
+																	//Apparently you can substring in Arma, who new
+			
 			if(_inc != count(_curDir select 1))then{
-				_output = _output + ([_x] call File_fnc_getName) + "<br/>";
+				_output = _output + _fileName + "<br/>";
 			}else{
-				_output = _output + ([_x] call File_fnc_getName);
+				_output = _output + _fileName;
 			};
 		}forEach ([_curDir] call File_fnc_getContents);
 		_output;
