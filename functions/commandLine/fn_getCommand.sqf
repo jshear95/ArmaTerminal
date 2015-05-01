@@ -16,6 +16,7 @@ _time = ["T","I","M","E"];
 _whoami = ["W","H","O","A","M","I"];
 _color = ["C","O","L","O","R"];
 _ls = ["L","S"];
+_cd = ["C","D"," "];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -35,6 +36,9 @@ switch true do {
 	};
 	case(str(_userInput) == str(_ls)):{
 		_output = ["LS"];
+	};
+	case(str(_userInput select[0,3]) == str(_cd)):{
+		_output = ["CD",_userInput select [3,count _userInput - 1]];
 	};
 };
 

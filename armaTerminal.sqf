@@ -21,7 +21,7 @@ pressedKey = -1;
 	 *This is the ID of the key from the action listener below
 	 */
 shift = false;
-(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; _handled = true;}];
+(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; handled = true; handled;}];
 
 /**
  * Execution loop

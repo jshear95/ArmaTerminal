@@ -8,7 +8,7 @@ _contents = [_parent] call File_fnc_getContents;
 
 _file = 0;
 {
-	if([_x] call File_fnc_getName == _fileName && typeName(_x select 1) == "ARRAY")then{
+	if(str([_x] call File_fnc_getName) == str(_fileName))then{
 		_file = _x;
 	};
 }forEach _contents;

@@ -22,6 +22,7 @@ _color = _this select 1 select 6;
 
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
+_filePath = _commandLine select 2;
 _prevCommands = _commandLine select 3;
 _prevCommandIndex = _commandLine select 4;
 _yOffset = _commandLine select 5;
@@ -55,7 +56,7 @@ switch true do {
 		_output = _exe select 0;
 		_prevLines = [_prevLines,[_output]] call Line_fnc_push;
 		_filePath = _commandLine select 2;
-		_curLine = [(_filePath select (count _filePath - 1)) + ": "] call Line_fnc_newLine;
+		_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
 		//BackSpace has been pressed
