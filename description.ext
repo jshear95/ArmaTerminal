@@ -29,8 +29,6 @@ class CfgFunctions {
     };
 	class File {
 		class File {
-			class newFolder {};
-			class newDocument {};
 			class getContents {};
 			class getFile {};
 			class getName {};

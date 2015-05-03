@@ -57,6 +57,11 @@ switch true do {
 		};
 		_filePath = _commandLine select 2;
 		_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
+		_commandLine set [0,_prevLines];
+		_commandLine set [1,_curLine];
+		_commandLine set [2,_filePath];
+		_commandLine set [3,_prevCommands];
+		_commandLine set [4,_prevCommandIndex];
 	};
 	case (_backSpace) : {
 		//Pop char from curLine
@@ -65,6 +70,7 @@ switch true do {
 			_pop = [_curLine] call Line_fnc_pop;
 		};
 		_curLine = _curLine - [""];
+		_commandLine set [1,_curLine];
 	};
 	case (_up) : {
 		//display next prevCommand
@@ -79,7 +85,8 @@ switch true do {
 			}forEach _temp;
 			
 		};
-		_curLine;
+		_commandLine set [1,_curLine];
+		_commandLine set [4,_prevCommandIndex];
 	};
 	case (_down) : {
 		//display previous prevCommand
@@ -93,25 +100,26 @@ switch true do {
 				_curLine = [_curLine, _x] call Line_fnc_push;
 			}forEach _temp;
 		};
-		_curLine;
+		_commandLine set [1,_curLine];
+		_commandLine set [4,_prevCommandIndex];
 	};
 	case (_scrollUp) : {
 		//Scrolls page up
 		_yOffset = _yOffset + _lineHeight;
+		_commandLine set [5,_yOffset];
 	};
 	case (_scrollDown) : {
 		//Scrolls page down
 		_yOffset = _yOffset - _lineHeight;
+		_commandLine set [5,_yOffset];
 	};
 	case (!(_userInput == "")) : {
 		//Key has been pressed
 		//push key to curLine
 		_curLine = _curLine - [""];
 		_curLine = [_curLine,_userInput] call Line_fnc_push;
-		
+		_commandLine set [1,_curLine];
 	};
 };
-
-_commandLine = [_prevLines, _curLine, _commandLine select 2, _prevCommands, _prevCommandIndex,_yOffset];
 
 [_users,_files,_currentUser,_computerName,_state,_commandLine,_color];

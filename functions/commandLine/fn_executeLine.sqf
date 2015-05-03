@@ -93,6 +93,10 @@ switch true do {
 			};
 		}forEach ([_curDir] call File_fnc_getContents);
 		
+		if(_output == "")then{
+			_output = "No files in directory";
+		};
+		
 		_output;
 	};
 	case(str(_cmd) == str("CD")):{
@@ -120,10 +124,10 @@ switch true do {
 					_filePath = _filePath + [_file select 0];
 					_output = "";
 				}else{
-					_output = str(_fileName) + " : Not a directory";
+					_output = "Not a directory";
 				};
 			}else{
-				_output = str(_fileName) + " : No such file or directory";
+				_output = "No such file or directory";
 			};
 		};
 		
