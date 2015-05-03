@@ -25,7 +25,6 @@ class CfgFunctions {
 			class inputToString {};
 			class parseFilePath {};
 			class parseSpaceDeliniation {};
-			
 		};
     };
 	class File {
@@ -35,7 +34,6 @@ class CfgFunctions {
 			class getContents {};
 			class getFile {};
 			class getName {};
-			
 		};
 	};
 };

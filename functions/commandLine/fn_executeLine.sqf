@@ -10,6 +10,9 @@ _arg = _this select 0;
 _cmd = _arg select 0;
 _computer = _this select 1;
 
+_remainingLine = [_arg select 1] call Line_fnc_inputToString;
+_params = [_remainingLine] call Line_fnc_parseSpaceDeliniation;
+
 _output = "The command you entered is not recognised as a command. Type 'HELP' in order to see a list of supported commands.";
 
 switch true do {
@@ -28,6 +31,7 @@ switch true do {
 			"  LS             Displays all files in current active directory<br/>" +
 			"  CD [DirName]   Opens the specified directory, no [] braces, 'cd ..' returns you to the parent directory<br/>" +
 			"  RN [DirName] [NewName]   Renames the directory matching the first parameter with the name specified in the second parameter, no [] braces<br/>" +
+			"  MKDIR [DirName] Creates a new directory in the current active directory with specified dirName, no [] braces<br/>" +
 			"  QUIT           Exits the terminal<br/>"+
 			"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 	};
@@ -99,7 +103,6 @@ switch true do {
 		
 		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 		_fileName = [_arg select 1] call Line_fnc_inputToString;
-		_params = [_fileName] call Line_fnc_parseSpaceDeliniation;
 		_fileName = _params select 0;
 		
 		if(_fileName == ".." || _fileName == "../")then{
@@ -139,9 +142,7 @@ switch true do {
 		
 		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 		
-		_remainingLine = [_arg select 1] call Line_fnc_inputToString;
-		
-		_params = [_remainingLine] call Line_fnc_parseSpaceDeliniation;
+
 		
 		_prevName = _params select 0;
 		_newName = _params select 1;
@@ -163,6 +164,31 @@ switch true do {
 			};
 		};
 		
+		_output;
+	};
+	case(str(_cmd)==str("MKDIR")):{
+		_output = "";
+		
+		_commandLine = _computer select 5;
+		_filePath = _commandLine select 2;
+		_files = _computer select 1;
+		
+		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+
+		_newFileName = _params select 0;
+		
+		switch(true)do{
+			case(_newFileName == ""):{
+				_output = "Unspecified File Name";
+			};
+			case(str([_curDir,_newFileName] call File_fnc_getFile) != str(0)):{
+				_output = "New file name already exists in current directory";
+			};
+			case(_newFileName != "" && str([_curDir,_newFileName] call File_fnc_getFile) == str(0)):{
+				_newFile = [_newFileName,[]];
+				(_curDir select 1) set[count (_curDir select 1), _newFile];
+			};
+		};
 		_output;
 	};
 };

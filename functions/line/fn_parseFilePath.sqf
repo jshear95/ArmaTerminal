@@ -11,7 +11,7 @@ _output = "";
 	if(_x == "MASTER")then{
 		_output = _output + _x;
 	}else{
-		_output = _output + "\" + _x;
+		_output = _output + "/" + _x;
 	};	
 }forEach _filePath;
 
