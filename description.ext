@@ -24,6 +24,7 @@ class CfgFunctions {
 			class pop {};
 			class inputToString {};
 			class parseFilePath {};
+			class parseSpaceDeliniation {};
 			
 		};
     };
@@ -34,8 +35,7 @@ class CfgFunctions {
 			class getContents {};
 			class getFile {};
 			class getName {};
-			class deleteItem {};
-			class editContents {};
+			
 		};
 	};
 };

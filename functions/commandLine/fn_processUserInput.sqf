@@ -31,12 +31,10 @@ _lineHeight = 0.05527;	//This is the height of a line of text. This was measured
 
 switch true do {
 	case (_return) : {
-		//Enter has been pressed
-		/*
-			execute current line
-			push curLine to prevLines
-			create new line
-		 */
+		//execute current line
+		//push curLine to prevLines
+		//create new line
+		
 		_temp = _curLine - [_curLine select 0];
 		_prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
 		_prevCommandIndex = count _prevCommands;
@@ -61,8 +59,8 @@ switch true do {
 		_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
 	};
 	case (_backSpace) : {
-		//BackSpace has been pressed
 		//Pop char from curLine
+		
 		if(count _curLine > 1) then {
 			_pop = [_curLine] call Line_fnc_pop;
 		};
@@ -70,6 +68,7 @@ switch true do {
 	};
 	case (_up) : {
 		//display next prevCommand
+		
 		if(_prevCommandIndex > 0)then{
 			_prevCommandIndex = _prevCommandIndex - 1;
 			_temp = _prevCommands select _prevCommandIndex;
@@ -84,6 +83,7 @@ switch true do {
 	};
 	case (_down) : {
 		//display previous prevCommand
+		
 		if(_prevCommandIndex < count _prevCommands - 1)then{
 			_prevCommandIndex = _prevCommandIndex + 1;
 			_temp = _prevCommands select _prevCommandIndex;

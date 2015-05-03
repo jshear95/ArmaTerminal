@@ -18,30 +18,3 @@ if(count _filePath > 1)then{
 	}forEach (_filePath select [1, count _filepath - 1]);
 };
 _files;
-
-
-
-
-/*
-/*p = t
-curFile = folderA
-f = f
-* /
-if(count _filePath > 1)then{
-	{
-		if(_progress)then{
-			_curFile = [_x] call CommandLine_fnc_alphaToAlpha;
-			_found = false;
-			{
-				hint str([_x] call File_fnc_getName);
-				if(_curFile == ([_x] call File_fnc_getName) && !_found)then{
-					hint "TEST1";
-					_files = _x;
-					_found = true;
-				};
-				_progress = !_found;
-			}forEach ([_files] call File_fnc_getContents);
-		};
-	} forEach (_filePath select [1, count _filePath - 1]);
-};
-_files;*/
