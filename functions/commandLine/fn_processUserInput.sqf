@@ -26,6 +26,7 @@ _filePath = _commandLine select 2;
 _prevCommands = _commandLine select 3;
 _prevCommandIndex = _commandLine select 4;
 _yOffset = _commandLine select 5;
+_cache = _commandLine select 6;
 
 _lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
 
@@ -38,7 +39,12 @@ switch true do {
 		_temp = _curLine - [_curLine select 0];
 		_prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
 		_prevCommandIndex = count _prevCommands;
-
+		
+		_cache = _commandLine select 6;
+		if(_cache select 0)then{
+			_cache set [count _cache, _temp];
+		};
+		
 		_cmd = [_curLine] call CommandLine_fnc_getCommand;
 		_exe = [_cmd,_this select 1] call CommandLine_fnc_executeLine;
 		
@@ -55,13 +61,23 @@ switch true do {
 		if(_output != "")then{
 			_prevLines = [_prevLines,[_output]] call Line_fnc_push;
 		};
-		_filePath = _commandLine select 2;
-		_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
+		
+		_cache = _commandLine select 6;
+		if(!(_cache select 0))then{
+			_filePath = _commandLine select 2;
+			_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
+			copyToClipboard str(_filePath);
+		}else{
+			_curLine = [_cache select 2] call Line_fnc_newLine;
+		};
+		
+		
 		_commandLine set [0,_prevLines];
 		_commandLine set [1,_curLine];
 		_commandLine set [2,_filePath];
 		_commandLine set [3,_prevCommands];
 		_commandLine set [4,_prevCommandIndex];
+		_commandLine set [6,_cache];
 	};
 	case (_backSpace) : {
 		//Pop char from curLine

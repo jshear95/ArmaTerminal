@@ -19,6 +19,7 @@ _ls = ["L","S"];
 _cd = ["C","D"," "];
 _rn = ["R","N"," "];
 _mkdir = ["M","K","D","I","R"," "];
+_rm = ["R","M"," "];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -48,6 +49,10 @@ switch true do {
 	case(str(_userInput select[0,6])==str(_mkdir)):{
 		_output = ["MKDIR",_userInput select [6,count _userInput - 1]];
 	};
+	case(str(_userInput select[0,3])==str(_rm)):{
+		_output = ["RM",_userInput select [3,count _userInput - 1]];
+	};
 };
+
 
 _output;

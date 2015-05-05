@@ -7,6 +7,8 @@ _curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;		//C
 _prevCommands = [];										//All commands previously put into the command line
 _prevCommandIndex = 0;									//Index of which previous command the user is at
 _yOffset = 0;											//Int val of how far to offset y cord of text for scrolling
+_cache = [false];										//Array for passing data to subsequent lines in a multi line operation
+														//Index 0 of cache is weather or not to look at it
 
 _temp = "Welcome to Arma Terminal! (version >0.1)<br/>"+
 		"Use 'page up' and 'page down' to scroll. "+
@@ -21,5 +23,6 @@ _prevLines = [_prevLines, [_temp]] call Line_fnc_push;	//Pushes generic help to 
 	_filePath,
 	_prevCommands,
 	_prevCommandIndex,
-	_yOffset
+	_yOffset,
+	_cache
 ];
