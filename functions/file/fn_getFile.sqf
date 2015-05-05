@@ -8,7 +8,7 @@ _contents = [_parent] call File_fnc_getContents;
 
 _file = 0;
 {
-	if(str([_x] call File_fnc_getName) == str(_fileName))then{
+	if(str([_x] call File_fnc_getName) == str(_fileName))then{		//If the specified file name matches any file in the current directory
 		_file = _x;
 	};
 }forEach _contents;

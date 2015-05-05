@@ -10,9 +10,9 @@ _contents = [_parent] call File_fnc_getContents;
 _index = -1;
 _loop = true;
 
-while{_index < count _contents && _loop}do{
+while{_index < count _contents && _loop}do{						//while there are unchecked files in the current directory and the file has not been found
 	_index = _index + 1;
-	if(str([_contents select _index] call File_fnc_getName) == str(_fileName))then{
+	if(str([_contents select _index] call File_fnc_getName) == str(_fileName))then{		//If the specified name matches the name of the file being checked
 		_loop = false;
 	};
 };
