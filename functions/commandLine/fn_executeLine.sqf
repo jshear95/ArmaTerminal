@@ -38,6 +38,7 @@ if(!(_cache select 0))then{
 				"  RN [DirName] [NewName]   Renames the directory matching the first parameter with the name specified in the second parameter, no [] braces<br/>" +
 				"  MKDIR [DirName] Creates a new directory in the current active directory with specified dirName, no [] braces<br/>" +
 				"  RM [DirName]    permanently deletes the specified subdirectory from the current directory<br/>"+
+				"  STEED [FileName]   If specified file exists and is not a directory, opens it in Simulated TExt EDitor (STEED), if the specified file does not exist, it creates it and opens the new blank file in STEED<br/>" +
 				"  QUIT           Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
@@ -124,7 +125,7 @@ if(!(_cache select 0))then{
 			}else{
 				_file = [_curDir,_fileName] call File_fnc_getFile;
 				if(str(_file) != str(0))then{						//If you can find a file with specified name
-					if(typeName(_file select 1) == "ARRAY")then{	//If specified file found and is a directory
+					if([_file] call File_fnc_getType)then{	//If specified file found and is a directory
 						_filePath = _filePath + [_file select 0];
 						_output = "";
 					}else{											//If specified file found but not a directory
@@ -227,6 +228,43 @@ if(!(_cache select 0))then{
 			};
 			_output;
 		};
+		case(str(_cmd)==str("STEED")):{
+			_output = "";
+			
+			_zfileName = _params select 0;
+			
+			_commandLine = _computer select 5;
+			_filePath = _commandLine select 2;
+			_files = _computer select 1;
+			
+			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+			_file = [_zfileName,[""]];
+			_steed = _computer select 7;
+			
+			switch(true)do{
+				case(_zfileName == ""):{													//No file name given
+					_output = "Unspecified File Name";
+				};
+				case(str([_curDir,_zfileName] call File_fnc_getFile) == str(0)):{			//File name is not in current directory
+					//Create skeleton file
+					_file = [_zfileName,[""]];
+					_steed = [_file select 0, _file select 1] call Steed_fnc_newSteed;
+					_computer set[4,"EDITOR"];
+				};
+				case(_zfileName != "" && str([_curDir,_zfileName] call File_fnc_getFile) != str(0) && [[_curDir,_zfileName] call File_fnc_getFile] call File_fnc_getType):{	
+					_output = "Specified file name is already a directory";					//File name is not in current directory
+				};
+				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0)):{			//File name is already a file
+					//get file
+					_file = [_curDir,_zfileName] call File_fnc_getFile;
+					_steed = [_file select 0, _file select 1] call Steed_fnc_newSteed;
+					_computer set[4,"EDITOR"];
+				};
+			};
+			_computer set[7,_steed];
+			_output;
+			
+		};
 	};
 }else{
 	_output = "Not a valid command";
@@ -260,6 +298,5 @@ if(!(_cache select 0))then{
 	};
 	_output;
 };
-
 
 [_output,_computer];

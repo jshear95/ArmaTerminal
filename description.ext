@@ -33,6 +33,12 @@ class CfgFunctions {
 			class getFile {};
 			class getName {};
 			class getFileIndex {};
+			class getType {};
+		};
+	};
+	class Steed {
+		class Steed {
+			class newSteed {};
 		};
 	};
 };

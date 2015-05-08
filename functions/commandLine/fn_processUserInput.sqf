@@ -19,6 +19,7 @@ _computerName = _this select 1 select 3;
 _state = _this select 1 select 4;
 _commandLine = _this select 1 select 5;
 _color = _this select 1 select 6;
+_steed = _this select 1 select 7;
 
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
@@ -29,6 +30,7 @@ _yOffset = _commandLine select 5;
 _cache = _commandLine select 6;
 
 _lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
+						//NO LONGER ACCURATE, GOOD APPROXIMATE FOR TIME BEING
 
 switch true do {
 	case (_return) : {
@@ -56,6 +58,7 @@ switch true do {
 		_state = _exe select 1 select 4;
 		_commandLine = _exe select 1 select 5;
 		_color = _exe select 1 select 6;
+		_steed = _exe select 1 select 7;
 		
 		//create new line
 		_prevLines = [_prevLines,_curLine] call Line_fnc_push;
@@ -68,7 +71,6 @@ switch true do {
 		if(!(_cache select 0))then{										//If cache is not in use, then create a normal next line
 			_filePath = _commandLine select 2;
 			_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
-			copyToClipboard str(_filePath);
 		}else{															//If cache is in use, create a next line with prompt specified in cache
 			_curLine = [_cache select 2] call Line_fnc_newLine;
 		};
@@ -139,4 +141,4 @@ switch true do {
 	};
 };
 
-[_users,_files,_currentUser,_computerName,_state,_commandLine,_color];
+[_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed];

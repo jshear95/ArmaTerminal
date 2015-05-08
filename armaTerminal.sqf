@@ -36,19 +36,23 @@ shift = false;
 	
 	//Gets key and logs it
 	_input = -1;
+	
 	if(pressedKey != -1 && pressedKey != 54 && pressedKey != 42)then{
 		_tempIn = pressedKey;
 		_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
 		
 		//Executes proper code for current state
 		_state = _computer select 4;
+		if(str(_state) == str("EDITOR")) then{
+			
+		};
 		if(str(_state) == str("COMMANDLINE"))then{
 			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
 		};
 		if(str(_state) == str("LOGIN"))then{};
-		if(str(_state) == str("EDITOR")) then{};
 		pressedKey = -1;
 	};
+	
 	_print = [_computer] call Computer_fnc_print;
 };
 

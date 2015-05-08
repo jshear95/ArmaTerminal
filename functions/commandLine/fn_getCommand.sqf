@@ -20,6 +20,7 @@ _cd = ["C","D"," "];
 _rn = ["R","N"," "];
 _mkdir = ["M","K","D","I","R"," "];
 _rm = ["R","M"," "];
+_steed = ["S","T","E","E","D"," "];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -51,6 +52,9 @@ switch true do {
 	};
 	case(str(_userInput select[0,3])==str(_rm)):{
 		_output = ["RM",_userInput select [3,count _userInput - 1]];
+	};
+	case(str(_userInput select[0,6])==str(_steed)):{
+		_output = ["STEED",_userInput select [6,count _userInput - 1]];
 	};
 };
 
