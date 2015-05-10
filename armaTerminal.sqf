@@ -21,7 +21,8 @@ pressedKey = -1;
 	 *This is the ID of the key from the action listener below
 	 */
 shift = false;
-(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; _handled = true; _handled;}];
+control = false;
+(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; control = _this select 3; _handled = true; _handled;}];
 
 /**
  * Execution loop
@@ -39,17 +40,19 @@ shift = false;
 	
 	if(pressedKey != -1 && pressedKey != 54 && pressedKey != 42)then{
 		_tempIn = pressedKey;
-		_input = [0, _tempIn, shift, false,false] call Computer_fnc_getUserInput;
+		_input = [0, _tempIn, shift, control,false] call Computer_fnc_getUserInput;
 		
 		//Executes proper code for current state
 		_state = _computer select 4;
-		if(str(_state) == str("EDITOR")) then{
-			
+		switch(true) do {
+		case(str(_state) == str("EDITOR")) :{
+			_computer = [_input, _computer] call Steed_fnc_processUserInput;
 		};
-		if(str(_state) == str("COMMANDLINE"))then{
+		case(str(_state) == str("COMMANDLINE")):{
 			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
 		};
-		if(str(_state) == str("LOGIN"))then{};
+		case(str(_state) == str("LOGIN")):{};
+		};
 		pressedKey = -1;
 	};
 	

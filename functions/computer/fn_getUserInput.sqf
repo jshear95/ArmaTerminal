@@ -12,9 +12,19 @@ _backSpace = false;
 _return = false;
 _up = false;
 _down = false;
+_left = false;
+_right = false;
 _scrollUp = false;
 _scrollDown = false;
+_insert = false;
+_delete = false;
+_home = false;
+_end = false;
+
 _userInput = "";
+
+//hint str(_dikCode);
+
 if(_dikCode == 41)then{_userInput = "`";};
 if(_dikCode == 2)then{_userInput = "1";};
 if(_dikCode == 3)then{_userInput = "2";};
@@ -119,13 +129,17 @@ if(_dikCode == 209)then{_scrollUp=true;};									//Page Down Key = down
 if(_dikCode == 201)then{_scrollDown=true;};									//Page Up Key = Up
 if(_dikCode == 57)then{_userInput = " ";};
 //if(_dikCode == 184)then{_userInput = "";};
-//if(_dikCode == 203)then{_userInput = "";};								//Left
-//if(_dikCode == 205)then{_userInput = "";};								//Right
+if(_dikCode == 203)then{_left = true;};										//Left
+if(_dikCode == 205)then{_right = true;};									//Right
 if(_dikCode == 200)then{_up = true;};										//Up
 if(_dikCode == 208)then{_down = true;};										//Down
 if(_dikCode == 14)then{_backSpace = true; _userInput = "";};				//BackSpace
 if(_dikCode == 28)then{_return = true;};									//Return
 //if(_dikCode == 58)then{};													//Caps Lock
+if(_dikCode == 210)then{_insert = true;};									//Insert
+if(_dikCode == 211)then{_delete = true;};									//Delete
+if(_dikCode == 199)then{_home = true;};										//Home
+if(_dikCode == 207)then{_end = true;};										//End
 //Return input
 [
 	_return,
@@ -134,5 +148,12 @@ if(_dikCode == 28)then{_return = true;};									//Return
 	_down,
 	_userInput,
 	_scrollUp,
-	_scrollDown
+	_scrollDown,
+	_ctrlKey,
+	_left,
+	_right,
+	_insert,
+	_delete,
+	_home,
+	_end
 ];

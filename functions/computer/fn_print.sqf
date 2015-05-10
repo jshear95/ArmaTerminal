@@ -24,9 +24,9 @@ _printText = {											//print [_text] in the terminal
 	_txtColor = _comp select 6;
 	_displayText = "";
 	if(_txtColor == "#33CC33")then{
-		_displayText = format ["<t size='0.4' color='#33CC33' align='left' font='LucidaConsoleB'>%1<br /></t>", _text];
+		_displayText = format ["<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
 	}else{
-		_displayText = format ["<t size='0.4' color='#FFFFFF' align='left' font='LucidaConsoleB'>%1<br /></t>", _text];
+		_displayText = format ["<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
 	};
 	null = [_displayText,_xCord,_yCord + _yOffset,0.09,0] spawn BIS_fnc_dynamicText;
 	//null = [text,X,Y,Fade Out Time,Fade In Time] spawn BIS_fnc_dynamicText;

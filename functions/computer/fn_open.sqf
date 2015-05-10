@@ -15,6 +15,7 @@ _files = _this select 4;					//Starting File Structure
 
 _callScreenBlack = [] call _screenBlack;		//turns screen black
 _caller enableSimulation false;					//Disables *most* player activity while in terminal
+
 _target removeAction _actionID;					//Removes open action to prevent the competing console bug
 
 //Var Init

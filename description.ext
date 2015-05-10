@@ -39,6 +39,7 @@ class CfgFunctions {
 	class Steed {
 		class Steed {
 			class newSteed {};
+			class processUserInput {};
 		};
 	};
 };
