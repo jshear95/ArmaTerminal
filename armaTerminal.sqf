@@ -22,7 +22,7 @@ pressedKey = -1;
 	 */
 shift = false;
 control = false;
-(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; control = _this select 3; _handled = true; _handled;}];
+(findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; control = _this select 3; _handled = true;}];
 
 /**
  * Execution loop
@@ -45,14 +45,14 @@ control = false;
 		//Executes proper code for current state
 		_state = _computer select 4;
 		switch(true) do {
-		case(str(_state) == str("EDITOR")) :{
-			_computer = [_input, _computer] call Steed_fnc_processUserInput;
-		};
-		case(str(_state) == str("COMMANDLINE")):{
-			_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
-		};
-		case(str(_state) == str("LOGIN")):{};
-		};
+			case(str(_state) == str("EDITOR")) :{
+				_computer = [_input, _computer] call Steed_fnc_processUserInput;
+			};
+			case(str(_state) == str("COMMANDLINE")):{
+				_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
+			};
+			case(str(_state) == str("LOGIN")):{};
+			};
 		pressedKey = -1;
 	};
 	

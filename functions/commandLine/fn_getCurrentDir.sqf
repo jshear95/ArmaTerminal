@@ -4,14 +4,14 @@
  * Returns the current open directory
  */
 
-private[_files, _filePath];
-_files = _this select 0;
+private[_dafiles, _filePath];
+_dafiles = _this select 0;
 _filePath = _this select 1;
 
 
 if(count _filePath > 1)then{								//If the file path is more than MASTER
 	{														//For each file in filePath
-		_files = [_files, _x] call File_fnc_getFile;		//get that file and set it to the current file to search through
+		_dafiles = [_dafiles, _x] call File_fnc_getFile;		//get that file and set it to the current file to search through
 	}forEach (_filePath select [1, count _filepath - 1]);	//^For each file in filePath
 };
-_files;
+_dafiles;

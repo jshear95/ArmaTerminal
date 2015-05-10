@@ -29,7 +29,7 @@ _commandLine = _this select 1 select 5;
 _color = _this select 1 select 6;
 _steed = _this select 1 select 7;
 
-_fileName = _steed select 0;
+_zfileName = _steed select 0;
 _header = _steed select 1;
 _preText = _steed select 2;
 _postText = _steed select 3;
@@ -104,19 +104,24 @@ switch true do {
 	};
 	case (_save) : {
 		//control and s have been pressed, init saving
-		_commandLine = _this select 1 select 5;
 		_filePath = _commandLine select 2;
-		_files = _this select 1 select 1;
 		
 		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+		_theFile = [_curDir,_zfileName] call File_fnc_getFile;
 		
-		_theFile = [_curDir,_fileName] call File_fnc_getFile;
-		_contents = [];
-		{_contents set[count _contents, _x];}forEach _preText;
-		{_contents set[count _contents, _x];}forEach _postText;
-		_theFile set[1, _contents];
+		_contents = [];													//What will be the file contents
+		{_contents set[count _contents, _x];}forEach _preText;			//Add the text before the cursor to the file contents
+		{_contents set[count _contents, _x];}forEach _postText;			//Add the text after the cursor to the file contents
+		_contents = _contents - [""];									//Remove all empty strings from the contents
 		
-		hint "SAVING";
+		if(str(_theFile) != str(0))then{
+			_theFile set[1, _contents];									//Set contents
+		}else{
+			//File does not exist
+			_theFile = [_zfileName, _contents];
+			(_curDir select 1) set[count (_curDir select 1), _theFile];	//Add the file to the directory
+		};
+
 	};
 	case (_exit) : {
 		//control and z have been pressed, init exit
