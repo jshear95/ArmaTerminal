@@ -81,11 +81,13 @@ switch true do {
 	};
 	case (_scrollUp) : {
 		//Scrolls page up
-
+		_yOffset = _yOffset + _lineHeight;
+		_steed set [4,_yOffset];
 	};
 	case (_scrollDown) : {
 		//Scrolls page down
-
+		_yOffset = _yOffset - _lineHeight;
+		_steed set [4,_yOffset];
 	};
 	case (_save) : {
 		//control and s have been pressed, init saving
