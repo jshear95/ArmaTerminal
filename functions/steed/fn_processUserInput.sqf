@@ -14,10 +14,10 @@ _control = _this select 0 select 7;
 _left = _this select 0 select 8;
 _right = _this select 0 select 9;
 _insert = false;
-_delete = false;
+_delete = _this select 0 select 11;
 _home = false;
 _end = false;
-_save = false;
+_save = (_control && str(_userInput) == str("S"));
 _exit = (_control && str(_userInput) == str("Z"));
 
 _users = _this select 1 select 0;
@@ -30,6 +30,7 @@ _color = _this select 1 select 6;
 _steed = _this select 1 select 7;
 
 _fileName = _steed select 0;
+_header = _steed select 1;
 _preText = _steed select 2;
 _postText = _steed select 3;
 _yOffset = _steed select 4;
@@ -40,14 +41,26 @@ _lineHeight = 0.05527;	//This is the height of a line of text. This was measured
 switch true do {
 	case (_return) : {
 		//Add <br/>
-
+		_preText set[count _preText, "<br/>"];
+		_steed set[2, _preText];
 	};
 	case (_backSpace) : {
 		//Remove char from preText
-
+		if(count(_preText) > 1)then{								//If there should be a char in preText
+			_preText = (_preText select[0, count _preText - 1]);	//Remove the desired char
+		}else{														//If preText should be empty, make it so
+			_preText = [""];
+		};
+		_steed set[2, _preText];
 	};
 	case (_delete) : {
 		//Remove char from postText
+		if(count(_postText) > 1)then{								//If there should be a char in postText
+			_postText = (_postText select[1, count _postText - 1]);	//Remove the shifted char
+		}else{														//If postText should be empty, make it so
+			_postText = [""];
+		};
+		_steed set[3,_postText];
 	};
 	case (_left) : {
 		//move cursor left
@@ -87,10 +100,23 @@ switch true do {
 	case (_scrollDown) : {
 		//Scrolls page down
 		_yOffset = _yOffset - _lineHeight;
-		_steed set [4,_yOffset];
+		_steedl set [4,_yOffset];
 	};
 	case (_save) : {
 		//control and s have been pressed, init saving
+		_commandLine = _this select 1 select 5;
+		_filePath = _commandLine select 2;
+		_files = _this select 1 select 1;
+		
+		_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+		
+		_theFile = [_curDir,_fileName] call File_fnc_getFile;
+		_contents = [];
+		{_contents set[count _contents, _x];}forEach _preText;
+		{_contents set[count _contents, _x];}forEach _postText;
+		_theFile set[1, _contents];
+		
+		hint "SAVING";
 	};
 	case (_exit) : {
 		//control and z have been pressed, init exit
@@ -98,7 +124,8 @@ switch true do {
 	};
 	case (!(_userInput == "")) : {
 		//Append key to preText
-
+		_preText set[count _preText, _userInput];
+		_steed set[2, _preText];
 	};
 };
 

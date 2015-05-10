@@ -67,11 +67,18 @@ switch (true) do {
 			_pText = _pText + _x;
 		}forEach _prevText;
 		if(floor(time) mod 2 == 0)then{						//Toggles cursor at cursor position every second
-			_pText = _pText + "_";
-			{
-				_pText = _pText + _x;
-			}forEach (_postText select[1, count _postText - 1]);
-			//Gets all chars in post text except the first one which is replaced by the cursor char
+			if(str(_postText select 0) == str("<br/>"))then{//If the first char of post text is a line break, we don't want to replace the line break with a cursor
+				_pText = _pText + "_";
+				{
+					_pText = _pText + _x;
+				}forEach _postText;
+			}else{
+				_pText = _pText + "_";
+				{
+					_pText = _pText + _x;
+				}forEach (_postText select[1, count _postText - 1]);
+				//Gets all chars in post text except the first one which is replaced by the cursor char
+			};
 		}else{
 			{
 				_pText = _pText + _x;
