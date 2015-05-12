@@ -11,13 +11,6 @@ _header = _fileName + "<br/>Control+Z to exit without saving<br/>Control+S to sa
 _prevText = [""];
 _postText = _fileContents;
 _yOffset = 0;
-/*UnImplemented Variables
-_highlightText = [""];
-_clipboard = [""];
-_updateName = _fileName;
-_footer = "";
-_cursorPos = True;
-*/
 
 _steed = [_fileName, _header, _prevText, _postText, _yOffset];
 _steed
