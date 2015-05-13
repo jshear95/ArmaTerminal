@@ -161,11 +161,33 @@ switch true do {
 	};
 	case (_paste) : {
 		_txt = copyFromClipboard;
+		
+		_brs = [];					//Indexes of all <br/>'s
+		_tmp = toUpper _txt;
+		_ind = _tmp find "<BR/>";
+		
+		while{_ind != -1}do{						//While there is another <br/>
+			_brs set[count _brs, _ind];
+			_tmp = [_tmp, _ind + 1] call BIS_fnc_trimString;
+			_ind = (_tmp find "<BR/>");
+		};
+		
 		_stuff = [];
 		for [{_i = 0}, {_i < count _txt}, {_i = _i + 1}] do {	//For each char in txt
 			_stuff set [_i, _txt select [_i,1]];
 		};
-		
+		_val = 0;
+		{
+			_val = _val + _x;				//Offset the index in _brs to account for the alogrithm above which substringed
+			_stuff set [_val, "<br/>"];		//Set zeroth char to line break char
+			_stuff set [_val + 1, ""];		//Set remaining to empty string
+			_stuff set [_val + 2, ""];
+			_stuff set [_val + 3, ""];
+			_stuff set [_val + 4, ""];
+			_val = _val + 1;
+		}forEach _brs;
+		_stuff = _stuff - [""];				//Remove all empty strings
+
 		_preText = [""];
 		_postText = _stuff;
 		_steed set[2, _preText];
