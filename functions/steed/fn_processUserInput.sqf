@@ -17,6 +17,8 @@ _insert = false;
 _delete = _this select 0 select 11;
 _home = _this select 0 select 12;
 _end = _this select 0 select 13;
+_copy = (_control && str(_userInput) == str("C"));
+_paste = (_control && str(_userInput) == str("V"));
 _save = (_control && str(_userInput) == str("S"));
 _exit = (_control && str(_userInput) == str("Z"));
 
@@ -150,6 +152,26 @@ switch true do {
 			(_curDir select 1) set[count (_curDir select 1), _theFile];	//Add the file to the directory
 		};
 
+	};
+	case (_copy) : {
+		//Copies all text in the document into the window's clipboard
+		_stuff = _preText + _postText;
+		_txt = [_stuff] call Line_fnc_inputToString;
+		copyToClipboard _txt;
+	};
+	case (_paste) : {
+		_txt = copyFromClipboard;
+		_stuff = [];
+		for [{_i = 0}, {_i < count _txt}, {_i = _i + 1}] do {	//For each char in txt
+			hint _txt select [_i,1];
+			_stuff set [_i, _txt select [_i,1]];
+		};
+		
+		_preText = [""];
+		_postText = _stuff;
+		_steed set[2, _preText];
+		_steed set[3,_postText];
+		
 	};
 	case (_exit) : {
 		//control and z have been pressed, init exit
