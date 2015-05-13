@@ -163,7 +163,6 @@ switch true do {
 		_txt = copyFromClipboard;
 		_stuff = [];
 		for [{_i = 0}, {_i < count _txt}, {_i = _i + 1}] do {	//For each char in txt
-			hint _txt select [_i,1];
 			_stuff set [_i, _txt select [_i,1]];
 		};
 		

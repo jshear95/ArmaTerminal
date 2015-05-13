@@ -21,6 +21,7 @@ _rn = ["R","N"," "];
 _mkdir = ["M","K","D","I","R"," "];
 _rm = ["R","M"," "];
 _steed = ["S","T","E","E","D"," "];
+_helpSteed = ["H","E","L","P"," ","S","T","E","E","D"];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -28,6 +29,9 @@ switch true do {
 	};
 	case(str(_userInput) == str(_help)):{
 		_output = ["HELP"];
+	};
+	case(str(_userInput) == str(_helpSteed)):{
+		_output = ["HELPSTEED"];
 	};
 	case(str(_userInput)==str(_time)):{
 		_output = ["TIME"];
@@ -56,6 +60,7 @@ switch true do {
 	case(str(_userInput select[0,6])==str(_steed)):{
 		_output = ["STEED",_userInput select [6,count _userInput - 1]];
 	};
+	
 };
 
 

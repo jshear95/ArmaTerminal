@@ -31,15 +31,16 @@ if(!(_cache select 0))then{
 			_output = "Supported Commands:<br/>"+
 				"  HELP           Displays all supported commands<br/>"+
 				"  TIME           Displays the current date and time   m/d/y hr:min<br/>"+
-				"  WHOAMI        Displays the current active user's user name <br/>"+
-				"  COLOR         Toggles color of text between green and white<br/>"+
+				"  WHOAMI         Displays the current active user's user name <br/>"+
+				"  COLOR          Toggles color of text between green and white<br/>"+
 				"  LS             Displays all files in current active directory<br/>" +
 				"  CD [DirName]   Opens the specified directory, no [] braces, 'cd ..' returns you to the parent directory<br/>" +
 				"  RN [DirName] [NewName]   Renames the directory matching the first parameter with the name specified in the second parameter, no [] braces<br/>" +
-				"  MKDIR [DirName] Creates a new directory in the current active directory with specified dirName, no [] braces<br/>" +
-				"  RM [DirName]    permanently deletes the specified subdirectory from the current directory<br/>"+
+				"  MKDIR [DirName]    Creates a new directory in the current active directory with specified dirName, no [] braces<br/>" +
+				"  RM [DirName]       permanently deletes the specified subdirectory from the current directory<br/>"+
 				"  STEED [FileName]   If specified file exists and is not a directory, opens it in Simulated TExt EDitor (STEED), if the specified file does not exist, it creates it and opens the new blank file in STEED<br/>" +
-				"  QUIT           Exits the terminal<br/>"+
+				"                     For more information on steed, type 'HELP STEED' without the quotes<br/>"+
+				"  QUIT               Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
 		case(str(_cmd) == str("TIME")):{
@@ -264,6 +265,24 @@ if(!(_cache select 0))then{
 			_computer set[7,_steed];
 			_output;
 			
+		};
+		case(str(_cmd)==str("HELPSTEED")):{
+			_output =	"Simulated TExt EDitor(STEED) HELP<br/>"+
+						"  About: Steed is Arma Terminal's built in text editor. It has basic functionality but should not be considered a full fleged text editor<br/>"+
+						"  Commands:<br/>"+
+						"    LEFT ARROW = Move the cursor left<br/>"+
+						"    RIGHT ARROW = Move the cursor right<br/>"+
+						"    CONTROL Z = Exit Steed (DOES NOT SAVE)<br/>"+
+						"    CONTROL S = Save document (DOES NOT EXIT)<br/>"+
+						"    HOME = returns the cursor to the beginning of the document<br/>"+
+						"    END = brings the cursor to the end of the document<br/>"+
+						"    BACKSPACE = Remove character behind cursor<br/>"+
+						"    DELETE = Remove character in front of cursor<br/>"+
+						"    PAGE UP = Scroll steed up<br/>"+
+						"    PAGE DOWN = Scroll steed down<br/>"+
+						"    CONTROL C = Copy entire document to clipboard, this allows you to paste into a full text editor such as Notepad or Microsoft Word<br/>"+
+						"    CONTROL V = Pastes text in clipboard into the document (WARNING: THIS WILL OVERWRITE THE ENTIRE DOCUMENT, even if the text in the clipboard is shorter than the document)<br/>"+
+						"  NOTE: No hints or warnings are displayed before saving or exiting, be careful not to loose your work or overwrite anything important.";
 		};
 	};
 }else{
