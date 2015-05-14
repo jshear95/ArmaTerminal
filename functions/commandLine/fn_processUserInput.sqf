@@ -20,6 +20,7 @@ _state = _this select 1 select 4;
 _commandLine = _this select 1 select 5;
 _color = _this select 1 select 6;
 _steed = _this select 1 select 7;
+_dev = _this select 1 select 8;
 
 _prevLines = _commandLine select 0;
 _curLine = _commandLine select 1;
@@ -148,4 +149,4 @@ switch true do {
 	};
 };
 
-[_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed];
+[_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev];

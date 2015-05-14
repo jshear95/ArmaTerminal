@@ -13,6 +13,6 @@ _screenClear = {										//Return to game
 
 sleep 2;										//Allows text to fade the same time as the black background
 _caller enableSimulation true;					//Re enables full game for player
-_target addAction ["Access Terminal","armaTerminal.sqf",[_users,_files]];
+_target addAction ["UseComputer","armaTerminal.sqf",[_users,_files]];
 												//Restores action with all variables updated based on any user changes
 _callScreenClear = [] call _screenClear;		//Returns screen to game

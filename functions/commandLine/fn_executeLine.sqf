@@ -47,7 +47,7 @@ if(!(_cache select 0))then{
 				"  USERDEL            Prompts user for input for user name of user to delete, password of user to delete, and current user's password, then deletes the specified user<br/>"+
 				"  LOGIN              Prompts user for input for user name and password, if both are correct, logs in as user<br/>"+
 				"  LOGOUT             Logs current user out and return to the master directory, if no user is logged in, nothing happens.<br/>"+
-				"  FILEHIDE [Param]   Sets the file permission to the specified parameter (PRIVATE or PUBLIC), no [] braces<br/>"+
+				"  FILEHIDE [FileName] [Param]   Sets the file permission of the specified file, to the specified parameter (PRIVATE or PUBLIC), no [] braces<br/>"+
 				"  QUIT               Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
@@ -392,11 +392,16 @@ if(!(_cache select 0))then{
 			};
 			_output;
 		};
+		case(str(_cmd)==str("CTC") && _computer select 8):{
+			_str = "this enableSimulation false;this addAction["+str("Use Computer")+","+str("armaTerminal.sqf")+",["+str(_computer select 0)+","+str(_computer select 1)+",false]];";
+			copyToClipboard _str;
+			_output = "Copied";
+		};
 	};
 }else{
 	_output = "Not a valid command";
 	switch(true)do{
-		case(str(_cache select 1) == str("RM")):{			//Cache has data and RM cached it			
+		case(str(_cache select 1)==str("RM")):{			//Cache has data and RM cached it			
 			if(str(_cache select 4) == str(["Y"]))then{		//User input y for yes
 
 				_commandLine = _computer select 5;

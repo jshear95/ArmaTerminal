@@ -11,8 +11,9 @@
 	_actionID = _this select 2;					//Action ID
 	_users = _this select 3 select 0;			//Users registered with computer
 	_files = _this select 3 select 1;			//Starting File Structure
+	_devMode = _this select 3 select 2;			//Weather armaTerminal is in dev mode
 
-_computer = [_target,_caller,_actionID,_users,_files] call Computer_fnc_open;
+_computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fnc_open;
 
 //Initializes Key Logger for basic input
 
