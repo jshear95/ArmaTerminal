@@ -45,7 +45,7 @@ if(!(_cache select 0))then{
 				"                     For more information on steed, type 'HELP STEED' without the quotes<br/>"+
 				"  USERADD            Prompts user for input for user name, password and password confirmation, then generates a new user<br/>"+
 				"  LOGIN              Prompts user for input for user name and password, if both are correct, logs in as user<br/>"+
-				"  LOGOUT             Logs current user out, if no user is logged in, nothing happens.<br/>"+
+				"  LOGOUT             Logs current user out and return to the master directory, if no user is logged in, nothing happens.<br/>"+
 				"  QUIT               Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
@@ -132,9 +132,13 @@ if(!(_cache select 0))then{
 			}else{
 				_file = [_curDir,_fileName] call File_fnc_getFile;
 				if(str(_file) != str(0))then{						//If you can find a file with specified name
-					if([_file] call File_fnc_getType)then{	//If specified file found and is a directory
-						_filePath = _filePath + [_file select 0];
-						_output = "";
+					if([_file] call File_fnc_getType)then{			//If specified file found and is a directory
+						if(str(_file select 2) == str(_user) || str(_file select 2) == str("PUBLIC"))then{
+							_filePath = _filePath + [_file select 0];
+							_output = "";
+						}else{
+							_output = "You do not have permission to enter this directory";
+						};
 					}else{											//If specified file found but not a directory
 						_output = "Not a directory";
 					};
@@ -173,11 +177,15 @@ if(!(_cache select 0))then{
 				case(str([_curDir,_newName] call File_fnc_getFile) != str(0)):{			//If the new file name exists in the current directory
 					_output = "New file name already exists in current directory";
 				};
+				case(str(([_curDir,_prevName] call File_fnc_getFile) select 2) != str("PUBLIC") && str(([_curDir,_prevName] call File_fnc_getFile) select 2) != str(_user)):{
+																					//You do not have permission to remove the specified file
+					_output = "You lack the required permission to rename the specified file";
+				};
 				case(str([_curDir,_prevName] call File_fnc_getFile) != str(0)):{		//If the file exists and the new name is not in the current directory
 					_theFile = [_curDir,_prevName] call File_fnc_getFile;
 					_theFile set[0, _newName];											//By a miracle, sqf understood that I wanted a reference and not a copy for this variable
 																						//the file structure is updated from this line
-					_output = "File name changed from ''" + _prevName + "'' to ''" + _newName + "''.";
+					_output = "File name changed from '" + _prevName + "' to '" + _newName + "'.";
 				};
 			};
 			
@@ -201,8 +209,11 @@ if(!(_cache select 0))then{
 				case(str([_curDir,_newFileName] call File_fnc_getFile) != str(0)):{			//File name is already a file
 					_output = "New file name already exists in current directory";
 				};
+				case(_newFileName == "MASTER"):{											//New file name is MASTER
+					_output = "MASTER cannot be used as a subdirectory name, MASTER is reserved for the root directory";
+				};
 				case(_newFileName != "" && str([_curDir,_newFileName] call File_fnc_getFile) == str(0)):{	//File name is unique in current directory
-					_newFile = [_newFileName,[]];
+					_newFile = [_newFileName,[],_user];
 					(_curDir select 1) set[count (_curDir select 1), _newFile];
 				};
 			};
@@ -225,6 +236,10 @@ if(!(_cache select 0))then{
 				};
 				case(str([_curDir,_rmFile] call File_fnc_getFile) == str(0)):{		//Specified name does not exist
 					_output = "Specified file name does not exist";
+				};
+				case(str([_curDir,_rmFile] call File_fnc_getFile select 2) != str("PUBLIC") && str([_curDir,_rmFile] call File_fnc_getFile select 2) != str(_user)):{
+																					//You do not have permission to remove the specified file
+					_output = "You lack the required permission to delete the specified file";
 				};
 				case(str([_curDir,_rmFile] call File_fnc_getFile) != str(0)):{		//Specified file name does exist
 					_output = "Deleting this file will permanently erase all of its contents.";
@@ -254,17 +269,21 @@ if(!(_cache select 0))then{
 				};
 				case(str([_curDir,_zfileName] call File_fnc_getFile) == str(0)):{			//File name is not in current directory
 					//Create skeleton file
-					_file = [_zfileName,[""]];
-					_steed = [_file select 0, _file select 1] call Steed_fnc_newSteed;
+					_file = [_zfileName,[""],_user];
+					_steed = [_file select 0, _file select 1, _file select 2] call Steed_fnc_newSteed;
 					_computer set[4,"EDITOR"];
 				};
 				case(_zfileName != "" && str([_curDir,_zfileName] call File_fnc_getFile) != str(0) && [[_curDir,_zfileName] call File_fnc_getFile] call File_fnc_getType):{	
 					_output = "Specified file name is already a directory";					//File name is not in current directory
 				};
-				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0)):{			//File name is already a file
+				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0) && str([_curDir,_zfileName] call File_fnc_getFile select 2) != str("PUBLIC") && (str([_curDir,_zfileName] call File_fnc_getFile select 2) != str(_user))):{
+																							//File name is already a file but user does not have permission
+					_output = "You lack the required permission to view/edit this file";
+				};
+				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0)):{			//File name is already a file and user has permission
 					//get file
 					_file = [_curDir,_zfileName] call File_fnc_getFile;
-					_steed = [_file select 0, _file select 1] call Steed_fnc_newSteed;
+					_steed = [_file select 0, _file select 1, _file select 2] call Steed_fnc_newSteed;
 					_computer set[4,"EDITOR"];
 				};
 			};
@@ -311,6 +330,8 @@ if(!(_cache select 0))then{
 				_output = "User logged out";
 				_user = "PUBLIC";
 				_computer set [2, _user];
+				_filePath = ["MASTER"];			//Prevents logging out and being in a forbidden directory
+				_commandLine set[2, _filePath];
 			}else{
 				_output = "No user logged in";
 			};
@@ -349,7 +370,6 @@ if(!(_cache select 0))then{
 		case(str(_cache select 1)==str("USERADD0")):{
 			if(str(_cache select 3)!=str([""]))then{
 				_userName = [_cache select 3] call Line_fnc_inputToString;
-				hint str(_userName);
 				if(str(_userName)!=str("PUBLIC"))then{
 					_b0ol = false;
 					{

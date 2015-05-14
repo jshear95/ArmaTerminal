@@ -24,7 +24,7 @@ _computerName = "ION Secure Device";	//Name of the computer
 _state = "COMMANDLINE";					//State that the computer is in (COMMANDLINE, EDITOR, QUIT)
 _commandLine = [] call CommandLine_fnc_newCommandLine;	//Creates the command line for the system
 _color = "#33CC33";						//Text color (by default green) (can be toggled to white)
-_textEditor = ["NO DOCUMENT",[""]] call Steed_fnc_newSteed;						//Strategic TExt EDitor for editing text and code files
+_textEditor = ["NO DOCUMENT",[""],"PUBLIC"] call Steed_fnc_newSteed;						//Strategic TExt EDitor for editing text and code files
 
 [
 	_users,		//All users registered on the computer

@@ -36,6 +36,7 @@ _header = _steed select 1;
 _preText = _steed select 2;
 _postText = _steed select 3;
 _yOffset = _steed select 4;
+_permission = _steed select 5;
 
 _lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
 						//NO LONGER ACCURATE, GOOD APPROXIMATE FOR TIME BEING
@@ -148,7 +149,7 @@ switch true do {
 			_theFile set[1, _contents];									//Set contents
 		}else{
 			//File does not exist
-			_theFile = [_zfileName, _contents];
+			_theFile = [_zfileName, _contents, _permission];
 			(_curDir select 1) set[count (_curDir select 1), _theFile];	//Add the file to the directory
 		};
 
