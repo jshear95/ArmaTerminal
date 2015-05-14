@@ -303,6 +303,12 @@ if(!(_cache select 0))then{
 			};
 			_output;
 		};
+		case(str(_cmd)==str("LOGOUT")):{
+			_output = "User logged out";
+			_user = "PUBLIC";
+			_computer set [2, _user];
+			_output;
+		};
 	};
 }else{
 	_output = "Not a valid command";

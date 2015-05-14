@@ -23,7 +23,8 @@ _rm = ["R","M"," "];
 _steed = ["S","T","E","E","D"," "];
 _helpSteed = ["H","E","L","P"," ","S","T","E","E","D"];
 _userAdd = ["U","S","E","R","A","D","D"];
-_login =["L","O","G","I","N"];
+_login = ["L","O","G","I","N"];
+_logout = ["L","O","G","O","U","T"];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -49,6 +50,9 @@ switch true do {
 	};
 	case(str(_userInput) == str(_login)):{
 		_output = ["LOGIN"];
+	};
+	case(str(_userInput) == str(_logout)):{
+		_output = ["LOGOUT"];
 	};
 	case(str(_userInput) == str(_ls)):{
 		_output = ["LS"];
