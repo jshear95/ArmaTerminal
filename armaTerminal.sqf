@@ -51,7 +51,6 @@ control = false;
 			case(str(_state) == str("COMMANDLINE")):{
 				_computer = [_input, _computer] call CommandLine_fnc_processUserInput;
 			};
-			case(str(_state) == str("LOGIN")):{};
 			};
 		pressedKey = -1;
 	};
