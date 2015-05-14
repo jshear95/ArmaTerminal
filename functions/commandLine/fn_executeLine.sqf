@@ -15,6 +15,7 @@ _commandLine = _computer select 5;
 _cache = _commandLine select 6;
 
 _users = _computer select 0;
+_user = _computer select 2;
 
 _remainingLine = [_arg select 1] call Line_fnc_inputToString;
 _params = [_remainingLine] call Line_fnc_parseSpaceDeliniation;
@@ -60,8 +61,8 @@ if(!(_cache select 0))then{
 		case(str(_cmd) == str("WHOAMI")):{
 			_output = "No user currently logged in.";
 			
-			if(_computer select 2 != "PUBLIC")then{
-				_output = _computer select 2;		//Get current User
+			if(_user != "PUBLIC")then{
+				_output = _user;		//Get current User
 			};
 			
 			_output;
@@ -290,6 +291,17 @@ if(!(_cache select 0))then{
 			_output = "";
 			_cache = [true, "USERADD0", "Specify User Name (Specify nothing to terminate command) : "];
 			_commandLine set[6,_cache];
+			_output;
+		};
+		case(str(_cmd)==str("LOGIN")):{
+			if(str(_user) == str("PUBLIC"))then{
+				_output = "";
+				_cache = [true, "LOGIN0", "Enter User Name : "];
+				_commandLine set[6,_cache];
+			}else{
+				_output = "User already logged in, log out before you log on to another user"
+			};
+			_output;
 		};
 	};
 }else{
@@ -342,7 +354,7 @@ if(!(_cache select 0))then{
 					_output = "";
 				};
 			}else{
-				_output = "Action canceled";
+				_output = "Action cancelled";
 				_cache = [false];
 				_commandLine set[6,_cache];
 			};
@@ -374,6 +386,47 @@ if(!(_cache select 0))then{
 				_commandLine set[7, true];		//Set input to be stared out
 				_output = "Passwords do not match.";
 			};
+			_output;
+		};
+		case(str(_cache select 1)==str("LOGIN0")):{
+			_userName = [_cache select 3] call Line_fnc_inputToString;
+			_b0ol = false;
+			{
+				if(str(_userName)==str(_x select 1))then{
+					_b0ol = true;
+				};
+			}forEach _users;
+			if(_b0ol)then{
+				_cache = [true, "LOGIN1", "Enter Password : ", _userName];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			}else{
+				_output = "Specified User Name does not exist";
+				_cache = [false];
+				_commandLine set[6,_cache];
+			};
+			_output;
+		};
+		case(str(_cache select 1)==str("LOGIN1")):{
+			_password = [_cache select 4] call Line_fnc_inputToString;
+			_userName = _cache select 3;
+			_b0ol = false;
+			{
+				if(str(_userName)==str(_x select 1) && str(_password) == str(_x select 0))then{
+					_b0ol = true;
+				};
+			}forEach _users;
+			_output = "";
+			if(_b0ol)then{
+				_user = _userName
+			}else{
+				_output = "Password incorrect";
+			};
+			_cache = [false];
+			_commandLine set[6,_cache];
+			_commandLine set[7, false];
+			_computer set [2, _user];
 			_output;
 		};
 	};

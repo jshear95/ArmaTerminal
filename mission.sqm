@@ -39,10 +39,13 @@ class Mission
 		briefingName="Arma Terminal Testing Enviornment";
 		overviewText="A safe* enviornment to test the Arma Terminal in. *Safe that is until you start playing with zeus";
 		resistanceWest=0;
+		timeOfChanges=5400;
 		startWeather=0.47999999;
+		startFog=0.44999999;
 		startWind=0.099999994;
 		startWaves=0.099999994;
 		forecastWeather=0.12;
+		forecastFog=0.14999999;
 		forecastWind=0.099999994;
 		forecastWaves=0.099999994;
 		forecastLightnings=0.099999994;
