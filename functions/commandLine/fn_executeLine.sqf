@@ -32,17 +32,20 @@ if(!(_cache select 0))then{
 		};
 		case(str(_cmd) == str("HELP")):{
 			_output = "Supported Commands:<br/>"+
-				"  HELP           Displays all supported commands<br/>"+
-				"  TIME           Displays the current date and time   m/d/y hr:min<br/>"+
-				"  WHOAMI         Displays the current active user's user name <br/>"+
-				"  COLOR          Toggles color of text between green and white<br/>"+
-				"  LS             Displays all files in current active directory<br/>" +
-				"  CD [DirName]   Opens the specified directory, no [] braces, 'cd ..' returns you to the parent directory<br/>" +
+				"  HELP               Displays all supported commands<br/>"+
+				"  TIME               Displays the current date and time   m/d/y hr:min<br/>"+
+				"  WHOAMI             Displays the current active user's user name <br/>"+
+				"  COLOR              Toggles color of text between green and white<br/>"+
+				"  LS                 Displays all files in current active directory<br/>" +
+				"  CD [DirName]       Opens the specified directory, no [] braces, 'cd ..' returns you to the parent directory<br/>" +
 				"  RN [DirName] [NewName]   Renames the directory matching the first parameter with the name specified in the second parameter, no [] braces<br/>" +
 				"  MKDIR [DirName]    Creates a new directory in the current active directory with specified dirName, no [] braces<br/>" +
 				"  RM [DirName]       permanently deletes the specified subdirectory from the current directory<br/>"+
 				"  STEED [FileName]   If specified file exists and is not a directory, opens it in Simulated TExt EDitor (STEED), if the specified file does not exist, it creates it and opens the new blank file in STEED<br/>" +
 				"                     For more information on steed, type 'HELP STEED' without the quotes<br/>"+
+				"  USERADD            Prompts user for input for user name, password and password confirmation, then generates a new user<br/>"+
+				"  LOGIN              Prompts user for input for user name and password, if both are correct, logs in as user<br/>"+
+				"  LOGOUT             Logs current user out, if no user is logged in, nothing happens.<br/>"+
 				"  QUIT               Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
@@ -304,9 +307,13 @@ if(!(_cache select 0))then{
 			_output;
 		};
 		case(str(_cmd)==str("LOGOUT")):{
-			_output = "User logged out";
-			_user = "PUBLIC";
-			_computer set [2, _user];
+			if(str(_user)!=str("PUBLIC"))then{
+				_output = "User logged out";
+				_user = "PUBLIC";
+				_computer set [2, _user];
+			}else{
+				_output = "No user logged in";
+			};
 			_output;
 		};
 	};
@@ -342,22 +349,29 @@ if(!(_cache select 0))then{
 		case(str(_cache select 1)==str("USERADD0")):{
 			if(str(_cache select 3)!=str([""]))then{
 				_userName = [_cache select 3] call Line_fnc_inputToString;
-				_b0ol = false;
-				{
-					if(str(_userName)==str(_x select 1))then{
-						_b0ol = true;
+				hint str(_userName);
+				if(str(_userName)!=str("PUBLIC"))then{
+					_b0ol = false;
+					{
+						if(str(_userName)==str(_x select 1))then{
+							_b0ol = true;
+						};
+					}forEach _users;
+					if(_b0ol)then{
+						_output = "User name already in use.";
+						_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
+						_commandLine set[6,_cache];
+					}else{
+						
+						_cache = [true, "USERADD1", "Specify User Password:",_userName];
+						_commandLine set[6,_cache];
+						_commandLine set[7, true];		//Set input to be stared out
+						_output = "";
 					};
-				}forEach _users;
-				if(_b0ol)then{
-					_output = "User name already in use.";
-					_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
-					_commandLine set[6,_cache];
 				}else{
-					
-					_cache = [true, "USERADD1", "Specify User Password:",_userName];
+					_output = "User name cannot be 'PUBLIC'";
+					_cache = [false];
 					_commandLine set[6,_cache];
-					_commandLine set[7, true];		//Set input to be stared out
-					_output = "";
 				};
 			}else{
 				_output = "Action cancelled";
