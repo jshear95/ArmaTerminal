@@ -324,10 +324,23 @@ if(!(_cache select 0))then{
 		case(str(_cache select 1)==str("USERADD0")):{
 			if(str(_cache select 3)!=str([""]))then{
 				_userName = [_cache select 3] call Line_fnc_inputToString;
-				_cache = [true, "USERADD1", "Specify User Password:",_userName];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
-				_output = "";
+				_b0ol = false;
+				{
+					if(str(_userName)==str(_x select 1))then{
+						_b0ol = true;
+					};
+				}forEach _users;
+				if(_b0ol)then{
+					_output = "User name already in use.";
+					_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
+					_commandLine set[6,_cache];
+				}else{
+					
+					_cache = [true, "USERADD1", "Specify User Password:",_userName];
+					_commandLine set[6,_cache];
+					_commandLine set[7, true];		//Set input to be stared out
+					_output = "";
+				};
 			}else{
 				_output = "Action canceled";
 				_cache = [false];
@@ -347,7 +360,6 @@ if(!(_cache select 0))then{
 			if(str(_confPassword)==str(_cache select 4))then{
 				//Passwords match
 				_commandLine set[7, false];		//make input not stared out
-				
 				_users set [count _users, [_confPassword, (_cache select 3)]];
 				_computer set [0, _users];
 				
