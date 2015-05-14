@@ -28,6 +28,7 @@ _prevCommands = _commandLine select 3;
 _prevCommandIndex = _commandLine select 4;
 _yOffset = _commandLine select 5;
 _cache = _commandLine select 6;
+_safe = _commandLine select 7;
 
 _lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
 						//NO LONGER ACCURATE, GOOD APPROXIMATE FOR TIME BEING
@@ -59,6 +60,12 @@ switch true do {
 		_commandLine = _exe select 1 select 5;
 		_color = _exe select 1 select 6;
 		_steed = _exe select 1 select 7;
+		
+		if(_safe)then{	//Star out input from current line
+			for[{_i = 1},{_i < count _curLine},{_i = _i + 1}]do{
+				_curLine set [_i, "*"];
+			};
+		};
 		
 		//create new line
 		_prevLines = [_prevLines,_curLine] call Line_fnc_push;

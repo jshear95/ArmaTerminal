@@ -14,6 +14,8 @@ _computer = _this select 1;
 _commandLine = _computer select 5;
 _cache = _commandLine select 6;
 
+_users = _computer select 0;
+
 _remainingLine = [_arg select 1] call Line_fnc_inputToString;
 _params = [_remainingLine] call Line_fnc_parseSpaceDeliniation;
 
@@ -284,6 +286,11 @@ if(!(_cache select 0))then{
 						"    CONTROL V = Pastes text in clipboard into the document (WARNING: THIS WILL OVERWRITE THE ENTIRE DOCUMENT, even if the text in the clipboard is shorter than the document)<br/>"+
 						"  NOTE: No hints or warnings are displayed before saving or exiting, be careful not to loose your work or overwrite anything important.";
 		};
+		case(str(_cmd)==str("USERADD")):{
+			_output = "";
+			_cache = [true, "USERADD0", "Specify User Name (Specify nothing to terminate command) : "];
+			_commandLine set[6,_cache];
+		};
 	};
 }else{
 	_output = "Not a valid command";
@@ -312,6 +319,49 @@ if(!(_cache select 0))then{
 			
 			_cache = [false];
 			_commandLine set[6,_cache];
+			_output;
+		};
+		case(str(_cache select 1)==str("USERADD0")):{
+			if(str(_cache select 3)!=str([""]))then{
+				_userName = [_cache select 3] call Line_fnc_inputToString;
+				_cache = [true, "USERADD1", "Specify User Password:",_userName];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			}else{
+				_output = "Action canceled";
+				_cache = [false];
+				_commandLine set[6,_cache];
+			};
+			_output;
+		};
+		case(str(_cache select 1)==str("USERADD1")):{
+			_password = [_cache select 4] call Line_fnc_inputToString;
+			_cache = [true, "USERADD2", "Confirm Password:", (_cache select 3), _password];
+			_commandLine set[6,_cache];
+			_output = "";
+			_output;
+		};
+		case(str(_cache select 1)==str("USERADD2")):{
+			_confPassword =	[_cache select 5] call Line_fnc_inputToString;
+			if(str(_confPassword)==str(_cache select 4))then{
+				//Passwords match
+				_commandLine set[7, false];		//make input not stared out
+				
+				_users set [count _users, [_confPassword, (_cache select 3)]];
+				_computer set [0, _users];
+				
+				_cache = [false];
+				_commandLine set[6,_cache];
+				
+				_output = "User created";
+			}else{
+				//Passwords dont match
+				_cache = [true, "USERADD1", "Specify User Password:", (_cache select 3)];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "Passwords do not match.";
+			};
 			_output;
 		};
 	};

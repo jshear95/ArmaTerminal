@@ -7,6 +7,8 @@ private [_comp];
 _comp = _this select 0;
 _state = _this select 0 select 4;
 _yOffset = 0;
+_safe = _this select 0 select 5 select 7;
+
 if(_state == "COMMANDLINE")then{
 	_yOffset = _this select 0 select 5 select 5;
 };
@@ -47,8 +49,14 @@ switch (true) do {
 			}forEach _x;
 			_pText = _pText + "<br />";
 		}forEach _prevLines;
+		_b00l = false;	//Weather the loop below has passed index 0
 		{
-			_pText = _pText + _x;
+			if(_safe&&_b00l && str(_x) != str(""))then{
+				_pText = _pText + "*";
+			}else{
+				_pText = _pText + _x;
+				_b00l = true;
+			};
 		}forEach _curLine;
 		if(floor(time) mod 2 == 0)then{						//Toggles cursor at end of line every second
 			_pText = _pText + "_";
