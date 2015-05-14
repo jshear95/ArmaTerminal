@@ -44,8 +44,10 @@ if(!(_cache select 0))then{
 				"  STEED [FileName]   If specified file exists and is not a directory, opens it in Simulated TExt EDitor (STEED), if the specified file does not exist, it creates it and opens the new blank file in STEED<br/>" +
 				"                     For more information on steed, type 'HELP STEED' without the quotes<br/>"+
 				"  USERADD            Prompts user for input for user name, password and password confirmation, then generates a new user<br/>"+
+				"  USERDEL            Prompts user for input for user name of user to delete, password of user to delete, and current user's password, then deletes the specified user<br/>"+
 				"  LOGIN              Prompts user for input for user name and password, if both are correct, logs in as user<br/>"+
 				"  LOGOUT             Logs current user out and return to the master directory, if no user is logged in, nothing happens.<br/>"+
+				"  FILEHIDE [Param]   Sets the file permission to the specified parameter (PRIVATE or PUBLIC), no [] braces<br/>"+
 				"  QUIT               Exits the terminal<br/>"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
@@ -380,6 +382,16 @@ if(!(_cache select 0))then{
 			
 			_output;
 		};
+		case(str(_cmd)==str("USERDEL")):{
+			_output = "";
+			if(str(_user)!=str("PUBLIC"))then{
+				_cache = [true, "USERDEL0", "Specify User Name of the account to delete (Specify nothing to terminate command) : "];
+				_commandLine set[6,_cache];
+			}else{
+				_output = "You are not logged in";
+			};
+			_output;
+		};
 	};
 }else{
 	_output = "Not a valid command";
@@ -425,7 +437,6 @@ if(!(_cache select 0))then{
 						_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
 						_commandLine set[6,_cache];
 					}else{
-						
 						_cache = [true, "USERADD1", "Specify User Password:",_userName];
 						_commandLine set[6,_cache];
 						_commandLine set[7, true];		//Set input to be stared out
@@ -511,6 +522,91 @@ if(!(_cache select 0))then{
 			_commandLine set[7, false];
 			_computer set [2, _user];
 			_output;
+		};
+		case(str(_cache select 1)==str("USERDEL0")):{
+			_output = "";
+			
+			_delUser = [_cache select 3] call Line_fnc_inputToString;
+			_b0ol = false;
+			{
+				if(str(_delUser)==str(_x select 1))then{
+					_b0ol = true;
+				};
+			}forEach _users;
+			
+			if(_b0ol)then{
+				_cache = [true, "USERDEL1", "Specify User Password : ",_delUser];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			}else{
+				_cache = [false];
+				_commandLine set[6,_cache];
+				_output = "Specified user does not exist";
+			};
+		};
+		case(str(_cache select 1)==str("USERDEL1")):{
+			_output = "";
+			
+			_delPswd = [_cache select 4] call Line_fnc_inputToString;
+			_delUser = _cache select 3;
+			_b0ol = false;
+			{
+				if(str(_delUser)==str(_x select 1) && str(_delPswd)==str(_x select 0))then{
+					_b0ol = true;
+				};
+			}forEach _users;
+			
+			if(_b0ol)then{
+				_cache = [true, "USERDEL2", "Enter your password to complete : ",_delUser, _delPswd];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			}else{
+				_cache = [false];
+				_commandLine set[6,_cache];
+				_commandLine set[7, false];
+				_output = "Incorrect password";
+			};
+		};
+		case(str(_cache select 1)==str("USERDEL2")):{
+			_output = "";
+			
+			_Pswd = [_cache select 5] call Line_fnc_inputToString;
+			_delUser = _cache select 3;
+			_delPswd = _cache select 4;
+			_b0ol = false;
+			{
+				if(str(_User)==str(_x select 1) && str(_Pswd)==str(_x select 0))then{
+					_b0ol = true;
+				};
+			}forEach _users;
+			_inde = 0;
+			if(_b0ol)then{
+				_b0ol = false;
+				{			//Delete user
+					if(str(_delUser)==str(_x select 1) && str(_delPswd)==str(_x select 0))then{
+						_b0ol = true;
+					};
+					if(!(_b0ol))then{
+						_inde = _inde + 1;
+					};
+				}forEach _users;
+				_users set[_inde, ""];
+				_users = _users - [""];
+				_computer set [0, _users];
+				
+				if(str(_delUser)==str(_user))then{
+					_computer set [2, "PUBLIC"];
+				};
+				
+				_output = "User " + _delUser + " deleted";
+			}else{
+				_output = "Incorrect password";
+			};
+			_commandLine set[7, false];
+			_cache = [false];
+			_commandLine set[6,_cache];
 		};
 	};
 	_output;

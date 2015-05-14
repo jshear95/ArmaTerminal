@@ -26,6 +26,7 @@ _userAdd = ["U","S","E","R","A","D","D"];
 _login = ["L","O","G","I","N"];
 _logout = ["L","O","G","O","U","T"];
 _fileHide = ["F","I","L","E","H","I","D","E"," "];
+_userDel = ["U","S","E","R","D","E","L"];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -48,6 +49,9 @@ switch true do {
 	};
 	case(str(_userInput) == str(_userAdd)):{
 		_output = ["USERADD"];
+	};
+	case(str(_userInput) == str(_userDel)):{
+		_output = ["USERDEL"];
 	};
 	case(str(_userInput) == str(_login)):{
 		_output = ["LOGIN"];
