@@ -327,7 +327,7 @@ if(!(_cache select 0))then{
 		};
 		case(str(_cmd)==str("LOGOUT")):{
 			if(str(_user)!=str("PUBLIC"))then{
-				_output = "User logged out";
+				_output = "User logged out, returned to MASTER directory";
 				_user = "PUBLIC";
 				_computer set [2, _user];
 				_filePath = ["MASTER"];			//Prevents logging out and being in a forbidden directory
