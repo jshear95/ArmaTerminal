@@ -25,6 +25,7 @@ _helpSteed = ["H","E","L","P"," ","S","T","E","E","D"];
 _userAdd = ["U","S","E","R","A","D","D"];
 _login = ["L","O","G","I","N"];
 _logout = ["L","O","G","O","U","T"];
+_fileHide = ["F","I","L","E","H","I","D","E"," "];
 
 switch true do {
 	case(str(_userInput) == str(_quit)):{
@@ -62,6 +63,9 @@ switch true do {
 	};
 	case(str(_userInput select[0,3]) == str(_rn)):{
 		_output = ["RN",_userInput select [3,count _userInput - 1]];
+	};
+	case(str(_userInput select[0,9]) == str(_fileHide)):{
+		_output = ["FILEHIDE",_userInput select [9,count _userInput - 1]];
 	};
 	case(str(_userInput select[0,6])==str(_mkdir)):{
 		_output = ["MKDIR",_userInput select [6,count _userInput - 1]];

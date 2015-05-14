@@ -337,6 +337,49 @@ if(!(_cache select 0))then{
 			};
 			_output;
 		};
+		case(str(_cmd)==str("FILEHIDE")):{
+			_output = "";
+			
+			_commandLine = _computer select 5;
+			_filePath = _commandLine select 2;
+			_files = _computer select 1;
+			
+			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+			
+			_filName = _params select 0;
+			_perm = _params select 1;
+			
+			switch(true)do{
+				case(str(_user) == str("PUBLIC")):{										//If not logged in
+					_output = "You are not logged in";
+				};
+				case(str([_curDir,_filName] call File_fnc_getFile) == str(0)):{			//If no file name given
+					_output = "Unspecified File Name";
+				};
+				case(count _params < 2):{												//If no new file name given
+					_output = "No permission specified for the file";
+				};
+				case(str(([_curDir,_filName] call File_fnc_getFile) select 2) != str("PUBLIC") && str(([_curDir,_filName] call File_fnc_getFile) select 2) != str(_user)):{
+																						//You do not have permission to remove the specified file
+					_output = "You lack the required permission to rename the specified file";
+				};
+				case(!(str(_perm)==str("PUBLIC") || str(_perm)==str("PRIVATE"))):{		//Proper permission not specified
+					_output = "Proper permission type not specified";
+				};
+				case(str([_curDir,_filName] call File_fnc_getFile) != str(0) && (str(_perm)==str("PUBLIC") || str(_perm)==str("PRIVATE"))):{
+																						//File exists and permission specified properly
+					_theFile = [_curDir,_filName] call File_fnc_getFile;
+					if(str(_perm)==str("PUBLIC"))then{
+						_theFile set[2, "PUBLIC"];
+					}else{
+						_theFile set[2, _user];
+					};
+					_output = "Permission changed to " + _perm;
+				};
+			};
+			
+			_output;
+		};
 	};
 }else{
 	_output = "Not a valid command";
