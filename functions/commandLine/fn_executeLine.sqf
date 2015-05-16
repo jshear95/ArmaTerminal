@@ -33,6 +33,7 @@ if(!(_cache select 0))then{
 		case(str(_cmd) == str("HELP")):{
 			_output = "Supported Commands:<br/>"+
 				"  HELP               Displays all supported commands<br/>"+
+				"  CONTROL X          Clears all previous lines printed in the terminal<br/>"+
 				"  TIME               Displays the current date and time   m/d/y hr:min<br/>"+
 				"  WHOAMI             Displays the current active user's user name <br/>"+
 				"  COLOR              Toggles color of text between green and white<br/>"+
@@ -203,9 +204,12 @@ if(!(_cache select 0))then{
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 
 			_newFileName = _params select 0;
-			
+
 			switch(true)do{
-				case(_newFileName == ""):{													//No file name given
+				case(str(_params) == str([])):{
+					_output = "Unspecified File Name";
+				}; 
+				case(_newFileName == ""):{							//No file name given
 					_output = "Unspecified File Name";
 				};
 				case(str([_curDir,_newFileName] call File_fnc_getFile) != str(0)):{			//File name is already a file

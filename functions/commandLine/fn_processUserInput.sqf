@@ -11,6 +11,7 @@ _down = _this select 0 select 3;
 _userInput = _this select 0 select 4;
 _scrollUp = _this select 0 select 5;
 _scrollDown = _this select 0 select 6;
+_control = _this select 0 select 7;
 
 _users = _this select 1 select 0;
 _files = _this select 1 select 1;
@@ -138,6 +139,13 @@ switch true do {
 	case (_scrollDown) : {
 		//Scrolls page down
 		_yOffset = _yOffset - _lineHeight;
+		_commandLine set [5,_yOffset];
+	};
+	case (_control && _userInput == "x") : {
+		//Clear all previous lines and resets offset so curLine is visible
+		_prevLines = [];
+		_yOffset = 0;
+		_commandLine set [0, _prevLines];
 		_commandLine set [5,_yOffset];
 	};
 	case (!(_userInput == "")) : {
