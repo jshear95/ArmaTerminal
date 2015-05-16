@@ -1,5 +1,9 @@
-//Converts an alpha sequence to an all caps alpha sequence for command analysis
-
+/*
+ *	Joshua Shear
+ *	CommandLine_fnc_alphaToAlpha.sqf
+ *	Takes in an input array and converts all lowercase letters to capital letters
+ */
+ 
 private[_alpha];
 _alpha = _this select 0;
 if(typeName(_alpha) == "ARRAY")then{

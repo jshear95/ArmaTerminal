@@ -1,11 +1,14 @@
 /*
+ * Joshua Shear
+ * CommandLine_fnc_executeLine.sqf
+ * This is a known god class
  * Takes a command value and any parameters and executes the command with given perimeters.
  * It also takes in the computer to allow for operations on the computers state
  * It returns the output line of the command, and the updated computer
  * In some cases, it might modify commandLines cache for multi line operations
  */
 
-private [_arg,_computer];
+private [_arg,_computer,_cmd,_commandLine,_cache,_users,_user,_remainingLine,_params,_output,_date,_year,_month,_day,_hour,_minute,_color,_filePath,_i,_curDir,_fileName,_prevName,_newName,_rmFile,_perm,_index,_bool,_userName,_password,_confPassword,_delUser,_delPswd,_Pswd];
 
 _arg = _this select 0;
 _cmd = _arg select 0;
@@ -25,7 +28,6 @@ _output = "The command you entered is not recognised as a command. Type 'HELP' i
 if(!(_cache select 0))then{
 	switch true do {
 		case(str(_cmd) == str("QUIT")):{
-		
 			_computer set[4,"QUIT"];
 			
 			_output = "";
@@ -68,7 +70,7 @@ if(!(_cache select 0))then{
 			_output = "No user currently logged in.";
 			
 			if(_user != "PUBLIC")then{
-				_output = _user;		//Get current User
+				_output = "Logged in as " + _user;		//Get current User
 			};
 			
 			_output;
@@ -88,25 +90,27 @@ if(!(_cache select 0))then{
 			_output;
 		};
 		case(str(_cmd) == str("LS")):{
+			_output = "";
+			
 			_commandLine = _computer select 5;
 			_filePath = _commandLine select 2;
 			_files = _computer select 1;
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
-			_output = "";
-			_inc = 0;
+			
+			_i = 0;
 			
 			{
-				_inc = _inc + 1;				//To account for last line not needing a br
-				_fileName = str(_x select 0);	//Converts from errorString to string with extra ""
+				_i = _i + 1;											//To account for last line not needing a br
+				_fileName = str(_x select 0);							//Converts from errorString to string with extra ""
 				_fileName = _fileName select [1,(count _fileName - 2)];	//Removes extra ""
 
-				if(_inc != count(_curDir select 1))then{		//if not the last subDirectory
+				if(_i != count(_curDir select 1))then{					//if not the last subDirectory
 					_output = _output + _fileName + "<br/>";
 				}else{
 					_output = _output + _fileName;
 				};
-			}forEach ([_curDir] call File_fnc_getContents);
+			}forEach (_curDir select 1);
 			
 			if(_output == "")then{
 				_output = "No files in directory";
@@ -121,7 +125,6 @@ if(!(_cache select 0))then{
 			_files = _computer select 1;
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
-			_fileName = [_arg select 1] call Line_fnc_inputToString;
 			_fileName = _params select 0;
 			
 			if(_fileName == ".." || _fileName == "../")then{
@@ -134,19 +137,22 @@ if(!(_cache select 0))then{
 				};
 			}else{
 				_file = [_curDir,_fileName] call File_fnc_getFile;
-				if(str(_file) != str(0))then{						//If you can find a file with specified name
-					if([_file] call File_fnc_getType)then{			//If specified file found and is a directory
-						if(str(_file select 2) == str(_user) || str(_file select 2) == str("PUBLIC"))then{
-							_filePath = _filePath + [_file select 0];
-							_output = "";
-						}else{
-							_output = "You do not have permission to enter this directory";
-						};
-					}else{											//If specified file found but not a directory
+				
+				switch(true)do{
+					case(str(_file)==str(0)):{
+						_output = "No such file or directory";
+					};
+					case(!([_file] call File_fnc_getType)):{
 						_output = "Not a directory";
 					};
-				}else{												//If the specified file could not be found
-					_output = "No such file or directory";
+					case(str(_file select 2) != str(_user) && str(_file select 2) != str("PUBLIC")):{
+						_output = "You do not have permission to enter this directory";
+					};
+					case(str(_file) != str(0) && [_file] call File_fnc_getType && str(_file select 2) == str(_user) || str(_file select 2) == str("PUBLIC")):{
+												//File exists, its a directory, and you have permission
+						_filePath = _filePath + [_file select 0];	//append desired file to file path
+						_output = "";
+					};
 				};
 			};
 			
@@ -164,8 +170,6 @@ if(!(_cache select 0))then{
 			_files = _computer select 1;
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
-			
-
 			
 			_prevName = _params select 0;
 			_newName = _params select 1;
@@ -203,23 +207,23 @@ if(!(_cache select 0))then{
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 
-			_newFileName = _params select 0;
+			_newName = _params select 0;
 
 			switch(true)do{
 				case(str(_params) == str([])):{
 					_output = "Unspecified File Name";
 				}; 
-				case(_newFileName == ""):{							//No file name given
+				case(_newName == ""):{							//No file name given
 					_output = "Unspecified File Name";
 				};
-				case(str([_curDir,_newFileName] call File_fnc_getFile) != str(0)):{			//File name is already a file
+				case(str([_curDir,_newName] call File_fnc_getFile) != str(0)):{			//File name is already a file
 					_output = "New file name already exists in current directory";
 				};
-				case(_newFileName == "MASTER"):{											//New file name is MASTER
+				case(_newName == "MASTER"):{											//New file name is MASTER
 					_output = "MASTER cannot be used as a subdirectory name, MASTER is reserved for the root directory";
 				};
-				case(_newFileName != "" && str([_curDir,_newFileName] call File_fnc_getFile) == str(0)):{	//File name is unique in current directory
-					_newFile = [_newFileName,[],_user];
+				case(_newName != "" && str([_curDir,_newName] call File_fnc_getFile) == str(0)):{	//File name is unique in current directory
+					_newFile = [_newName,[],_user];
 					(_curDir select 1) set[count (_curDir select 1), _newFile];
 				};
 			};
@@ -251,7 +255,7 @@ if(!(_cache select 0))then{
 					_output = "Deleting this file will permanently erase all of its contents.";
 					_cache = [true, "RM", "Confirm you want to delete this file (y/n) : ",_rmFile];
 					_commandLine set[6,_cache];
-					//Doesnt actually remove the file in this function, simply caches data for later
+					//Doesn't actually remove the file in this function, simply caches data for later
 				};
 			};
 			_output;
@@ -259,36 +263,36 @@ if(!(_cache select 0))then{
 		case(str(_cmd)==str("STEED")):{
 			_output = "";
 			
-			_zfileName = _params select 0;
+			_fileName = _params select 0;
 			
 			_commandLine = _computer select 5;
 			_filePath = _commandLine select 2;
 			_files = _computer select 1;
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
-			_file = [_zfileName,[""]];
+			_file = [_fileName,[""]];
 			_steed = _computer select 7;
 			
 			switch(true)do{
-				case(_zfileName == ""):{													//No file name given
+				case(_fileName == ""):{														//No file name given
 					_output = "Unspecified File Name";
 				};
-				case(str([_curDir,_zfileName] call File_fnc_getFile) == str(0)):{			//File name is not in current directory
+				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0)):{			//File name is not in current directory
 					//Create skeleton file
-					_file = [_zfileName,[""],_user];
+					_file = [_fileName,[""],_user];
 					_steed = [_file select 0, _file select 1, _file select 2] call Steed_fnc_newSteed;
 					_computer set[4,"EDITOR"];
 				};
-				case(_zfileName != "" && str([_curDir,_zfileName] call File_fnc_getFile) != str(0) && [[_curDir,_zfileName] call File_fnc_getFile] call File_fnc_getType):{	
+				case(_fileName != "" && str([_curDir,_fileName] call File_fnc_getFile) != str(0) && [[_curDir,_fileName] call File_fnc_getFile] call File_fnc_getType):{	
 					_output = "Specified file name is already a directory";					//File name is not in current directory
 				};
-				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0) && str([_curDir,_zfileName] call File_fnc_getFile select 2) != str("PUBLIC") && (str([_curDir,_zfileName] call File_fnc_getFile select 2) != str(_user))):{
+				case(str([_curDir,_fileName] call File_fnc_getFile) != str(0) && str([_curDir,_fileName] call File_fnc_getFile select 2) != str("PUBLIC") && (str([_curDir,_fileName] call File_fnc_getFile select 2) != str(_user))):{
 																							//File name is already a file but user does not have permission
 					_output = "You lack the required permission to view/edit this file";
 				};
-				case(str([_curDir,_zfileName] call File_fnc_getFile) != str(0)):{			//File name is already a file and user has permission
+				case(str([_curDir,_fileName] call File_fnc_getFile) != str(0)):{			//File name is already a file and user has permission
 					//get file
-					_file = [_curDir,_zfileName] call File_fnc_getFile;
+					_file = [_curDir,_fileName] call File_fnc_getFile;
 					_steed = [_file select 0, _file select 1, _file select 2] call Steed_fnc_newSteed;
 					_computer set[4,"EDITOR"];
 				};
@@ -334,8 +338,10 @@ if(!(_cache select 0))then{
 		case(str(_cmd)==str("LOGOUT")):{
 			if(str(_user)!=str("PUBLIC"))then{
 				_output = "User logged out, returned to MASTER directory";
+				
 				_user = "PUBLIC";
 				_computer set [2, _user];
+				
 				_filePath = ["MASTER"];			//Prevents logging out and being in a forbidden directory
 				_commandLine set[2, _filePath];
 			}else{
@@ -352,29 +358,29 @@ if(!(_cache select 0))then{
 			
 			_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 			
-			_filName = _params select 0;
-			_perm = _params select 1;
+			_fileName = _params select 0;
+			_perm = _params select 1;			//Specified Permission
 			
 			switch(true)do{
 				case(str(_user) == str("PUBLIC")):{										//If not logged in
 					_output = "You are not logged in";
 				};
-				case(str([_curDir,_filName] call File_fnc_getFile) == str(0)):{			//If no file name given
+				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0)):{			//If no file name given
 					_output = "Unspecified File Name";
 				};
 				case(count _params < 2):{												//If no new file name given
 					_output = "No permission specified for the file";
 				};
-				case(str(([_curDir,_filName] call File_fnc_getFile) select 2) != str("PUBLIC") && str(([_curDir,_filName] call File_fnc_getFile) select 2) != str(_user)):{
+				case(str(([_curDir,_fileName] call File_fnc_getFile) select 2) != str("PUBLIC") && str(([_curDir,_fileName] call File_fnc_getFile) select 2) != str(_user)):{
 																						//You do not have permission to remove the specified file
 					_output = "You lack the required permission to rename the specified file";
 				};
 				case(!(str(_perm)==str("PUBLIC") || str(_perm)==str("PRIVATE"))):{		//Proper permission not specified
 					_output = "Proper permission type not specified";
 				};
-				case(str([_curDir,_filName] call File_fnc_getFile) != str(0) && (str(_perm)==str("PUBLIC") || str(_perm)==str("PRIVATE"))):{
+				case(str([_curDir,_fileName] call File_fnc_getFile) != str(0) && (str(_perm)==str("PUBLIC") || str(_perm)==str("PRIVATE"))):{
 																						//File exists and permission specified properly
-					_theFile = [_curDir,_filName] call File_fnc_getFile;
+					_theFile = [_curDir,_fileName] call File_fnc_getFile;
 					if(str(_perm)==str("PUBLIC"))then{
 						_theFile set[2, "PUBLIC"];
 					}else{
@@ -405,7 +411,7 @@ if(!(_cache select 0))then{
 }else{
 	_output = "Not a valid command";
 	switch(true)do{
-		case(str(_cache select 1)==str("RM")):{			//Cache has data and RM cached it			
+		case(str(_cache select 1)==str("RM")):{				//Cache has data and RM cached it			
 			if(str(_cache select 4) == str(["Y"]))then{		//User input y for yes
 
 				_commandLine = _computer select 5;
@@ -415,10 +421,10 @@ if(!(_cache select 0))then{
 				_curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 				_rmFile = [_curDir,_cache select 3] call File_fnc_getFile;
 				_index = [_curDir, _rmFile select 0] call File_fnc_getFileIndex;
-				_contents = _curDir select 1;		//Get file contents and modify it
+				_contents = _curDir select 1;				//Get file contents and modify it
 				_contents set[_index, ""];
 				_contents = _contents - [""];
-				_curDir set[1, _contents];			//Up date file structure through reference
+				_curDir set[1, _contents];					//Up date file structure through reference
 				
 				_output = "File deleted";
 			};
@@ -432,35 +438,38 @@ if(!(_cache select 0))then{
 			_output;
 		};
 		case(str(_cache select 1)==str("USERADD0")):{
-			if(str(_cache select 3)!=str([""]))then{
-				_userName = [_cache select 3] call Line_fnc_inputToString;
-				if(str(_userName)!=str("PUBLIC"))then{
-					_b0ol = false;
+			switch(true)do{
+				case(str(_cache select 3)==str([""])):{		//Input was null
+					_output = "Action cancelled";
+					_cache = [false];
+					_commandLine set[6,_cache];
+				};
+				case(str([_cache select 3] call Line_fnc_inputToString)==str("PUBLIC")):{	//Input was "PUBLIC"
+					_output = "User name cannot be 'PUBLIC'";
+					_cache = [false];
+					_commandLine set[6,_cache];
+				};
+				case(str([_cache select 3] call Line_fnc_inputToString)!=str("PUBLIC")):{
+					_userName = [_cache select 3] call Line_fnc_inputToString;
+					_bool = false;
 					{
 						if(str(_userName)==str(_x select 1))then{
-							_b0ol = true;
+							_bool = true;
 						};
-					}forEach _users;
-					if(_b0ol)then{
+					}forEach _users;						//Search for user, if found, set _bool
+					if(_bool)then{							//If username already in use
 						_output = "User name already in use.";
 						_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
 						_commandLine set[6,_cache];
-					}else{
+					}else{									//If username not in use
 						_cache = [true, "USERADD1", "Specify User Password:",_userName];
 						_commandLine set[6,_cache];
 						_commandLine set[7, true];		//Set input to be stared out
 						_output = "";
 					};
-				}else{
-					_output = "User name cannot be 'PUBLIC'";
-					_cache = [false];
-					_commandLine set[6,_cache];
 				};
-			}else{
-				_output = "Action cancelled";
-				_cache = [false];
-				_commandLine set[6,_cache];
 			};
+
 			_output;
 		};
 		case(str(_cache select 1)==str("USERADD1")):{
@@ -492,14 +501,18 @@ if(!(_cache select 0))then{
 			_output;
 		};
 		case(str(_cache select 1)==str("LOGIN0")):{
+			_output = "";
+			
 			_userName = [_cache select 3] call Line_fnc_inputToString;
-			_b0ol = false;
+			
+			_bool = false;
 			{
 				if(str(_userName)==str(_x select 1))then{
-					_b0ol = true;
+					_bool = true;
 				};
 			}forEach _users;
-			if(_b0ol)then{
+			
+			if(_bool)then{
 				_cache = [true, "LOGIN1", "Enter Password : ", _userName];
 				_commandLine set[6,_cache];
 				_commandLine set[7, true];		//Set input to be stared out
@@ -509,41 +522,47 @@ if(!(_cache select 0))then{
 				_cache = [false];
 				_commandLine set[6,_cache];
 			};
+			
 			_output;
 		};
 		case(str(_cache select 1)==str("LOGIN1")):{
 			_password = [_cache select 4] call Line_fnc_inputToString;
 			_userName = _cache select 3;
-			_b0ol = false;
+			
+			_bool = false;
 			{
 				if(str(_userName)==str(_x select 1) && str(_password) == str(_x select 0))then{
-					_b0ol = true;
+					_bool = true;
 				};
 			}forEach _users;
+			
 			_output = "";
-			if(_b0ol)then{
+			
+			if(_bool)then{
 				_user = _userName
 			}else{
 				_output = "Password incorrect";
 			};
+			
 			_cache = [false];
 			_commandLine set[6,_cache];
 			_commandLine set[7, false];
 			_computer set [2, _user];
+			
 			_output;
 		};
 		case(str(_cache select 1)==str("USERDEL0")):{
 			_output = "";
 			
 			_delUser = [_cache select 3] call Line_fnc_inputToString;
-			_b0ol = false;
+			_bool = false;
 			{
 				if(str(_delUser)==str(_x select 1))then{
-					_b0ol = true;
+					_bool = true;
 				};
 			}forEach _users;
 			
-			if(_b0ol)then{
+			if(_bool)then{
 				_cache = [true, "USERDEL1", "Specify User Password : ",_delUser];
 				_commandLine set[6,_cache];
 				_commandLine set[7, true];		//Set input to be stared out
@@ -553,20 +572,23 @@ if(!(_cache select 0))then{
 				_commandLine set[6,_cache];
 				_output = "Specified user does not exist";
 			};
+			
+			_output;
 		};
 		case(str(_cache select 1)==str("USERDEL1")):{
 			_output = "";
 			
 			_delPswd = [_cache select 4] call Line_fnc_inputToString;
 			_delUser = _cache select 3;
-			_b0ol = false;
+			
+			_bool = false;
 			{
 				if(str(_delUser)==str(_x select 1) && str(_delPswd)==str(_x select 0))then{
-					_b0ol = true;
+					_bool = true;
 				};
 			}forEach _users;
 			
-			if(_b0ol)then{
+			if(_bool)then{
 				_cache = [true, "USERDEL2", "Enter your password to complete : ",_delUser, _delPswd];
 				_commandLine set[6,_cache];
 				_commandLine set[7, true];		//Set input to be stared out
@@ -584,35 +606,42 @@ if(!(_cache select 0))then{
 			_Pswd = [_cache select 5] call Line_fnc_inputToString;
 			_delUser = _cache select 3;
 			_delPswd = _cache select 4;
-			_b0ol = false;
+			
+			_bool = false;
 			{
 				if(str(_User)==str(_x select 1) && str(_Pswd)==str(_x select 0))then{
-					_b0ol = true;
+					_bool = true;
 				};
 			}forEach _users;
-			_inde = 0;
-			if(_b0ol)then{
-				_b0ol = false;
-				{			//Delete user
+			
+			_i = 0;										//Index of user to delete
+			if(_bool)then{
+				_bool = false;
+				{										//Get User
 					if(str(_delUser)==str(_x select 1) && str(_delPswd)==str(_x select 0))then{
-						_b0ol = true;
+						_bool = true;
 					};
-					if(!(_b0ol))then{
-						_inde = _inde + 1;
+					
+					if(!(_bool))then{
+						_i = _i + 1;
 					};
 				}forEach _users;
-				_users set[_inde, ""];
+				
+				_users set[_i, ""];						//Remove User
 				_users = _users - [""];
 				_computer set [0, _users];
 				
-				if(str(_delUser)==str(_user))then{
+				if(str(_delUser)==str(_user))then{		//If logged in as user just deleted, log them out properly
 					_computer set [2, "PUBLIC"];
+					_filePath = ["MASTER"];				//Prevents logging out and being in a forbidden directory
+					_commandLine set[2, _filePath];
 				};
 				
 				_output = "User " + _delUser + " deleted";
 			}else{
 				_output = "Incorrect password";
 			};
+			
 			_commandLine set[7, false];
 			_cache = [false];
 			_commandLine set[6,_cache];
