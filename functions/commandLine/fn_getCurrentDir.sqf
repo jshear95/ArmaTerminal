@@ -1,17 +1,19 @@
 /*
- * Takes in a file system and a current file path.
- * Walks through the file path until it reaches the current open directory
- * Returns the current open directory
+ *	Joshua Shear
+ *	CommandLine_fnc_getCurrentDir.sqf
+ *	Takes in a file system and file path.
+ *	Walks through the file path until it reaches the current open directory
+ *	Returns the current open directory
  */
 
-private[_dafiles, _filePath];
-_dafiles = _this select 0;
+private[_Files, _filePath];
+_Files = _this select 0;
 _filePath = _this select 1;
 
 
 if(count _filePath > 1)then{								//If the file path is more than MASTER
 	{														//For each file in filePath
-		_dafiles = [_dafiles, _x] call File_fnc_getFile;		//get that file and set it to the current file to search through
+		_Files = [_Files, _x] call File_fnc_getFile;		//get that file and set it to the current file to search through
 	}forEach (_filePath select [1, count _filepath - 1]);	//^For each file in filePath
 };
-_dafiles;
+_Files;
