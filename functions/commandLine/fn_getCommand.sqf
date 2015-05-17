@@ -1,6 +1,8 @@
 /*
- * Takes in user input and evaluates it to get the command and any parameters.
- * If input matches no command, it returns an error.
+ *	Joshua Shear
+ *	CommandLine_fnc_getCommand.sqf
+ *	Takes in user input and evaluates it to get the command and any parameters.
+ *	If input matches no command, it returns an error.
  */
 
 private [_userInput];
