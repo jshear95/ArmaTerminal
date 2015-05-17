@@ -13,10 +13,7 @@ _users = _this select 3 select 0;			//Users registered with computer
 _files = _this select 3 select 1;			//Starting File Structure
 _devMode = _this select 3 select 2;			//Weather armaTerminal is in dev mode
 
-//Creates computer object
-_computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fnc_open;
-
-//Initializes Key Logger for basic input
+//Initializes Key Logger for basic input (THIS ONLY RECORDS INGAME KEYS DONT WORRY)
 
 pressedKey = -1;
 /*
@@ -29,6 +26,9 @@ _KeyUp = (findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this s
 /*Handles input for program, searches for key release events*/
 _KeyDown =(findDisplay 46) displayAddEventHandler ["KeyDown", {_handled = true; _handled}];
 /*Handles blocking input from affecting character in game while terminal is running*/
+
+//Creates computer object
+_computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fnc_open;
 
 /**
  * Execution loop
@@ -67,4 +67,4 @@ _KeyDown =(findDisplay 46) displayAddEventHandler ["KeyDown", {_handled = true; 
 (findDisplay 46) displayRemoveEventHandler ["KeyUp", _KeyUp];
 
 //Archives data into add action for future use
-[_target,_caller] call Computer_fnc_close;
+[_target,_caller,_devMode] call Computer_fnc_close;

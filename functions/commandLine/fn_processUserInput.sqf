@@ -1,5 +1,7 @@
-/**
-	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
+/*
+ *	Joshua Shear
+ *	CommandLine_fnc_processUserInput.sqf
+ *	Takes in input and a computer and then processes user input by appending chars, executing lines, removing chars, scrolling, or fetching and displaying previous commands
 */
 
 private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];
