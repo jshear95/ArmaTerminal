@@ -1,5 +1,7 @@
-/**
-	Creates a new command line object with necessary variables
+/*
+ *	Joshua Shear
+ *	CommandLine_fnc_newCommandLine.sqf
+ *	Creates a new command line object with necessary variables
 */
 _prevLines = [];										//Array of all lines before current line
 _filePath = ["MASTER"];									//Path to Current Directory including current Directory
@@ -11,7 +13,7 @@ _cache = [false];										//Array for passing data to subsequent lines in a mul
 														//Index 0 of cache is weather or not to look at it
 _safeMode = false;										//Weather or not to star out text input (*****)
 
-_temp = "Welcome to Arma Terminal! (version >0.1)<br/>"+
+_temp = "Welcome to Arma Terminal! (version 0.0.1)<br/>"+
 		"Use 'page up' and 'page down' to scroll. "+
 		"If you don't know any commands, type 'HELP' to display a list of all* available commands. "+
 		"<br/><br/>" +
