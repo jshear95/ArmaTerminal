@@ -2,7 +2,9 @@
 	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
 */
 
-private[_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_users,_files,_currentUser,_computerName,_state,_commandLine,_color];
+private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];
+
+_computer = _this select 0;
 
 _return = _this select 0 select 0;
 _backSpace = _this select 0 select 1;
@@ -37,9 +39,6 @@ _lineHeight = 0.05527;	//This is the height of a line of text. This was measured
 
 switch true do {
 	case (_return) : {
-		
-		
-		
 		//push curLine to prevLines
 		_cache = _commandLine select 6;
 		_temp = _curLine - [_curLine select 0];
@@ -94,25 +93,28 @@ switch true do {
 	};
 	case (_backSpace) : {
 		//Pop char from curLine
-		if(count _curLine > 1) then {		//If there are input chars on the current line
+		if(count _curLine > 1) then {				//If there are input chars on the current line
 			_pop = [_curLine] call Line_fnc_pop;	//Remove the last char from current line
 		};
 		_curLine = _curLine - [""];					//Update current line reference
+		
+		//Update all changed variables in commandLine
 		_commandLine set [1,_curLine];
 	};
 	case (_up) : {
 		//display next prevCommand
-		
-		if(_prevCommandIndex > 0)then{					//If there is a previous command
-			_prevCommandIndex = _prevCommandIndex - 1;
-			_temp = _prevCommands select _prevCommandIndex;
-			_curLine = [_curLine select 0];
-			_temp = _temp select 0;
-			{
+		if(_prevCommandIndex > 0)then{								//If there is a previous command
+			_prevCommandIndex = _prevCommandIndex - 1;				//Set Index
+			_temp = _prevCommands select _prevCommandIndex;			//Get command at index
+			_curLine = [_curLine select 0];							//Get directory or whatnot that precedes user text
+			_temp = _temp select 0;									//Unpack the command
+			
+			{														//Extract the command
 				_curLine = [_curLine, _x] call Line_fnc_push;
 			}forEach _temp;
-			
 		};
+		
+		//Update all changed variables in commandLine
 		_commandLine set [1,_curLine];
 		_commandLine set [4,_prevCommandIndex];
 	};
@@ -120,41 +122,65 @@ switch true do {
 		//display previous prevCommand
 		
 		if(_prevCommandIndex < count _prevCommands - 1)then{	//If we are not at the most recent command
-			_prevCommandIndex = _prevCommandIndex + 1;
-			_temp = _prevCommands select _prevCommandIndex;
-			_curLine = [_curLine select 0];
-			_temp = _temp select 0;
-			{
+			_prevCommandIndex = _prevCommandIndex + 1;			//Set index
+			_temp = _prevCommands select _prevCommandIndex;		//Get command at index
+			_curLine = [_curLine select 0];						//Get directory or whatnot that precedes user text
+			_temp = _temp select 0;								//unpack the command
+			
+			{													//Extract the command
 				_curLine = [_curLine, _x] call Line_fnc_push;
 			}forEach _temp;
 		};
+		
+		//Update all changed variables in commandLine
 		_commandLine set [1,_curLine];
 		_commandLine set [4,_prevCommandIndex];
 	};
 	case (_scrollUp) : {
 		//Scrolls page up
 		_yOffset = _yOffset + _lineHeight;
+		
+		//Update all changed variables in commandLine
 		_commandLine set [5,_yOffset];
 	};
 	case (_scrollDown) : {
 		//Scrolls page down
 		_yOffset = _yOffset - _lineHeight;
+		
+		//Update all changed variables in commandLine
 		_commandLine set [5,_yOffset];
 	};
 	case (_control && _userInput == "x") : {
 		//Clear all previous lines and resets offset so curLine is visible
 		_prevLines = [];
 		_yOffset = 0;
+		
+		//Update all changed variables in commandLine
 		_commandLine set [0, _prevLines];
 		_commandLine set [5,_yOffset];
 	};
 	case (!(_userInput == "")) : {
 		//Key has been pressed
-		_curLine = _curLine - [""];
+		_curLine = _curLine - [""];								//Always clear empty strings from curLine
+		
 		//push key to curLine
 		_curLine = [_curLine,_userInput] call Line_fnc_push;
+		
+		//Update all changed variables in commandLine
 		_commandLine set [1,_curLine];
 	};
 };
 
-[_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev];
+//Updates computer
+_computer set[0, _users];
+_computer set[1, _files];
+_computer set[2, _currentUser];
+_computer set[3, _computerName];
+_computer set[4, _state];
+_computer set[5, _commandLine];
+_computer set[6, _color];
+_computer set[7, _steed];
+_computer set[8, _dev];
+
+//Returns computer
+_computer;
