@@ -262,7 +262,7 @@ if(!(_cache select 0))then{
 		};
 		case(str(_cmd)==str("STEED")):{
 			_output = "";
-			
+
 			_fileName = _params select 0;
 			
 			_commandLine = _computer select 5;

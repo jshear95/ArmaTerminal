@@ -24,7 +24,7 @@ control = false;
 
 _KeyUp = (findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; control = _this select 3;}];
 /*Handles input for program, searches for key release events*/
-_KeyDown =(findDisplay 46) displayAddEventHandler ["KeyDown", {_handled = true; _handled}];
+_KeyDown =(findDisplay 46) displayAddEventHandler ["KeyDown", {if((_this select 1) != 1)then{_handled = true; _handled}}];
 /*Handles blocking input from affecting character in game while terminal is running*/
 
 //Creates computer object

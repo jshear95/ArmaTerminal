@@ -1,7 +1,7 @@
 /**
 	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
 */
-private[_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed];
+private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_left,_right,_delete,_home,_end,_copy,_paste,_save,_exit,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_zFileName,_header,_preText,_postText,_yOffset,_permission,_lineHeight,_char,_stuff,_txt,_brs,_tmp,_ind,_i,_val];
 
 _return = _this select 0 select 0;
 _backSpace = _this select 0 select 1;
@@ -13,7 +13,6 @@ _scrollDown = _this select 0 select 6;
 _control = _this select 0 select 7;
 _left = _this select 0 select 8;
 _right = _this select 0 select 9;
-_insert = false;
 _delete = _this select 0 select 11;
 _home = _this select 0 select 12;
 _end = _this select 0 select 13;
@@ -21,6 +20,8 @@ _copy = (_control && str(_userInput) == str("C"));
 _paste = (_control && str(_userInput) == str("V"));
 _save = (_control && str(_userInput) == str("S"));
 _exit = (_control && str(_userInput) == str("Z"));
+
+_computer = _this select 1;
 
 _users = _this select 1 select 0;
 _files = _this select 1 select 1;
@@ -55,6 +56,7 @@ switch true do {
 		}else{														//If preText should be empty, make it so
 			_preText = [""];
 		};
+		
 		_steed set[2, _preText];
 	};
 	case (_delete) : {
@@ -64,21 +66,25 @@ switch true do {
 		}else{														//If postText should be empty, make it so
 			_postText = [""];
 		};
+		
 		_steed set[3,_postText];
 	};
 	case (_left) : {
 		//move cursor left
 		if(str(_preText) != str([""]))then{								//If there is something to the left
 			_char = _preText select (count _preText - 1);				//Get the char to the left
+			
 			reverse _postText;											//Flip the post text for easier access
 			_postText set[count _postText, _char];						//Append the char to post text at the 'front'
 			reverse _postText;											//Flip the post text back to normal
+			
 			if(count(_preText) > 1)then{								//If there should be a char in preText
 				_preText = (_preText select[0, count _preText - 1]);	//Remove the shifted char
 			}else{														//If preText should be empty, make it so
 				_preText = [""];
 			};
 		};
+		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 	};
@@ -87,27 +93,32 @@ switch true do {
 		if(str(_postText) != str([""]))then{							//If there is something to the right
 			_char = _postText select 0;									//Get the char to the right
 			_preText set [count _preText, _char];						//Append the char to the end of preText
+			
 			if(count(_postText) > 1)then{								//If there should be a char in postText
 				_postText = (_postText select[1, count _postText - 1]);	//Remove the shifted char
 			}else{														//If postText should be empty, make it so
 				_postText = [""];
 			};
 		};
+		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 	};
 	case (_home) : {
-		while{str(_preText) != str([""])}do{								//If there is something to the left
+		while{str(_preText) != str([""])}do{							//If there is something to the left
 			_char = _preText select (count _preText - 1);				//Get the char to the left
+			
 			reverse _postText;											//Flip the post text for easier access
 			_postText set[count _postText, _char];						//Append the char to post text at the 'front'
 			reverse _postText;											//Flip the post text back to normal
+			
 			if(count(_preText) > 1)then{								//If there should be a char in preText
 				_preText = (_preText select[0, count _preText - 1]);	//Remove the shifted char
 			}else{														//If preText should be empty, make it so
 				_preText = [""];
 			};
 		};
+		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 	};
@@ -115,12 +126,14 @@ switch true do {
 		while{str(_postText) != str([""])}do{							//If there is something to the right
 			_char = _postText select 0;									//Get the char to the right
 			_preText set [count _preText, _char];						//Append the char to the end of preText
+			
 			if(count(_postText) > 1)then{								//If there should be a char in postText
 				_postText = (_postText select[1, count _postText - 1]);	//Remove the shifted char
 			}else{														//If postText should be empty, make it so
 				_postText = [""];
 			};
 		};
+		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 	};
@@ -153,7 +166,6 @@ switch true do {
 			_theFile = [_zfileName, _contents, _permission];
 			(_curDir select 1) set[count (_curDir select 1), _theFile];	//Add the file to the directory
 		};
-
 	};
 	case (_copy) : {
 		//Copies all text in the document into the window's clipboard
@@ -164,7 +176,7 @@ switch true do {
 	case (_paste) : {
 		_txt = copyFromClipboard;
 		
-		_brs = [];					//Indexes of all <br/>'s
+		_brs = [];									//Indexes of all <br/>'s
 		_tmp = toUpper _txt;
 		_ind = _tmp find "<BR/>";
 		
@@ -180,7 +192,7 @@ switch true do {
 		};
 		_val = 0;
 		{
-			_val = _val + _x;				//Offset the index in _brs to account for the alogrithm above which substringed
+			_val = _val + _x;				//Offset the index in _brs to account for the algorithm above which substringed
 			_stuff set [_val, "<br/>"];		//Set zeroth char to line break char
 			_stuff set [_val + 1, ""];		//Set remaining to empty string
 			_stuff set [_val + 2, ""];
@@ -192,6 +204,7 @@ switch true do {
 
 		_preText = [""];
 		_postText = _stuff;
+		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 		
@@ -207,4 +220,14 @@ switch true do {
 	};
 };
 
-[_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev];
+_computer set[0, _users];
+_computer set[1, _files];
+_computer set[2, _currentUser];
+_computer set[3, _computerName];
+_computer set[4, _state];
+_computer set[5, _commandLine];
+_computer set[6, _color];
+_computer set[7, _steed];
+_computer set[8, _dev];
+
+_computer;

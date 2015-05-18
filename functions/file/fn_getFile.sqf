@@ -3,7 +3,7 @@
  *	File_fnc_getFile.sqf
  * 	Takes in a parent folder and a folder name and returns the folder who's name is specified
  */
-private[_parent,_fName,_contents,_file];
+private[_parent,_fName,_contents];
 
 _parent = _this select 0;
 _fName = [_this select 1] call CommandLine_fnc_alphaToAlpha;
