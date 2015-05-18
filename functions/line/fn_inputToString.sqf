@@ -1,8 +1,10 @@
 /*
- * Takes in an array of input and returns the input as a string
+ *	Joshua Shear
+ *	Line_fnc_inputToString.sqf
+ *	Takes in an array of input and returns the input as a string
  */
  
-private[_input];
+private[_input,_output];
 
 _input = _this select 0;
 

@@ -1,8 +1,10 @@
-/**
-	Pops the top char on the stack and returns it
+/*
+ *	Joshua Shear
+ *	Line_fnc_pop.sqf
+ *	Takes in a stack and attempts to remove the top element on the stack before returning it
 */
 
-private ["_stack"];
+private [_stuff,_val];
 _stack = _this select 0;
 
 _val = _stack select (count _stack - 1);

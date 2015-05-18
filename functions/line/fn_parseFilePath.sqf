@@ -1,8 +1,11 @@
 /*
- * Takes in the current file path and returns the parsed version for the new lines pre text
+ *	Joshua Shear
+ *	Line_fnc_parseFilePath.sqf
+ *	Takes in the current file path and returns the parsed version for the new lines pre text
  */
  
-private[_filePath];
+private[_filePath,_output];
+
 _filePath = _this select 0;
 
 _output = "";
