@@ -29,9 +29,7 @@ class CfgFunctions {
     };
 	class File {
 		class File {
-			class getContents {};
 			class getFile {};
-			class getName {};
 			class getFileIndex {};
 			class getType {};
 		};
