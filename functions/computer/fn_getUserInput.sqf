@@ -1,6 +1,8 @@
-/**
-	takes in data from key event handler and processes it to get the given command
-*/
+/*
+ *	Joshua Shear
+ *	Computer_fnc_getUserInput.sqf
+ *	takes in data from key event handler and processes it to get the given command
+ */
 
 private [_ctrl, _dikCode, _shift, _ctrlKey, _alt];
 _ctrl = _this select 0;													//Not used
@@ -23,7 +25,7 @@ _end = false;
 
 _userInput = "";
 
-//hint str(_dikCode);
+//hint str(_dikCode);		//Uncomment this line to get the code for any key you press
 
 if(_dikCode == 41)then{_userInput = "`";};
 if(_dikCode == 2)then{_userInput = "1";};
@@ -73,6 +75,7 @@ if(_dikCode == 50)then{_userInput = "m";};
 if(_dikCode == 51)then{_userInput = ",";};
 if(_dikCode == 52)then{_userInput = ".";};
 if(_dikCode == 53)then{_userInput = "/";};
+
 if(_dikCode == 41 && _shift)then{_userInput = "~";};
 if(_dikCode == 2 && _shift)then{_userInput = "!";};
 if(_dikCode == 3 && _shift)then{_userInput = "@";};
@@ -120,6 +123,7 @@ if(_dikCode == 50 && _shift)then{_userInput = "M";};
 if(_dikCode == 51 && _shift)then{_userInput = "<";};
 if(_dikCode == 52 && _shift)then{_userInput = ">";};
 if(_dikCode == 53 && _shift)then{_userInput = "?";};
+
 //if(_dikCode == 54)then{_shift = true;};									//Shift (over ridden in event handler)
 //if(_dikCode == 42)then{_shift = true;};									//Shift (over ridden in event handler)
 //if(_dikCode == 58)then{_userInput = "";};
@@ -140,6 +144,7 @@ if(_dikCode == 210)then{_insert = true;};									//Insert
 if(_dikCode == 211)then{_delete = true;};									//Delete
 if(_dikCode == 199)then{_home = true;};										//Home
 if(_dikCode == 207)then{_end = true;};										//End
+
 //Return input
 [
 	_return,

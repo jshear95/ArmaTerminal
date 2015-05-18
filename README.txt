@@ -1,5 +1,6 @@
 README.txt
 Arma Terminal 0.1.0
+For best viewing of this document, view in notepad, notepad++ or your operating system's equivalent program
 
 Table of Contents
 
@@ -16,9 +17,9 @@ Table of Contents
 _____________________________________________________
 
 1.What is a command line
-	A command line is the most basic view of an operating system (OS). Even windows 7 and 8.1 have command line views (start, search 'command prompt'). Command lines are quite basic but also quite powerful. You should not mess around in a command line if you do not know what you are doing. It is very easy to completely erase ALL your data.
-	What makes the command line so special though is this power and the ease of access to it. Graphical systems such as your desktop and GUI applications (like Arma or notepad) dumb down what goes on behind the scenes so its easier for humans to interact with but harder for humans to make changes to the actual computer. Think of these programs as having training, wheels like on a bike, a command line, however, has no training wheels.
-	This means that commands that are cumbersome to access and use through gui systems (like control panel) are just a few keystrokes away in the command line. Unlike control panel however, unless you really know what you are doing, its a lot harder to undo changes in the command line, sometimes even impossible.
+	-A command line is the most basic view of an operating system (OS). Even windows 7 and 8.1 have command line views (start, search 'command prompt'). Command lines are quite basic but also quite powerful. You should not mess around in a command line if you do not know what you are doing. It is very easy to completely erase ALL your data.
+	-What makes the command line so special though is this power and the ease of access to it. Graphical systems such as your desktop and GUI applications (like Arma or notepad) dumb down what goes on behind the scenes so its easier for humans to interact with but harder for humans to make changes to the actual computer. Think of these programs as having training, wheels like on a bike, a command line, however, has no training wheels.
+	-This means that commands that are cumbersome to access and use through gui systems (like control panel) are just a few keystrokes away in the command line. Unlike control panel however, unless you really know what you are doing, its a lot harder to undo changes in the command line, sometimes even impossible.
 _____________________________________________________
 
 2.What is armaTerminal
@@ -47,7 +48,7 @@ _____________________________________________________
 
 5.Known Bugs
 	-When you delete a user, if they had exclusive access to any files, their files will not be usable. This can be remedied by making a user with the old user's user name and deleting the files manually.
-		-This is a minor bug but tedious to fix, will get done eventually, but large features will have more impact to the terminal than this minor issue.
+		-This is a minor bug, but tedious to fix, it will get done eventually, but large features will have more impact to the terminal than this minor issue.
 	-Typing '<' in the terminal or in STEED will prevent any text after the '<' from being displayed unless followed by 'br/>'. This is believed to be a limitation of the engine with the display method I am using.
 	-The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered.
 _____________________________________________________
@@ -103,3 +104,4 @@ _____________________________________________________
 	-Proper cd and ls commands
 	-Format command
 	-User groups
+	-UAV hacking / interaction
