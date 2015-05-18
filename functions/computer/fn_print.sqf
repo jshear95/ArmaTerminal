@@ -1,8 +1,10 @@
 /*
- * Takes in a computer. Based on the state, the function prints it accordingly on screen.
+ *	Joshua Shear
+ *	Computer_fnc_print.sqf
+ * 	Takes in a computer. Based on the state, the function prints it accordingly on screen.
  */
  
-private [_comp];
+private [_comp,_state,_yOffset,_safe,_xCord,_yCord,_cmdLn,_prevLines,_curLine,_pText,_bool,_return,_header,_prevText,_postText];
 
 _comp = _this select 0;
 _state = _this select 0 select 4;
@@ -21,17 +23,24 @@ _yCord = 0*safeZoneH;
 
 
 _printText = {											//print [_text] in the terminal
-	private[_text];
+	private[_text,_txtColor,_displayText];
+	
 	_text = _this select 0;
 	_txtColor = _comp select 6;
 	_displayText = "";
-	if(_txtColor == "#33CC33")then{
-		_displayText = format ["<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
-	}else{
-		_displayText = format ["<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
+	
+	switch(_txtColor)do{
+		case("#33CC33"):{	//Green
+			_displayText = format ["<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
+		};
+		case("#FFFFFF"):{	//White
+			_displayText = format ["<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
+		};
 	};
+	
 	null = [_displayText,_xCord,_yCord + _yOffset,0.09,0] spawn BIS_fnc_dynamicText;
 	//null = [text,X,Y,Fade Out Time,Fade In Time] spawn BIS_fnc_dynamicText;
+	
 	_displayText;
 };
 
@@ -41,6 +50,7 @@ switch (true) do {
 		_cmdLn = _comp select 5;
 		_prevLines = _cmdLn select 0;
 		_curLine = _cmdLn select 1;
+		
 		//Compiles text to print
 		_pText = "";
 		{
@@ -49,18 +59,21 @@ switch (true) do {
 			}forEach _x;
 			_pText = _pText + "<br />";
 		}forEach _prevLines;
-		_b00l = false;	//Weather the loop below has passed index 0
+		
+		_bool = false;	//Weather the loop below has passed index 0
 		{
-			if(_safe&&_b00l && str(_x) != str(""))then{
+			if(_safe&&_bool && str(_x) != str(""))then{
 				_pText = _pText + "*";
 			}else{
 				_pText = _pText + _x;
-				_b00l = true;
+				_bool = true;
 			};
 		}forEach _curLine;
+		
 		if(floor(time) mod 2 == 0)then{						//Toggles cursor at end of line every second
 			_pText = _pText + "_";
 		};
+		
 		_return = [_pText] call _printText;
 	};
 	case (_state == "EDITOR"):{
@@ -74,6 +87,7 @@ switch (true) do {
 		{
 			_pText = _pText + _x;
 		}forEach _prevText;
+		
 		if(floor(time) mod 2 == 0)then{						//Toggles cursor at cursor position every second
 			if(str(_postText select 0) == str("<br/>"))then{//If the first char of post text is a line break, we don't want to replace the line break with a cursor
 				_pText = _pText + "_";

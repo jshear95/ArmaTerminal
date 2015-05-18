@@ -4,7 +4,7 @@
  *	takes in data from key event handler and processes it to get the given command
  */
 
-private [_ctrl, _dikCode, _shift, _ctrlKey, _alt];
+private [_ctrl, _dikCode, _shift, _ctrlKey, _alt,_backspace,_return,_up,_down,_left,_right,_scrollUp,_scrollDown,_insert,_delete,_home,_end,_userInput];
 _ctrl = _this select 0;													//Not used
 _dikCode = _this select 1;
 _shift = _this select 2;
