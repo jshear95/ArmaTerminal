@@ -4,6 +4,14 @@
  * By Joshua Shear
  * Allows users to open computers and interface with virtual files and data through a Linux inspired command line and text editor
  */
+ 
+/*
+TODO:
+-Format help text
+-Abstract long line executions where possible
+-Documentation includes function call
+-UML Diagram
+*/
 
 //Get params
 _target = _this select 0;					//Computer

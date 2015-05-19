@@ -1,5 +1,7 @@
 README.txt
 Arma Terminal 0.1.0
+Simple COvert Terminal Shell
+(SCOTS)
 For best viewing of this document, view in notepad, notepad++ or your operating system's equivalent program
 
 Table of Contents
@@ -97,11 +99,13 @@ _____________________________________________________
 	this enableSimulation false;this addAction["Use Computer","armaTerminal.sqf",[[],["MASTER",[],"PUBLIC"],true]];
 _____________________________________________________
 
-9.Future Features
+9.Future Features (In no particular order)
 	-Networking
 	-Actual hacking
 	-Portable laptops
-	-Proper cd and ls commands
+	-Proper tab key
+	-Proper caps key
 	-Format command
 	-User groups
+	-Proper read and write permissions
 	-UAV hacking / interaction

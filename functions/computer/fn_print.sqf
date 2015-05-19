@@ -38,7 +38,7 @@ _printText = {											//print [_text] in the terminal
 		};
 	};
 	
-	null = [_displayText,_xCord,_yCord + _yOffset,0.09,0] spawn BIS_fnc_dynamicText;
+	null = [_displayText,_xCord,_yCord + _yOffset - (0.00051 * 11),0.09,0] spawn BIS_fnc_dynamicText;
 	//null = [text,X,Y,Fade Out Time,Fade In Time] spawn BIS_fnc_dynamicText;
 	
 	_displayText;

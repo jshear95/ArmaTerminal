@@ -4,7 +4,7 @@
  *	Takes in input and a computer and then processes user input by appending chars, executing lines, removing chars, scrolling, or fetching and displaying previous commands
 */
 
-private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];
+private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_tab,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];
 
 _computer = _this select 0;
 
@@ -16,6 +16,7 @@ _userInput = _this select 0 select 4;
 _scrollUp = _this select 0 select 5;
 _scrollDown = _this select 0 select 6;
 _control = _this select 0 select 7;
+_tab = (str(_userInput) == str("    "));
 
 _users = _this select 1 select 0;
 _files = _this select 1 select 1;
@@ -36,8 +37,7 @@ _yOffset = _commandLine select 5;
 _cache = _commandLine select 6;
 _safe = _commandLine select 7;
 
-_lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
-						//NO LONGER ACCURATE, GOOD APPROXIMATE FOR TIME BEING
+_lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor
 
 switch true do {
 	case (_return) : {
