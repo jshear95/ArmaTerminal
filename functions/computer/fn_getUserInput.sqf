@@ -124,6 +124,25 @@ if(_dikCode == 51 && _shift)then{_userInput = "<";};
 if(_dikCode == 52 && _shift)then{_userInput = ">";};
 if(_dikCode == 53 && _shift)then{_userInput = "?";};
 
+//Num pad
+if(_dikCode == 181)then{_userInput = "/";};
+if(_dikCode == 55)then{_userInput = "*";};
+if(_dikCode == 74)then{_userInput = "-";};
+if(_dikCode == 78)then{_userInput = "+";};
+if(_dikCode == 156)then{_return = true;};									//Num pad enter
+if(_dikCode == 83)then{_userInput = ".";};
+if(_dikCode == 73)then{_userInput = "9";};
+if(_dikCode == 72)then{_userInput = "8";};
+if(_dikCode == 71)then{_userInput = "7";};
+if(_dikCode == 77)then{_userInput = "6";};
+if(_dikCode == 76)then{_userInput = "5";};
+if(_dikCode == 75)then{_userInput = "4";};
+if(_dikCode == 81)then{_userInput = "3";};
+if(_dikCode == 80)then{_userInput = "2";};
+if(_dikCode == 79)then{_userInput = "1";};
+if(_dikCode == 82)then{_userInput = "0";};
+
+
 //if(_dikCode == 54)then{_shift = true;};									//Shift (over ridden in event handler)
 //if(_dikCode == 42)then{_shift = true;};									//Shift (over ridden in event handler)
 //if(_dikCode == 58)then{_userInput = "";};

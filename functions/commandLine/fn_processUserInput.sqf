@@ -37,7 +37,7 @@ _yOffset = _commandLine select 5;
 _cache = _commandLine select 6;
 _safe = _commandLine select 7;
 
-_lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor
+_lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
 
 switch true do {
 	case (_return) : {

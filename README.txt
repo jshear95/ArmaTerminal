@@ -1,7 +1,6 @@
 README.txt
 Arma Terminal 0.1.0
-Simple COvert Terminal Shell
-(SCOTS)
+
 For best viewing of this document, view in notepad, notepad++ or your operating system's equivalent program
 
 Table of Contents
@@ -13,6 +12,7 @@ Table of Contents
 5.Known Bugs
 6.Change Log
 7.File list
+7.5.Object contents
 8.Start Add Action
 9.Future Features
 
@@ -26,7 +26,7 @@ _____________________________________________________
 
 2.What is armaTerminal
 	The reason that I chose to make a command line OS rather than a graphical one is three fold. First off, I don't understand dialogues well (these would be the GUI components). Second, the command line seemed like it fit with ArmA better as easy to learn, hard to master. And Lastly, I wanted to learn about how command lines work, at least to some degree.
-	Arma Terminal allows a player to access a linux inspired command line in game and manipulate virtual files created by the mission maker and/or other players in the game world. This can lead to lots of new game play mechanics including vehicles for delivering story, hacking to get enemy intel, or even just more in depth objectives.
+	Arma Terminal allows a player to access a Linux inspired command line in game and manipulate virtual files created by the mission maker and/or other players in the game world. This can lead to lots of new game play mechanics including vehicles for delivering story, hacking to get enemy intel, or even just more in depth objectives.
 	Arma Terminal is not and should not be considered a fully fledged operating system or command line. It is still a work in progress and does not (and will not) contain all the commands necessary to support a full operating system. The commands that are implemented are designed to give players the tools to create, read, update, destroy, protect and hack the virtual files for mission game play. Any thing beyond that hasn't been implemented and niche commands probably never will be implemented by myself.
 	Once release 1.0.0 happens, I will be opening up the code for anyone to modify so long as they give credit, before that point, unless I say otherwise, the only version out there should be my own.
 _____________________________________________________
@@ -85,12 +85,23 @@ _____________________________________________________
 			-fn_newLine.sqf - Creates a new line for the command line.
 			-fn_parseFilePath.sqf - Takes in the file path, parses it and returns an array with each file in the path.
 			-fn_parseSpaceDeliniation.sqf - Takes in an input array and parses it for spaces with backslash as the escape character.
-			-fn_pop.sqf - Takes in a stack and returns the top element. To actually pop, you must remove that element from the top of the stack from where you called pop.
+			-fn_pop.sqf - Takes in a stack and returns the top element and pops it.
 			-fn_push.sqf - Takes a stack and an element and pushes the element to the top of the stack.
 		- Steed - Contains the logic for the built in text editor
 			-fn_newSteed.sqf - Creates a new STEED.
 			-fn_processUserInput.sqf - Handles the logic when a key is pressed in STEED
 	-Description.ext - The declarations for all of the 'classes' and functions. SQF is not an OO language hence the quotes.
+_____________________________________________________
+
+7.5.Object Contents
+	Sqf is not an OO language, however it does have a very loose object system. The following is the contents of the different arrays that constitute objects in ArmaTerminal
+		- Computer = [List of all users, File structure, Current user, Computer name, State of the computer (commandLine/steed/quit), Command line, Text color, Text editor, Whether or not the computer is in dev mode]
+		- Command Line = [Array of all previous lines, An array of chars that is the current line, the file path to the current directory, all previously input commands, all commands already scrolled through, the yOffset for scrolling the text, A cache for storing data for multi line operations, weather or not the input should be starred out (i.e. a password)]
+		- Line = [Text before the semicolon, Text after the semicolon] (assuming ':' is a semi colon)
+		- File - There are two types of files
+			-Document = [File Name, Contents, Permission(s)]
+			-Directory = [File Name, Array of sub directories, Permission(s)]
+		- STEED (text editor) = [Name of file being edited, header displayed to user at top of document, all text before the cursor, all text after the cursor, y offset for scrolling, permission(s) of the file];
 _____________________________________________________
 
 8.Start Add Action

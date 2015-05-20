@@ -40,8 +40,7 @@ _postText = _steed select 3;
 _yOffset = _steed select 4;
 _permission = _steed select 5;
 
-_lineHeight = 0.05527;	//This is the height of a line of text. This was measured on a 2880x1800 monitor (long story) but it should work for any sized monitor.
-						//NO LONGER ACCURATE, GOOD APPROXIMATE FOR TIME BEING
+_lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
 
 switch true do {
 	case (_return) : {

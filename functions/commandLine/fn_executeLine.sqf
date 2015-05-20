@@ -52,7 +52,7 @@ if(!(_cache select 0))then{
 				"  LOGOUT = Logs current user out and return to the master directory, if no user is<br/>        logged in, nothing happens.<br/>"+
 				"  FILEHIDE [FileName] [Param] = Sets the file permission of the specified file, to<br/>        the specified parameter (PRIVATE or PUBLIC), no [] braces<br/>"+
 				"  QUIT = Exits the terminal<br/>"+
-				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '<br/>";
+				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
 		case(str(_cmd) == str("TIME")):{
 			_date = date;				// [year, month, day, hour, minute]

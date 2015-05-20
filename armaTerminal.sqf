@@ -7,10 +7,8 @@
  
 /*
 TODO:
--Format help text
--Abstract long line executions where possible
--Documentation includes function call
--UML Diagram
+-Abstract useful line executions where possible
+-Documentation includes function calls and return types and values
 */
 
 //Get params
