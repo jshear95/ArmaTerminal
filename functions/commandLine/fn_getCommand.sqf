@@ -3,6 +3,13 @@
  *	CommandLine_fnc_getCommand.sqf
  *	Takes in user input and evaluates it to get the command and any parameters.
  *	If input matches no command, it returns an error.
+ *	
+ *	How to call : [current Line] call CommandLine_fnc_getCommand;
+ *	
+ *	Returns : Output - contains string representation of input command followed by any parameters input
+ *	
+ *	Function Calls :
+ *		CommandLine_fnc_alphaToAlpha
  */
 
 private [_userInput];

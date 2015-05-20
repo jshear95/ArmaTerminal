@@ -6,6 +6,19 @@
  * It also takes in the computer to allow for operations on the computers state
  * It returns the output line of the command, and the updated computer
  * In some cases, it might modify commandLines cache for multi line operations
+ *	
+ *	How to call : [Array of processed input, computer] call CommandLine_fnc_executeLine;
+ *	
+ *	Returns : [Text to print into Command Line, computer]
+ *	
+ *	Function Calls:
+ *		Line_fnc_inputToString
+ *		Line_fnc_parseSpaceDeliniation
+ *		CommandLine_fnc_getCurrentDir
+ *		Steed_fnc_newSteed
+ *		File_fnc_getFile
+ *		File_fnc_getType
+ *		File_fnc_getFileIndex
  */
 
 private [_arg,_computer,_cmd,_commandLine,_cache,_users,_user,_remainingLine,_params,_output,_date,_year,_month,_day,_hour,_minute,_color,_filePath,_i,_curDir,_fileName,_prevName,_newName,_rmFile,_perm,_index,_bool,_userName,_password,_confPassword,_delUser,_delPswd,_Pswd];

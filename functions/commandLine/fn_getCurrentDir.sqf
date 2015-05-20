@@ -4,6 +4,13 @@
  *	Takes in a file system and file path.
  *	Walks through the file path until it reaches the current open directory
  *	Returns the current open directory
+ *	
+ *	How to call : [File structure, file path] call CommandLine_fnc_getCurrentDir;
+ *	
+ *	Returns : The current directory
+ *	
+ *	Function Calls :
+ *		File_fnc_getFile
  */
 
 private[_curFiles, _filePath];

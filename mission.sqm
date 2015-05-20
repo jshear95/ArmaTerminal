@@ -449,10 +449,13 @@ class Mission
 			};
 			class Waypoints
 			{
-				items=3;
+				items=4;
 				class Item0
 				{
-					position[]={4772.0298,111.10626,6493.0176};
+					position[]={5023.7935,208.68849,5912.3335};
+					category="A3";
+					type="SCRIPTED";
+					script="A3\functions_f\waypoints\fn_wpLand.sqf ";
 					class Effects
 					{
 					};
@@ -460,13 +463,21 @@ class Mission
 				};
 				class Item1
 				{
-					position[]={1808.8317,5.5,5798.9795};
+					position[]={4772.0298,111.10626,6493.0176};
 					class Effects
 					{
 					};
 					showWP="NEVER";
 				};
 				class Item2
+				{
+					position[]={1808.8317,5.5,5798.9795};
+					class Effects
+					{
+					};
+					showWP="NEVER";
+				};
+				class Item3
 				{
 					position[]={5397.1567,193.63622,4981.8848};
 					type="CYCLE";

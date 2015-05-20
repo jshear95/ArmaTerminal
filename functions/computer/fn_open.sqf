@@ -3,6 +3,14 @@
  *	Computer_fnc_open.sqf
  *	Takes in the computer object, the player, the actionID, the list of users for the computer, the file structure for the computer, and weather or not the computer is in dev mode
  *	Creates a new computer instance with all necessary variables and blacks out screen for text.
+ *	
+ *	How to call : [_target,_caller,_actionID,_users,_files,_devMode] call Computer_fnc_open;
+ *	
+ *	Returns : A computer
+ *	
+ *	Function Calls:
+ *		CommandLine_fnc_newCommandLine
+ *		Steed_fnc_newSteed
 */
 
 private [_target,_caller,_actionID,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_textEditor,_devMode];

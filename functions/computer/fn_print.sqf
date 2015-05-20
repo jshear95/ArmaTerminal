@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	Computer_fnc_print.sqf
  * 	Takes in a computer. Based on the state, the function prints it accordingly on screen.
+ *	
+ *	How to call : [_computer] call Computer_fnc_print;
+ *	
+ *	Returns : String of text printed (usually discarded/ignored by caller)
+ *	
+ *	Function Calls :
+ *		NONE
  */
  
 private [_comp,_state,_yOffset,_safe,_xCord,_yCord,_cmdLn,_prevLines,_curLine,_pText,_bool,_return,_header,_prevText,_postText];

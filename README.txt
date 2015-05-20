@@ -96,7 +96,7 @@ _____________________________________________________
 7.5.Object Contents
 	Sqf is not an OO language, however it does have a very loose object system. The following is the contents of the different arrays that constitute objects in ArmaTerminal
 		- Computer = [List of all users, File structure, Current user, Computer name, State of the computer (commandLine/steed/quit), Command line, Text color, Text editor, Whether or not the computer is in dev mode]
-		- Command Line = [Array of all previous lines, An array of chars that is the current line, the file path to the current directory, all previously input commands, all commands already scrolled through, the yOffset for scrolling the text, A cache for storing data for multi line operations, weather or not the input should be starred out (i.e. a password)]
+		- Command Line = [Array of all previous lines, An array of chars that is the current line, the file path to the current directory, all previously input commands, index of where user is in list of previous commands, the yOffset for scrolling the text, A cache for storing data for multi line operations, weather or not the input should be starred out (i.e. a password)]
 		- Line = [Text before the semicolon, Text after the semicolon] (assuming ':' is a semi colon)
 		- File - There are two types of files
 			-Document = [File Name, Contents, Permission(s)]

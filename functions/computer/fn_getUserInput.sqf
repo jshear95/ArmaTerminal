@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	Computer_fnc_getUserInput.sqf
  *	takes in data from key event handler and processes it to get the given command
+ *	
+ *	How to call : [0,_dikCode,_shift,_control,_alt] call Computer_fnc_getUserInput;
+ *	
+ *	Returns : Array containing all relevant data of what key was pressed including several booleans about certain keys
+ *	
+ *	Function Calls :
+ *		NONE
  */
 
 private [_ctrl, _dikCode, _shift, _ctrlKey, _alt,_backspace,_return,_up,_down,_left,_right,_scrollUp,_scrollDown,_insert,_delete,_home,_end,_userInput];

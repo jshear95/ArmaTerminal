@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	File_fnc_getType.sqf
  *	Takes in a file and returns a boolean weather or not the file is a directory or not
+ *	
+ *	How to call : [file] call File_fnc_getType;
+ *	
+ *	Returns : boolean as to weather or not the file is a directory or not
+ *	
+ *	Function calls :
+ *		NONE
  */
  
 private[_file,_bool];

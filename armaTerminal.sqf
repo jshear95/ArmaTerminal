@@ -3,12 +3,23 @@
  * armaTerminal.sqf
  * By Joshua Shear
  * Allows users to open computers and interface with virtual files and data through a Linux inspired command line and text editor
+ *	
+ *	How to call : With ingame add action OR  [_target, _caller,_actionID,_Users,_Files,_devMode] execVM "armaTerminal.sqf";
+ *	
+ *	Returns : Nothing
+ *	
+ *	Calls:
+ *		Computer_fnc_open
+ *		Computer_fnc_getUserInput
+ *		Steed_fnc_processUserInput
+ *		CommandLine_fnc_processUserInput
+ *		Computer_fnc_print
+ *		Computer_fnc_close
  */
  
 /*
 TODO:
 -Abstract useful line executions where possible
--Documentation includes function calls and return types and values
 */
 
 //Get params

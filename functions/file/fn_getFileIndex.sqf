@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	File_fnc_getFileIndex.sqf
  *	Takes in a parent folder and a folder name and returns the specified folder's index
+ *	
+ *	How to call : [parent directory, file name] call File_fnc_getFileIndex;
+ *	
+ *	Returns : Int of index of desired file
+ *	
+ *	Function calls :
+ *		CommandLine_fnc_alphaToAlpha
  */
 private[_parent,_fileName,_contents,_index,_loop];
 

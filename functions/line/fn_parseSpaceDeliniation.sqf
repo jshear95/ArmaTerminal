@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	Line_fnc_parseSpaceDeliniation.sqf
  *	Takes a string and returns the sub strings parsed for spaces minus spaces preceded by \ the escape char
+ *	
+ *	How to call : [string] call Line_fnc_parseSpaceDeliniation;
+ *	
+ *	Returns : Array of substrings parsed for spaces (\ is escape char)
+ *	
+ *	Function Calls :
+ *		NONE
  */
 
 private[_input,_output,_terminate,_spInd,_bsInd];

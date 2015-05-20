@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	Computer_fnc_close.sqf
  *	Closes the command line and restores the screen
+ *	
+ *	How to call : [_target, _caller, _devMode] call Computer_fnc_close;
+ *	
+ *	Returns : nothing
+ *	
+ *	Function Calls
+ *		NONE
 */
 
 private [_target,_caller,_devMode];

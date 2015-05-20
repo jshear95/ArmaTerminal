@@ -2,6 +2,18 @@
  *	Joshua Shear
  *	CommandLine_fnc_processUserInput.sqf
  *	Takes in input and a computer and then processes user input by appending chars, executing lines, removing chars, scrolling, or fetching and displaying previous commands
+ *	
+ *	How to call : [input array, computer] CommandLine_fnc_processUserInput;
+ *	
+ *	Returns : a computer
+ *	
+ *	Function calls :
+ *		Line_fnc_push
+ *		Line_fnc_parseFilePath
+ *		Line_fnc_newLine
+ *		Line_fnc_pop
+ *		CommandLine_fnc_getCommand
+ *		CommandLine_fnc_executeLine
 */
 
 private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_tab,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];

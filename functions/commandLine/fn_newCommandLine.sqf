@@ -2,7 +2,19 @@
  *	Joshua Shear
  *	CommandLine_fnc_newCommandLine.sqf
  *	Creates a new command line object with necessary variables
+ *	
+ *	How to call : [] CommandLine_fnc_newCommandLine;
+ *	
+ *	Returns : A new command line
+ *	
+ *	Function calls :
+ *		Line_fnc_parseFilePath
+ *		Line_fnc_newLine
+ *		Line_fnc_push
 */
+
+private[_prevLines,_filePath,_curLine,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safeMode,_temp];
+
 _prevLines = [];										//Array of all lines before current line
 _filePath = ["MASTER"];									//Path to Current Directory including current Directory
 _curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;		//Current Line

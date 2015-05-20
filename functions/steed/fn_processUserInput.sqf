@@ -1,5 +1,15 @@
-/**
-	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
+/*
+ *	Joshua Shear
+ *	Steed_fnc_processUserInput.sqf
+ *	processes user input and appends char, executes line, removes char, scrolls, or fetch and displays previous commands
+ *	
+ *	How to call : [input,computer] call Steed_fnc_processUserInput.sqf
+ *	
+ *	Returns: a computer
+ *	
+ *	Function calls :
+ *		CommandLine_fnc_getCurrentDir
+ *		File_fnc_getFile
 */
 private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_left,_right,_delete,_home,_end,_copy,_paste,_save,_exit,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_zFileName,_header,_preText,_postText,_yOffset,_permission,_lineHeight,_char,_stuff,_txt,_brs,_tmp,_ind,_i,_val];
 

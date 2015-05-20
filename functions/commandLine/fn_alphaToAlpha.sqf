@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	CommandLine_fnc_alphaToAlpha.sqf
  *	Takes in an input array and converts all lowercase letters to capital letters
+ *	
+ *	How to call : [_charArray] call CommandLine_fnc_alphaToAlpha;
+ *	
+ *	Returns : _charArray with all caps
+ *	
+ *	Function Calls:
+ *		NONE
  */
  
 private[_alpha];

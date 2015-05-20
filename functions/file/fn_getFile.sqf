@@ -2,6 +2,13 @@
  *	Joshua Shear
  *	File_fnc_getFile.sqf
  * 	Takes in a parent folder and a folder name and returns the folder who's name is specified
+ *	
+ *	How to call : [parent directory, file name] call File_fnc_getFile;
+ *	
+ *	Returns : desired file
+ *	
+ *	Function calls :
+ *		CommandLine_fnc_alphaToAlpha
  */
 private[_parent,_fName,_contents];
 

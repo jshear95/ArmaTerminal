@@ -3,6 +3,14 @@
  *	Steed_fnc_steed.sqf
  *	Takes in a file name and char array
  *	Returns a textEditor (STEED)
+ *	
+ *	How to call : [file name, file contents, permission] call Steed_fnc_newSteed;
+ *	
+ *	Returns: new steed
+ *	
+ *	Function calls :
+ *		NONE
+ *		
  */
 
 private[_fileName, _fileContents, _permission,_header,_prevText,_postText,_yOffset,_steed];
