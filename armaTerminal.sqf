@@ -1,10 +1,10 @@
 /**
- * ArmaTerminal
+ * ArmaTerminal V 0.1.0
  * armaTerminal.sqf
  * By Joshua Shear
  * Allows users to open computers and interface with virtual files and data through a Linux inspired command line and text editor
  *	
- *	How to call : With ingame add action OR  [_target, _caller,_actionID,_Users,_Files,_devMode] execVM "armaTerminal.sqf";
+ *	How to call : With in-game add action OR  [_target, _caller,_actionID,_Users,_Files,_devMode] execVM "armaTerminal.sqf";
  *	
  *	Returns : Nothing
  *	
@@ -17,10 +17,6 @@
  *		Computer_fnc_close
  */
  
-/*
-TODO:
--Abstract useful line executions where possible
-*/
 
 //Get params
 _target = _this select 0;					//Computer

@@ -25,11 +25,9 @@ _cache = [false];										//Array for passing data to subsequent lines in a mul
 														//Index 0 of cache is weather or not to look at it
 _safeMode = false;										//Weather or not to star out text input (*****)
 
-_temp = "Welcome to Arma Terminal! (version 0.0.1)<br/>"+
+_temp = "Welcome to Arma Terminal! (version 0.1.0)<br/>"+
 		"Use 'page up' and 'page down' to scroll. "+
-		"If you don't know any commands, type 'HELP' to display a list of all* available commands. "+
-		"<br/><br/>" +
-		"* help screen not always kept up to date :)"+
+		"If you don't know any commands, type 'HELP' to display a list of all available commands. "+
 		"<br/>";
 _prevLines = [_prevLines, [_temp]] call Line_fnc_push;	//Pushes generic help to top of screen for first time users
 [
