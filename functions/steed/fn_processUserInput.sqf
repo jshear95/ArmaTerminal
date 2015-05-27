@@ -114,7 +114,7 @@ switch true do {
 		_steed set[3,_postText];
 	};
 	case (_home) : {
-		while{str(_preText) != str([""])}do{							//If there is something to the left
+		/*while{str(_preText) != str([""])}do{							//If there is something to the left
 			_char = _preText select (count _preText - 1);				//Get the char to the left
 			
 			reverse _postText;											//Flip the post text for easier access
@@ -126,13 +126,19 @@ switch true do {
 			}else{														//If preText should be empty, make it so
 				_preText = [""];
 			};
-		};
+		};*/
+		_postText = _preText + _postText;
+		_preText = [""];
+		
+		_char = _postText select 0;									//Get the char to the right
+		_preText set [count _preText, _char];						//Append the char to the end of preText
+		_postText = (_postText select[1, count _postText - 1]);	//Remove the shifted char
 		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
 	};
 	case (_end) : {
-		while{str(_postText) != str([""])}do{							//If there is something to the right
+		/*while{str(_postText) != str([""])}do{							//If there is something to the right
 			_char = _postText select 0;									//Get the char to the right
 			_preText set [count _preText, _char];						//Append the char to the end of preText
 			
@@ -141,7 +147,10 @@ switch true do {
 			}else{														//If postText should be empty, make it so
 				_postText = [""];
 			};
-		};
+		};*/
+		
+		_preText = _preText + _postText;
+		_postText = [""];
 		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
