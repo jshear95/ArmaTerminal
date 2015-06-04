@@ -18,7 +18,6 @@ _output = [];
 
 _index = 0;
 
-
 while{_index < count _input}do{
 	
 	_spInd = _input select [_index, count _input - 1] find " ";
@@ -50,26 +49,27 @@ while{_index < count _input}do{
 		
 		//If there is a space preceded by a \
 		case(_spInd != -1 && _bsInd != -1 && _bsInd == _spInd - 1):{
-			//Set ind = the space after the space i.e. "abc\\ efg" Ind = 4
+			//Set index equal to the space after the space i.e. "abc\\ efg" Ind = 5
 			_output set[count _output, (_input select [_index, _bsInd]) + " "];
-			_index = _index + _spInd;
+			_index = (_index + _spInd + 1);
 		};
-		
 	};
 	
 };
+
 if(count _output > 1)then{
 	_index = 0;
 	while{_index < count _output - 1}do{
-		if((_output select _index) find " " != -1)then{
+		if(" " == (_output select _index) select[(count(_output select _index)) - 1])then{
 			_entry = _output select _index;
 			_next = _output select _index + 1;
 			
 			_output set[_index, _entry + _next];
 			_output set[_index + 1, ""];
 			_output = _output - [""];
+		}else{
+			_index = _index + 1;
 		};
-		_index = _index + 1;
 	};
 };
 

@@ -127,7 +127,7 @@ if(_dikCode == 47 && _shift)then{_userInput = "V";};
 if(_dikCode == 48 && _shift)then{_userInput = "B";};
 if(_dikCode == 49 && _shift)then{_userInput = "N";};
 if(_dikCode == 50 && _shift)then{_userInput = "M";};
-if(_dikCode == 51 && _shift)then{_userInput = "<";};
+//if(_dikCode == 51 && _shift)then{_userInput = "<";};
 if(_dikCode == 52 && _shift)then{_userInput = ">";};
 if(_dikCode == 53 && _shift)then{_userInput = "?";};
 

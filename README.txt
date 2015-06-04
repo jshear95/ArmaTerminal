@@ -60,11 +60,9 @@ _____________________________________________________
 	-It is unknown if this is MP compatible. I am not able to test on a server with multiple people. If it does break in MP let me know and I will try to fix this. I do want this to work in MP.(not really a bug but this is the best place to put this)
 	-When you delete a user, if they had exclusive access to any files, their files will not be usable. This can be remedied by making a user with the old user's user name and deleting the files manually.
 		-This is a minor bug, but tedious to fix, it will get done eventually, but large features will have more impact to the terminal than this minor issue.
-	-Typing '<' in the terminal or in STEED will prevent any text after the '<' from being displayed unless followed by 'br/>'. This is believed to be a limitation of the engine with the display method I am using.
+	-Typing '<' in the terminal or in STEED will prevent any text after the '<' from being displayed unless followed by 'br/>'. This is believed to be a limitation of the engine with the display method I am using. As such, you cannot type '<' in ArmaTerminal.
 	-The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered. Pressing Control + X in the terminal, will wipe all previous lines so new text will be rendered for the time being.
 	-Key modifiers (control and shift) sometimes don't register when pressed. This is an engine limitation. If I find a better solution, I will fix it, but just be persistent for now.
-	-Cannot create files with more than 1 space (parsing error)
-	-Tabs in steed change to 1 space when cursor is highlighting any space on the tab
 	
 _____________________________________________________
 

@@ -104,7 +104,7 @@ switch (true) do {
 					}forEach _postText;
 				};
 				case (str(_postText select 0) == str("    ")) : {
-					_pText = _pText + "   _";
+					_pText = _pText + "_   ";
 					{
 						_pText = _pText + _x;
 					}forEach (_postText select[1, count _postText - 1]);
