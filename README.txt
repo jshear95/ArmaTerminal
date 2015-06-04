@@ -63,7 +63,6 @@ _____________________________________________________
 	-Typing '<' in the terminal or in STEED will prevent any text after the '<' from being displayed unless followed by 'br/>'. This is believed to be a limitation of the engine with the display method I am using.
 	-The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered. Pressing Control + X in the terminal, will wipe all previous lines so new text will be rendered for the time being.
 	-Key modifiers (control and shift) sometimes don't register when pressed. This is an engine limitation. If I find a better solution, I will fix it, but just be persistent for now.
-	-Home and end functions in steed are not optimized, game can pause (for a really long time) when used on large files
 	-Cannot create files with more than 1 space (parsing error)
 	-Tabs in steed change to 1 space when cursor is highlighting any space on the tab
 	
