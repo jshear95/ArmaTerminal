@@ -78,7 +78,6 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="dude";
-					init="nul = [player, ""Super Bad ass UAV intro achieved""] spawn BIS_fnc_establishingShot;";
 					syncId=0;
 					synchronizations[]={1};
 				};
