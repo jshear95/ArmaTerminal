@@ -12,11 +12,11 @@
  */
 
 private _input = _this select 0;
-
 private _output = "";
 
-{
-	_output = _output + _x;
-}forEach _input;
-
+if(str(_this) != "[<null>]")then{	//Prevents erroneous input from making error message
+	{
+		_output = _output + _x;
+	}forEach _input;
+};
 _output;
