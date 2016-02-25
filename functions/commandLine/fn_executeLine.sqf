@@ -198,6 +198,7 @@ if(!(_cache select 0))then{
 			private _prevName = _params select 0;
 			private _newName = _params select 1;
 			if(str([_curDir,_prevName] call File_fnc_getFile) != str(0) and ([[_curDir,_prevName] call File_fnc_getFile,_user] call File_fnc_hasWritePermission))then{
+																							//File exists and curUser has write permission
 				switch(true)do{
 					case(str([_curDir,_prevName] call File_fnc_getFile) == str(0)):{		//If no file name given
 						_output = "Unspecified File Name";
@@ -217,6 +218,7 @@ if(!(_cache select 0))then{
 				};
 			}else{
 				if(str([_curDir,_prevName] call File_fnc_getFile) != str(0) and not ([[_curDir,_prevName] call File_fnc_getFile,_user] call File_fnc_hasReadPermission))then{
+																							//File exists and current user does not have read permission
 					_output = "Specified file not found.";
 				}else{
 					_output = "You lack the permissions to rename this file.";
@@ -271,6 +273,7 @@ if(!(_cache select 0))then{
 			private _rmFile = _params select 0;
 			
 			if(str([_curDir,_rmFile] call File_fnc_getFile) != str(0) and [[_curDir,_rmFile] call File_fnc_getFile,_user] call File_fnc_hasWritePermission)then{
+																						//File exists and current user has write permission
 				switch(true)do{
 					case(_rmFile == ""):{												//No file name specified
 						_output = "Unspecified file name";
@@ -322,17 +325,19 @@ if(!(_cache select 0))then{
 																							//File name is already a file but user does not have read permission on it
 					_output = "Specified file cannot be created.";
 				};
-				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0) and [_curDir,_user] call File_fnc_hasWritePermission):{			//File name is not in current directory and user has write permission in current directory
+				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0) and [_curDir,_user] call File_fnc_hasWritePermission):{
+																							//File name is not in current directory and user has write permission in current directory
 					//Create skeleton file
 					_file = [_fileName,[""],_user,[7,4,0]];
-					if(_user == "PUBLIC")then{_file set [3,[7,7,7]]};	//If user is not logged in, anyone can do anything to the file
+					if(_user == "PUBLIC")then{_file set [3,[7,7,7]]};						//If user is not logged in, anyone can do anything to the file
 					_steed = [_file,_user,_curDir, false] call Steed_fnc_newSteed;
 					_computer set[4,"EDITOR"];
 				};
-				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0) && not ([_curDir,_user] call File_fnc_hasWritePermission)):{		//File not in current directory and current user does not have write access in current directory
+				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0) && not ([_curDir,_user] call File_fnc_hasWritePermission)):{
+																							//File not in current directory and current user does not have write access in current directory
 					_output = "Specified file cannot be created.";
 				};
-				case(_fileName != "" && str([_curDir,_fileName] call File_fnc_getFile) != str(0) && [[_curDir,_fileName] call File_fnc_getFile] call File_fnc_getType):{	
+				case(_fileName != "" && str([_curDir,_fileName] call File_fnc_getFile) != str(0) && [[_curDir,_fileName] call File_fnc_getFile] call File_fnc_getType):{
 					_output = "Specified file name is already a directory";					//File name is a directory
 				};
 				case(str([_curDir,_fileName] call File_fnc_getFile) != str(0)):{			//File name is already a file and user has permission
