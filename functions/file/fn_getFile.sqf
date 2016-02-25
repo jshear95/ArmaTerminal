@@ -10,11 +10,10 @@
  *	Function calls :
  *		CommandLine_fnc_alphaToAlpha
  */
-private[_parent,_fName,_contents];
 
-_parent = _this select 0;
-_fName = [_this select 1] call CommandLine_fnc_alphaToAlpha;
-_contents = _parent select 1;
+private _parent = _this select 0;
+private _fName = [_this select 1] call CommandLine_fnc_alphaToAlpha;
+private _contents = _parent select 1;
 
 _file = 0;
 {

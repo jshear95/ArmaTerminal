@@ -10,12 +10,10 @@
  *	Function calls :
  *		NONE
  */
- 
-private[_input,_output];
 
-_input = _this select 0;
+private _input = _this select 0;
 
-_output = "";
+private _output = "";
 
 {
 	_output = _output + _x;

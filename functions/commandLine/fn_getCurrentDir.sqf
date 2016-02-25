@@ -13,10 +13,8 @@
  *		File_fnc_getFile
  */
 
-private[_curFiles, _filePath];
-
-_curFiles = _this select 0;
-_filePath = _this select 1;
+private _curFiles = _this select 0;
+private _filePath = _this select 1;
 
 
 if(count _filePath > 1)then{								//If the file path is more than MASTER

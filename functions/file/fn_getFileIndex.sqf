@@ -10,14 +10,13 @@
  *	Function calls :
  *		CommandLine_fnc_alphaToAlpha
  */
-private[_parent,_fileName,_contents,_index,_loop];
 
-_parent = _this select 0;
-_fileName = [_this select 1] call CommandLine_fnc_alphaToAlpha;
-_contents = _parent select 1;
+private _parent = _this select 0;
+private _fileName = [_this select 1] call CommandLine_fnc_alphaToAlpha;
+private _contents = _parent select 1;
 
-_index = -1;
-_loop = true;
+private _index = -1;
+private _loop = true;
 
 while{_index < count _contents && _loop}do{						//while there are unchecked files in the current directory and the file has not been found
 	_index = _index + 1;

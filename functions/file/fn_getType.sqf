@@ -10,11 +10,9 @@
  *	Function calls :
  *		NONE
  */
- 
-private[_file,_bool];
 
-_file = _this select 0;
-_bool = false;
+private _file = _this select 0;
+private _bool = false;
 
 if(count (_file select 1) > 0)then{
 	if(typeName(_file select 1 select 0) == "ARRAY" || str(_file select 1) == str([]))then{

@@ -11,8 +11,7 @@
  *		NONE
  */
  
-private[_alpha];
-_alpha = _this select 0;
+private _alpha = _this select 0;
 if(typeName(_alpha) == "ARRAY")then{
 	{
 		switch(_x)do{

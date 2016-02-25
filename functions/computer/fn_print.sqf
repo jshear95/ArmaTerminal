@@ -10,13 +10,11 @@
  *	Function Calls :
  *		NONE
  */
- 
-private [_comp,_state,_yOffset,_safe,_xCord,_yCord,_cmdLn,_prevLines,_curLine,_pText,_bool,_return,_header,_prevText,_postText];
 
-_comp = _this select 0;
-_state = _this select 0 select 4;
-_yOffset = 0;
-_safe = _this select 0 select 5 select 7;
+private _comp = _this select 0;
+private _state = _this select 0 select 4;
+private _yOffset = 0;
+private _safe = _this select 0 select 5 select 7;
 
 if(_state == "COMMANDLINE")then{
 	_yOffset = _this select 0 select 5 select 5;
@@ -25,16 +23,14 @@ if(_state == "EDITOR")then{
 	_yOffset = _this select 0 select 7 select 4;
 };
 
-_xCord = 0*safeZoneW;
-_yCord = 0*safeZoneH;
+private _xCord = 0*safeZoneW;
+private _yCord = 0*safeZoneH;
 
 
 _printText = {											//print [_text] in the terminal
-	private[_text,_txtColor,_displayText];
-	
-	_text = _this select 0;
-	_txtColor = _comp select 6;
-	_displayText = "";
+	private _text = _this select 0;
+	private _txtColor = _comp select 6;
+	private _displayText = "";
 	
 	switch(_txtColor)do{
 		case("#33CC33"):{	//Green
@@ -54,12 +50,12 @@ _printText = {											//print [_text] in the terminal
 switch (true) do {
 	case (_state == "COMMANDLINE") : {
 		//Gets text to print
-		_cmdLn = _comp select 5;
-		_prevLines = _cmdLn select 0;
-		_curLine = _cmdLn select 1;
+		private _cmdLn = _comp select 5;
+		private _prevLines = _cmdLn select 0;
+		private _curLine = _cmdLn select 1;
 		
 		//Compiles text to print
-		_pText = "";
+		private _pText = "";
 		{
 			{
 				_pText = _pText + _x;
@@ -67,7 +63,7 @@ switch (true) do {
 			_pText = _pText + "<br />";
 		}forEach _prevLines;
 		
-		_bool = false;	//Weather the loop below has passed index 0
+		private _bool = false;	//Weather the loop below has passed index 0
 		{
 			if(_safe&&_bool && str(_x) != str(""))then{
 				_pText = _pText + "*";
@@ -81,13 +77,13 @@ switch (true) do {
 			_pText = _pText + "_";
 		};
 		
-		_return = [_pText] call _printText;
+		private _return = [_pText] call _printText;
 	};
 	case (_state == "EDITOR"):{
 		//Gets text to print
-		_header = _comp select 7 select 1;
-		_prevText = _comp select 7 select 2;
-		_postText = _comp select 7 select 3;
+		private _header = _comp select 7 select 1;
+		private _prevText = _comp select 7 select 2;
+		private _postText = _comp select 7 select 3;
 		
 		_pText = _header;
 		

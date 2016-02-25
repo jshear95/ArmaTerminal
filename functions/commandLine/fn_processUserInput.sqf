@@ -16,40 +16,38 @@
  *		CommandLine_fnc_executeLine
 */
 
-private[_computer,_return,_backSpace,_up,_down,_userInput,_scrollUp,_scrollDown,_control,_tab,_users,_files,_currentUser,_computerName,_state,_commandLine,_color,_steed,_dev,_prevLines,_curLine,_filePath,_prevCommands,_prevCommandIndex,_yOffset,_cache,_safe,_lineHeight];
+private _computer = _this select 0;
 
-_computer = _this select 0;
+private _return = _this select 0 select 0;
+private _backSpace = _this select 0 select 1;
+private _up = _this select 0 select 2;
+private _down = _this select 0 select 3;
+private _userInput = _this select 0 select 4;
+private _scrollUp = _this select 0 select 5;
+private _scrollDown = _this select 0 select 6;
+private _control = _this select 0 select 7;
+private _tab = (str(_userInput) == str("    "));
 
-_return = _this select 0 select 0;
-_backSpace = _this select 0 select 1;
-_up = _this select 0 select 2;
-_down = _this select 0 select 3;
-_userInput = _this select 0 select 4;
-_scrollUp = _this select 0 select 5;
-_scrollDown = _this select 0 select 6;
-_control = _this select 0 select 7;
-_tab = (str(_userInput) == str("    "));
+private _users = _this select 1 select 0;
+private _files = _this select 1 select 1;
+private _currentUser = _this select 1 select 2;
+private _computerName = _this select 1 select 3;
+private _state = _this select 1 select 4;
+private _commandLine = _this select 1 select 5;
+private _color = _this select 1 select 6;
+private _steed = _this select 1 select 7;
+private _dev = _this select 1 select 8;
 
-_users = _this select 1 select 0;
-_files = _this select 1 select 1;
-_currentUser = _this select 1 select 2;
-_computerName = _this select 1 select 3;
-_state = _this select 1 select 4;
-_commandLine = _this select 1 select 5;
-_color = _this select 1 select 6;
-_steed = _this select 1 select 7;
-_dev = _this select 1 select 8;
+private _prevLines = _commandLine select 0;
+private _curLine = _commandLine select 1;
+private _filePath = _commandLine select 2;
+private _prevCommands = _commandLine select 3;
+private _prevCommandIndex = _commandLine select 4;
+private _yOffset = _commandLine select 5;
+private _cache = _commandLine select 6;
+private _safe = _commandLine select 7;
 
-_prevLines = _commandLine select 0;
-_curLine = _commandLine select 1;
-_filePath = _commandLine select 2;
-_prevCommands = _commandLine select 3;
-_prevCommandIndex = _commandLine select 4;
-_yOffset = _commandLine select 5;
-_cache = _commandLine select 6;
-_safe = _commandLine select 7;
-
-_lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
+private _lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
 
 switch true do {
 	case (_return) : {

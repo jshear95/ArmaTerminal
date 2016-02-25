@@ -11,10 +11,9 @@
  *		NONE
 */
 
-private [_stack,_val];
-_stack = _this select 0;
+private _stack = _this select 0;
 
-_val = _stack select (count _stack - 1);
+private _val = _stack select (count _stack - 1);
 
 _stack set [count _stack - 1 , "" ];
 _stack = _stack - [""];

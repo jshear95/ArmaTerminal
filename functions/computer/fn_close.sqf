@@ -11,11 +11,9 @@
  *		NONE
 */
 
-private [_target,_caller,_devMode];
-
-_target = _this select 0;													//Computer
-_caller = _this select 1;													//Player Activating computer
-_devMode = _this select 2;													//Weather or not the computer is in dev mode
+private _target = _this select 0;													//Computer
+private _caller = _this select 1;													//Player Activating computer
+private _devMode = _this select 2;													//Weather or not the computer is in dev mode
 
 
 sleep 2;																		//Allows text to fade the same time as the black background

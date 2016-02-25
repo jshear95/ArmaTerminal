@@ -11,17 +11,16 @@
  *		NONE
  */
 
-private[_input,_output,_terminate,_spInd,_bsInd];
-_input = _this select 0;
-_input = _input + " ";
-_output = [];
+private _input = _this select 0;
+private _input = _input + " ";
+private _output = [];
 
 _index = 0;
 
 while{_index < count _input}do{
 	
-	_spInd = _input select [_index, count _input - 1] find " ";
-	_bsInd = _input select [_index, count _input - 1] find "\ ";
+	private _spInd = _input select [_index, count _input - 1] find " ";
+	private _bsInd = _input select [_index, count _input - 1] find "\ ";
 	//bs is for back slash not bull shit :)
 	
 	switch(true)do{

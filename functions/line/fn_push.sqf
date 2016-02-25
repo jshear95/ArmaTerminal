@@ -12,10 +12,8 @@
  *		
 */
 
-private [_stack,_item];
-
-_stack = _this select 0;
-_item = _this select 1;
+private _stack = _this select 0;
+private _item = _this select 1;
 
 _stack set [count _stack, _item ];
 

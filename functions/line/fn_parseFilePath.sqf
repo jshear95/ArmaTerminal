@@ -11,11 +11,9 @@
  *		NONE
  */
  
-private[_filePath,_output];
+private _filePath = _this select 0;
 
-_filePath = _this select 0;
-
-_output = "";
+private _output = "";
 
 {
 	if(_x == "MASTER")then{

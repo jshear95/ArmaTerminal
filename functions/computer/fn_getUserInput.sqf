@@ -11,26 +11,25 @@
  *		NONE
  */
 
-private [_ctrl, _dikCode, _shift, _ctrlKey, _alt,_backspace,_return,_up,_down,_left,_right,_scrollUp,_scrollDown,_insert,_delete,_home,_end,_userInput];
-_ctrl = _this select 0;													//Not used
-_dikCode = _this select 1;
-_shift = _this select 2;
-_ctrlKey = _this select 3;
-_alt = _this select 4;
-_backSpace = false;
-_return = false;
-_up = false;
-_down = false;
-_left = false;
-_right = false;
-_scrollUp = false;
-_scrollDown = false;
-_insert = false;
-_delete = false;
-_home = false;
-_end = false;
+private _ctrl = _this select 0;													//Not used
+private _dikCode = _this select 1;
+private _shift = _this select 2;
+private _ctrlKey = _this select 3;
+private _alt = _this select 4;
+private _backSpace = false;
+private _return = false;
+private _up = false;
+private _down = false;
+private _left = false;
+private _right = false;
+private _scrollUp = false;
+private _scrollDown = false;
+private _insert = false;
+private _delete = false;
+private _home = false;
+private _end = false;
 
-_userInput = "";
+private _userInput = "";
 
 //hint str(_dikCode);		//Uncomment this line to get the code for any key you press
 

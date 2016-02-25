@@ -32,6 +32,9 @@ class CfgFunctions {
 			class getFile {};
 			class getFileIndex {};
 			class getType {};
+			class hasReadPermission {};
+			class hasWritePermission {};
+			class hasExecutePermission {};
 		};
 	};
 	class Steed {

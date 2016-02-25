@@ -1,10 +1,10 @@
 /*
  *	Joshua Shear
  *	Steed_fnc_steed.sqf
- *	Takes in a file name and char array
+ *	Takes in the file to edit, the current user, and weather or not this is a new file or it will be creating a file
  *	Returns a textEditor (STEED)
  *	
- *	How to call : [file name, file contents, permission] call Steed_fnc_newSteed;
+ *	How to call : [file,current User,real file] call Steed_fnc_newSteed;
  *	
  *	Returns: new steed
  *	
@@ -13,17 +13,23 @@
  *		
  */
 
-private[_fileName, _fileContents, _permission,_header,_prevText,_postText,_yOffset,_steed];
+private _fileName = _this select 0 select 0;
+private _fileContents = _this select 0 select 1;
+private _owner = _this select 0 select 2;
+private _permissions = _this select 0 select 3;
+private _user = _this select 1;
+private _curDir =_this select 2;
+private _realFile = _this select 2;
 
-_fileName = _this select 0;
-_fileContents = _this select 1;
-_permission = _this select 2;
+private _header = _fileName + "<br/>Control+Z to exit (will not save, to keep progress, manually save first)<br/>Control+S to save<br/>";
 
-_header = _fileName + "<br/>Control+Z to exit without saving<br/>Control+S to save and exit<br/>";
-_prevText = [""];
-_postText = _fileContents;
-_yOffset = 0;
+//if(_realFile and ([(_this select 0),_user]call File_fnc_hasWritePermission))then{
+//	_header = _fileName + "<br/>Control+Z to exit<br/>";
+//};
+private _prevText = [""];
+private _postText = _fileContents;
+private _yOffset = 0;
 
-_steed = [_fileName, _header, _prevText, _postText, _yOffset, _permission];
+private _steed = [_fileName, _header, _prevText, _postText, _yOffset, _owner,_curDir];
 
 _steed;

@@ -9,11 +9,10 @@
  *	
  *	Function calls :
  *		NONE
-*/
-private [_preText,_userText];
+ */
 
-_preText = _this select 0;
-_userText = "";
+private _preText = _this select 0;
+private _userText = "";
 
 [
 	_preText,
