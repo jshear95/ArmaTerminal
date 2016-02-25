@@ -19,6 +19,8 @@
  *		File_fnc_getFile
  *		File_fnc_getType
  *		File_fnc_getFileIndex
+ *		File_fnc_hasReadPermission
+ *		File_fnc_hasWritePermission
  */
 
 private _arg = _this select 0;

@@ -10,6 +10,7 @@
  *	Function calls :
  *		CommandLine_fnc_getCurrentDir
  *		File_fnc_getFile
+ *		File_fnc_hasWritePermission
  */
 
 private _return = _this select 0 select 0;

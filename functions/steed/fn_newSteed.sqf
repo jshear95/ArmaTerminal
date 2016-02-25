@@ -23,9 +23,6 @@ private _realFile = _this select 2;
 
 private _header = _fileName + "<br/>Control+Z to exit (will not save, to keep progress, manually save first)<br/>Control+S to save<br/>";
 
-//if(_realFile and ([(_this select 0),_user]call File_fnc_hasWritePermission))then{
-//	_header = _fileName + "<br/>Control+Z to exit<br/>";
-//};
 private _prevText = [""];
 private _postText = _fileContents;
 private _yOffset = 0;
