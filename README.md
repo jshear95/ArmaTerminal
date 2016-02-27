@@ -16,7 +16,7 @@ Please note that compatibility between different versions of ArmaTerminal is ver
  - **Hacking UAVs** allow for players from the terminal to take over UAVs in game
 Check the issues list for current list of features and bugs
 
-### Uses for Arma Terminal
+### Uses for ArmaTerminal
 
 It might not be initially apparent the different uses for Arma Terminal inside of an Arma mission. These are some of the uses I have thought of:
 
@@ -29,7 +29,7 @@ It might not be initially apparent the different uses for Arma Terminal inside o
  - **Messaging System** (Not yet implemented)
    - This will allow for players to message each other across a network of terminals. This would be an alternative to the in game chat.
 
-## How to use armaTerminal as a player
+## How to use ArmaTerminal as a player
 
 Arma Terminal has been designed to be easy to learn, difficult to master. To open Arma Terminal, approach the computer. When you get close an action menu action `open computer` will pop up. To open the terminal use the `open computer` option. When you open Arma Terminal, it will have a blurb at the top to type `help` if you need  help. For experienced command line users, this will not need to be said, but for people new to a command line, this will be very helpful. Typing `help` will print out all the commands and a short blurb about what each one does.
 
@@ -51,7 +51,7 @@ Code for initializing the terminal:
 
 ## Known Bugs
  - It is unknown if this is MP compatible. I am currently not able to test on a server with multiple people. If it does break in MP let me know and I will try to fix this. I do want this to work in MP.
- - Typing '<' in the terminal or in STEED will prevent any text after the `<` from being displayed unless followed by `br/>`. This is believed to be a limitation of the engine with the display method I am using. As such, you cannot type `<` in ArmaTerminal.
+ - Typing '<' in the terminal or in STEED will prevent any text after the `<` from being displayed unless followed by `br/>`. This is believed to be a limitation of the engine with the display method I am using. As such, you cannot type `<` in Arma Terminal.
  - The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered. Pressing Control + X in the terminal, will wipe all previous lines so new text will be rendered for the time being.
  - Key modifiers (control and shift) sometimes don't register when pressed. This is an engine limitation. If I find a better solution, I will fix it, but just be persistent for now.
 
