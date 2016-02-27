@@ -16,13 +16,26 @@ Please note that compatibility between different versions of ArmaTerminal is ver
  - **Hacking UAVs** allow for players from the terminal to take over UAVs in game
 Check the issues list for current list of features and bugs
 
-## How to use armaTerminal
+### Uses for Arma Terminal
+
+It might not be initially apparent the different uses for Arma Terminal inside of an Arma mission. These are some of the uses I have thought of:
+
+ - **Objective Intel Storage**
+   - In the Zeus update we got access to placeable intel that could be inherently picked up and read. This was cool but honestly, other than terror networks trying to stay off the grid, who stores AARs and mission plans on paper, its all been computerized. This was the initial reason I made Arma Terminal. Not only can you store a lot of documents on a computer, but you can password protect it, and hide the login credentials on a piece of the placeable intel somewhere else in the base/safe house/terrain. This can add new dynamics to old 'collect the intel' missions.
+   - Another use is for storing lore for the mission. Say you want to have an option for players to find out why a camp was destroyed but its not required. At an enemy base you could hide an AAR on an Arma Terminal. Or you could hide chat feed between an agent and their handler that make it easier to locate an HVT.
+   - Further more in a multi player setting, one faction could be tasked with defending a laptop while the other team tries to access files on it. They would have to defend the person using the terminal while they hack in to find the data.
+ - **UAV Hacking** (Not yet implemented)
+   - Eventually I want to allow for players to connect to any UAV on the map. As this could be potentially game breaking, there will probably be a way to toggle this functionality to UAVs designated by the mission maker. (Note that UAV in this context also includes the UGVs, auto turrets and any other item controllable via the UAV terminals in game)
+ - **Messaging System** (Not yet implemented)
+   - This will allow for players to message each other across a network of terminals. This would be an alternative to the in game chat.
+
+## How to use armaTerminal as a player
 
 Arma Terminal has been designed to be easy to learn, difficult to master. To open Arma Terminal, approach the computer. When you get close an action menu action `open computer` will pop up. To open the terminal use the `open computer` option. When you open Arma Terminal, it will have a blurb at the top to type `help` if you need  help. For experienced command line users, this will not need to be said, but for people new to a command line, this will be very helpful. Typing `help` will print out all the commands and a short blurb about what each one does.
 
 To use a command line, type a command into the line. Once the command is fully typed out, you hit enter/return to confirm it. Once confirmed the computer processes the line and executes the command. Once it is finished processing, it will either prompt the user for more input or display another empty line.
 
-## How to use armaTerminal in your mission
+## How to use armaTerminal in your mission as a mission creator
 
  - Take the armaTerminal.sqf, functions folder, and description.ext and drag them into your mission folder.
    - If your mission already has a description.ext, you can just copy all the code in my description.ext into yours.
@@ -37,7 +50,7 @@ Code for initializing the terminal:
 `this enableSimulation false; this addAction["Use Computer","armaTerminal.sqf",[[["password","admin"]],["MASTER",[],"PUBLIC",[7,7,7]],true]];`
 
 ## Known Bugs
- - It is unknown if this is MP compatible. I am not able to test on a server with multiple people. If it does break in MP let me know and I will try to fix this. I do want this to work in MP.
+ - It is unknown if this is MP compatible. I am currently not able to test on a server with multiple people. If it does break in MP let me know and I will try to fix this. I do want this to work in MP.
  - Typing '<' in the terminal or in STEED will prevent any text after the `<` from being displayed unless followed by `br/>`. This is believed to be a limitation of the engine with the display method I am using. As such, you cannot type `<` in ArmaTerminal.
  - The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered. Pressing Control + X in the terminal, will wipe all previous lines so new text will be rendered for the time being.
  - Key modifiers (control and shift) sometimes don't register when pressed. This is an engine limitation. If I find a better solution, I will fix it, but just be persistent for now.
