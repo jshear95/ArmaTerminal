@@ -467,6 +467,47 @@ if(!(_cache select 0))then{
 			
 			_output;
 		};
+		case(str(_cmd)==str("CHOWN")):{
+			_output = "";
+			
+			_commandLine = _computer select 5;
+			_filePath = _commandLine select 2;
+			_files = _computer select 1;
+			
+			private _curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
+			
+			private _fileName = _params select 0;
+			private _newOwner = _params select 1;			//Specified New owner
+			
+			private _bool = false;
+			{
+				if(str(_newOwner)==str(_x select 1))then{
+					_bool = true;
+				};
+			}forEach _users;
+			
+			switch(true)do{
+				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0)):{	//File does not exist
+					_output = "Specified file does not exist.";
+				};
+				case(!_bool):{														//Specified new owner doesn't exist
+					_output = "Unable to find specified new user.";
+				};
+				case(str(_user) == str("PUBLIC")):{
+					_output = "Error updating file owner.";
+				};
+				case((str(([_curDir,_fileName] call File_fnc_getFile) select 2) == str(_user) and ([[_curDir,_fileName] call File_fnc_getFile,_user] call File_fnc_hasWritePermission)) or (str(_user) == str("admin"))):{
+																					//File owner or admin executing and if owner then they have write permission
+					([_curDir,_fileName] call File_fnc_getFile) set [2,_newOwner];
+					_output = "File owner updated to " + _newOwner + ".";
+				};
+				default {
+					_output = "Error updating file owner.";
+				};
+			};
+			
+			_output
+		};
 		case(str(_cmd)==str("USERDEL")):{
 			_output = "";
 			if(str(_user)!=str("PUBLIC"))then{

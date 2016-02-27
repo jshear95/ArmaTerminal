@@ -34,6 +34,7 @@ _userAdd = ["U","S","E","R","A","D","D"];
 _login = ["L","O","G","I","N"];
 _logout = ["L","O","G","O","U","T"];
 _chmod = ["C","H","M","O","D"," "];
+_chown = ["C","H","O","W","N"," "];
 _userDel = ["U","S","E","R","D","E","L"];
 _ctc = ["C","T","C"];
 
@@ -79,6 +80,9 @@ switch true do {
 	};
 	case(str(_userInput select[0,6]) == str(_chmod)):{
 		_output = ["CHMOD",_userInput select [6,count _userInput - 1]];
+	};
+	case(str(_userInput select[0,6]) == str(_chown)):{
+		_output = ["CHOWN",_userInput select [6,count _userInput - 1]];
 	};
 	case(str(_userInput select[0,6])==str(_mkdir)):{
 		_output = ["MKDIR",_userInput select [6,count _userInput - 1]];
