@@ -36,6 +36,7 @@ _logout = ["L","O","G","O","U","T"];
 _chmod = ["C","H","M","O","D"," "];
 _chown = ["C","H","O","W","N"," "];
 _userDel = ["U","S","E","R","D","E","L"];
+_pswd = ["P","A","S","S","W","D"];
 _ctc = ["C","T","C"];
 
 switch true do {
@@ -92,6 +93,9 @@ switch true do {
 	};
 	case(str(_userInput select[0,6])==str(_steed)):{
 		_output = ["STEED",_userInput select [6,count _userInput - 1]];
+	};
+	case(str(_userInput) == str(_pswd)):{
+		_output = ["PSWD"];
 	};
 	case(str(_userInput) == str(_ctc)):{
 		_output = ["CTC"];

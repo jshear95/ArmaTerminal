@@ -386,6 +386,19 @@ if(!(_cache select 0))then{
 			};
 			_output;
 		};
+		case(str(_cmd)==str("PSWD")):{
+			switch(true)do{
+				case(str(_user)==str("PUBLIC")):{
+					_output = "You must login as a user to change their password."
+				};
+				default {
+					_output = "";
+					_cache = [true, "PSWD0", "Enter Your Current Password: "];
+					_commandLine set [6,_cache];
+					_commandLine set[7, true];
+				};
+			};
+		};
 		case(str(_cmd)==str("LOGOUT")):{
 			if(str(_user)!=str("PUBLIC"))then{
 				_output = "User logged out, returned to MASTER directory";
@@ -667,6 +680,61 @@ if(!(_cache select 0))then{
 			_computer set [2, _user];
 			
 			_output;
+		};
+		case(str(_cache select 1)==str("PSWD0")):{
+			private _password = [_cache select 3] call Line_fnc_inputToString;
+			
+			private _bool = false;
+			{
+				if(str(_user)==str(_x select 1) && str(_password) == str(_x select 0))then{
+					_bool = true;
+				};
+			}forEach _users;
+			
+			_output = "";
+			
+			if(_bool)then{
+				_cache = [true, "PSWD1", "Enter New Password: "];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			}else{
+				_output = "Password incorrect";
+				_cache = [false];
+				_commandLine set[6,_cache];
+				_commandLine set[7, false];
+			};
+			
+			_output;
+		};
+		case(str(_cache select 1)==str("PSWD1")):{
+			private _newPassword = [_cache select 3] call Line_fnc_inputToString;
+			_output = "";
+			_cache = [true, "PSWD2", "Confirm New Password: ",_newPassword];
+			_commandLine set[6,_cache];
+			_commandLine set[7,true];
+			_output;
+		};
+		case(str(_cache select 1)==str("PSWD2")):{
+			private _newPassword = _cache select 3;
+			private _confPassword = [_cache select 4] call Line_fnc_inputToString;
+			_output = "";
+			if(str(_newPassword)==str(_confPassword))then{
+				{
+					if(str(_user)==str(_x select 1))then{
+						_x set[0,_newPassword];
+					};
+				}forEach _users;
+				_output = "Password changed";
+				_cache = [false];
+				_commandLine set[6,_cache];
+				_commandLine set[7, false];
+			}else{
+				_cache = [true, "PSWD1", "Passwords did not match. Enter New Password: "];
+				_commandLine set[6,_cache];
+				_commandLine set[7, true];		//Set input to be stared out
+				_output = "";
+			};
 		};
 		case(str(_cache select 1)==str("USERDEL0")):{
 			_output = "";
