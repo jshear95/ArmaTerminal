@@ -41,6 +41,10 @@ To use a command line, type a command into the line. Once the command is fully t
    - If your mission already has a description.ext, you can just copy all the code in my description.ext into yours.
  - Place down a computer (any object in game will do, even a pile of bricks or player, but a computer will add to the authenticity) and add the code from the end of this section of the readme to the init field of the object.
  - Go in game and open up Arma Terminal. Use the in game commands to create the users and file structure that you want.
+   - The login for the admin is:
+     - Username: admin
+     - Password: password
+   - It is recomended that you change the password for the admin, otherwise players will have unlimited access to the system, you can do this with a command within the terminal
  - Once you have the computer in the state you want it, type `ctc` into the command line and hit enter. This will copy all the data you need to your clip board. This is only possible from dev mode. When you copy the code to your clipboard, it will set the boolean for dev mode false so that players cannot do this in the mission.
  - With the code copied go into your mission and take out all the code you added in step 2 to its init field. Paste in the code that you got from in game.
  - Test your mission and the computer to make sure they are working properly.
