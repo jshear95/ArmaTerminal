@@ -38,6 +38,8 @@ private _params = [_remainingLine] call Line_fnc_parseSpaceDeliniation;
 
 private _output = "The command you entered is not recognised as a command. Type 'HELP' in order to see a list of supported commands.";
 
+private _addLines = 0;
+
 if(!(_cache select 0))then{
 	switch true do {
 		case(str(_cmd) == str("QUIT")):{
@@ -46,27 +48,28 @@ if(!(_cache select 0))then{
 			_output = "";
 		};
 		case(str(_cmd) == str("HELP")):{
-			_output = "Supported Commands:<br/>"+
-				"  HELP = Displays all supported commands<br/>"+
-				"  CONTROL X = Clears all previous lines printed in the terminal<br/>"+
-				"  TIME = Displays the current date and time   m/d/y hr:min<br/>"+
-				"  WHOAMI = Displays the current active user's user name <br/>"+
-				"  COLOR = Toggles color of text between green and white<br/>"+
-				"  LS = Displays all files in current active directory<br/>" +
-				"  LS -L = Displays all files in current active directory in the following<br/>        format: mod user file name<br/>" +
-				"  CD [DirName] = Opens the specified directory, no [] braces,<br/>        'cd ..' returns you to the parent directory<br/>" +
-				"  RN [DirName] [NewName] = Renames the directory matching the first parameter<br/>        with the name specified in the second parameter, no [] braces<br/>" +
-				"  MKDIR [DirName] = Creates a new directory in the current active directory with<br/>        specified dirName, no [] braces<br/>" +
-				"  RM [DirName] = permanently deletes the specified subdirectory from the current<br/>        directory<br/>"+
-				"  STEED [FileName] = If specified file exists and is not a directory, opens it<br/>        in Simulated TExt EDitor (STEED), if the specified file does not exist,<br/>        it creates it and opens the new blank file in STEED<br/>" +
-				"        For more information on steed, type 'HELP STEED' without the quotes<br/>"+
-				"  USERADD = Prompts user for input for user name, password and password<br/>        confirmation, then generates a new user<br/>"+
-				"  USERDEL = Prompts user for input for user name of user to delete, password of<br/>        user to delete, and current user's password, then deletes the specified<br/>        user<br/>"+
-				"  LOGIN = Prompts user for input for user name and password, if both are<br/>        correct, logs in as user<br/>"+
-				"  LOGOUT = Logs current user out and return to the master directory, if no user<br/>        is logged in, nothing happens.<br/>"+
-				"  CHMOD [FileName] [Permissions] = Sets the file permission of the specified<br/>        file, to the specified parameter with the following:<br/>                0=No Permissions<br/>                1=Execute Only<br/>                2=Write Only<br/>                4=Read Only<br/>                Add numbers to combine permissions.<br/>        List three nubmers. The first number is for the file owner, the middle<br/>        is for other users, the last is for public users. An example is:<br/>                chmod file 740<br/>        this gives read write and execute access to the owner, read only access<br/>        to other users and no access to users not logged in. If a user is given<br/>        0 permissions, they will not be able to see the file. All permissions<br/>        are recursive on any files within the specified file.<br/>"+
-				"  CHOWN [FileName] [NewOwner] = Sets the file owner to the new owner. The new<br/>        owner is specified as the new owner's username. In order to execute<br/>        this, you must be logged in as the admin or the file's owner. If the<br/>        file's owner is PUBLIC, then only the admin can change the owner.<br/>" +
-				"  QUIT = Exits the terminal<br/>"+
+			_addLines = 51;
+			_output = "Supported Commands:\n"+
+				"  HELP = Displays all supported commands\n"+
+				"  CONTROL X = Clears all previous lines printed in the terminal\n"+
+				"  TIME = Displays the current date and time   m/d/y hr:min\n"+
+				"  WHOAMI = Displays the current active user's user name \n"+
+				"  COLOR = Toggles color of text between green and white\n"+
+				"  LS = Displays all files in current active directory\n" +
+				"  LS -L = Displays all files in current active directory in the following\n        format: mod user file name\n" +
+				"  CD [DirName] = Opens the specified directory, no [] braces,\n        'cd ..' returns you to the parent directory\n" +
+				"  RN [DirName] [NewName] = Renames the directory matching the first parameter\n        with the name specified in the second parameter, no [] braces\n" +
+				"  MKDIR [DirName] = Creates a new directory in the current active directory with\n        specified dirName, no [] braces\n" +
+				"  RM [DirName] = permanently deletes the specified subdirectory from the current\n        directory\n"+
+				"  STEED [FileName] = If specified file exists and is not a directory, opens it\n        in Simulated TExt EDitor (STEED), if the specified file does not exist,\n        it creates it and opens the new blank file in STEED\n" +
+				"        For more information on steed, type 'HELP STEED' without the quotes\n"+
+				"  USERADD = Prompts user for input for user name, password and password\n        confirmation, then generates a new user\n"+
+				"  USERDEL = Prompts user for input for user name of user to delete, password of\n        user to delete, and current user's password, then deletes the specified\n        user\n"+
+				"  LOGIN = Prompts user for input for user name and password, if both are\n        correct, logs in as user\n"+
+				"  LOGOUT = Logs current user out and return to the master directory, if no user\n        is logged in, nothing happens.\n"+
+				"  CHMOD [FileName] [Permissions] = Sets the file permission of the specified\n        file, to the specified parameter with the following:\n                0=No Permissions\n                1=Execute Only\n                2=Write Only\n                4=Read Only\n                Add numbers to combine permissions.\n        List three nubmers. The first number is for the file owner, the middle\n        is for other users, the last is for public users. An example is:\n                chmod file 740\n        this gives read write and execute access to the owner, read only access\n        to other users and no access to users not logged in. If a user is given\n        0 permissions, they will not be able to see the file. All permissions\n        are recursive on any files within the specified file.\n"+
+				"  CHOWN [FileName] [NewOwner] = Sets the file owner to the new owner. The new\n        owner is specified as the new owner's username. In order to execute\n        this, you must be logged in as the admin or the file's owner. If the\n        file's owner is PUBLIC, then only the admin can change the owner.\n" +
+				"  QUIT = Exits the terminal\n"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
 		};
 		case(str(_cmd) == str("TIME")):{
@@ -79,9 +82,11 @@ if(!(_cache select 0))then{
 			
 			if(_minute < 10)then{ _minute = "0"+str(_minute);};				//Format time right
 			
+			_addLines = 1;
 			_output = format ["%1/%2/%3  %4:%5",_month,_day,_year,_hour,_minute];
 		};
 		case(str(_cmd) == str("WHOAMI")):{
+			_addLines = 1;
 			_output = "No user currently logged in.";
 			
 			if(_user != "PUBLIC")then{
@@ -96,8 +101,10 @@ if(!(_cache select 0))then{
 			
 			if(_color == "#33CC33")then{
 				_color = "#FFFFFF";			//White
+				//ctrlSetTextColor[101,[1,1,1,1]];
 			}else{
 				_color = "#33CC33";			//Green
+				//ctrlSetTextColor[101,[0,1,0,1]];
 			};
 			
 			_computer set [6, _color];
@@ -117,7 +124,8 @@ if(!(_cache select 0))then{
 					private _fileName = str(_x select 0);							//Converts from errorString to string with extra ""
 					_fileName = _fileName select [1,(count _fileName - 2)];			//Removes extra ""
 					if(_params select 0 == "")then{
-						_output = _output + _fileName + "<br/>";
+						_addLines = _addLines + 1;
+						_output = _output + _fileName + "\n";
 					}else{
 						private _name = str(_x select 2);
 						_name = _name select [1, (count _name) - 2];
@@ -130,15 +138,16 @@ if(!(_cache select 0))then{
 							};
 						};
 						_output = _output + str(_x select 3 select 0) + str(_x select 3 select 1) + str(_x select 3 select 2) + " " + _name;
-						_output = _output + " " + _fileName + "<br/>";
+						_output = _output + " " + _fileName + "\n";
 					};
 				};
 			}forEach (_curDir select 1);
 			
 			if(_output == "")then{
+				_addLines = 1;
 				_output = "No files in directory";
 			}else{
-				_output = _output select [0, ((count _output) - 5)];
+				_output = _output select [0, ((count _output) - 2)];
 			};
 			
 			_output;
@@ -165,12 +174,15 @@ if(!(_cache select 0))then{
 				
 				switch(true)do{
 					case(str(_file)==str(0)):{
+						_addLines = 1;
 						_output = "No such file or directory";
 					};
 					case(not ([_file,_user] call File_fnc_hasReadPermission)):{
+						_addLines = 1;
 						_output = "No such file or directory";
 					};
 					case(!([_file] call File_fnc_getType)):{
+						_addLines = 1;
 						_output = "Not a directory";
 					};
 					case(str(_file) != str(0) && [_file,_user] call File_fnc_hasReadPermission):{
@@ -225,7 +237,7 @@ if(!(_cache select 0))then{
 					_output = "You lack the permissions to rename this file.";
 				};
 			};
-			
+			_addLines = 1;
 			_output;
 		};
 		case(str(_cmd)==str("MKDIR")):{
@@ -234,7 +246,7 @@ if(!(_cache select 0))then{
 			_commandLine = _computer select 5;
 			_filePath = _commandLine select 2;
 			_files = _computer select 1;
-			
+			_addLines = 1;
 			private _curDir = [_files, _filePath] call CommandLine_fnc_getCurrentDir;
 			private _newName = _params select 0;
 			if([_curDir,_user] call File_fnc_hasWritePermission)then{
@@ -250,12 +262,14 @@ if(!(_cache select 0))then{
 						_output = "Error creating file";
 					};
 					case(_newName == "MASTER"):{											//New file name is MASTER
+						_addlines = _addLines + 1;
 						_output = "MASTER cannot be used as a subdirectory name, MASTER is reserved for the root directory";
 					};
 					case(_newName != "" && str([_curDir,_newName] call File_fnc_getFile) == str(0)):{	//File name is unique in current directory
 						_newFile = [_newName,[],_user,[7,0,0]];
 						if(str(_user) == str("PUBLIC"))then{_newFile set [3,[7,7,7]]};	//If user is not logged in, anyone can do anything to the file
 						(_curDir select 1) set[count (_curDir select 1), _newFile];
+						_addLines = 0;
 					};
 				};
 			}else{
@@ -265,7 +279,7 @@ if(!(_cache select 0))then{
 		};
 		case(str(_cmd)==str("RM")):{
 			_output = "";
-			
+			_addLines = 1;
 			_commandLine = _computer select 5;
 			_filePath = _commandLine select 2;
 			_files = _computer select 1;
@@ -287,6 +301,7 @@ if(!(_cache select 0))then{
 						_output = "You lack the required permission to delete the specified file";
 					};
 					case(str([_curDir,_rmFile] call File_fnc_getFile) != str(0)):{		//Specified file name does exist
+						_addLines = 2;
 						_output = "Deleting this file will permanently erase all of its contents.";
 						_cache = [true, "RM", "Confirm you want to delete this file (y/n) : ",_rmFile];
 						_commandLine set[6,_cache];
@@ -304,7 +319,7 @@ if(!(_cache select 0))then{
 		};
 		case(str(_cmd)==str("STEED")):{
 			_output = "";
-			
+			_addLines = 1;
 			_commandLine = _computer select 5;
 			_filePath = _commandLine select 2;
 			_files = _computer select 1;
@@ -327,6 +342,7 @@ if(!(_cache select 0))then{
 					_output = "Specified file cannot be created.";
 				};
 				case(str([_curDir,_fileName] call File_fnc_getFile) == str(0) and [_curDir,_user] call File_fnc_hasWritePermission):{
+					_addLines = 0;
 																							//File name is not in current directory and user has write permission in current directory
 					//Create skeleton file
 					_file = [_fileName,[""],_user,[7,4,0]];
@@ -342,6 +358,7 @@ if(!(_cache select 0))then{
 					_output = "Specified file name is already a directory";					//File name is a directory
 				};
 				case(str([_curDir,_fileName] call File_fnc_getFile) != str(0)):{			//File name is already a file and user has permission
+					_addLines = 0;
 					//get file
 					_file = [_curDir,_fileName] call File_fnc_getFile;
 					_steed = [_file,_user,_curDir, true] call Steed_fnc_newSteed;
@@ -353,22 +370,22 @@ if(!(_cache select 0))then{
 			
 		};
 		case(str(_cmd)==str("HELPSTEED")):{
-			_output =	"Simulated TExt EDitor(STEED) HELP<br/>"+
-						"  About: Steed is Arma Terminal's built in text editor. It has basic functionality<br/>          but should not be considered a full fleged text editor<br/>"+
-						"  Commands:<br/>"+
-						"    LEFT ARROW = Move the cursor left<br/>"+
-						"    RIGHT ARROW = Move the cursor right<br/>"+
-						"    CONTROL Z = Exit Steed (DOES NOT SAVE)<br/>"+
-						"    CONTROL S = Save document (DOES NOT EXIT)<br/>"+
-						"    HOME = returns the cursor to the beginning of the document<br/>"+
-						"    END = brings the cursor to the end of the document<br/>"+
-						"    BACKSPACE = Remove character behind cursor<br/>"+
-						"    DELETE = Remove character in front of cursor<br/>"+
-						"    PAGE UP = Scroll steed up<br/>"+
-						"    PAGE DOWN = Scroll steed down<br/>"+
-						"    CONTROL C = Copy entire document to clipboard, this allows you to paste into a<br/>                  full text editor such as Notepad or Microsoft Word<br/>"+
-						"    CONTROL V = Pastes text in clipboard into the document (WARNING: THIS WILL<br/>                  OVERWRITE THE ENTIRE DOCUMENT, even if the text in the clipboard<br/>                  is shorter than the document)<br/>"+
-						"  NOTE: No hints or warnings are displayed before saving or exiting, be careful not<br/>         to loose your work or overwrite anything important.";
+			_output =	"Simulated TExt EDitor(STEED) HELP\n"+
+						"  About: Steed is Arma Terminal's built in text editor. It has basic functionality\n          but should not be considered a full fleged text editor\n"+
+						"  Commands:\n"+
+						"    LEFT ARROW = Move the cursor left\n"+
+						"    RIGHT ARROW = Move the cursor right\n"+
+						"    CONTROL Z = Exit Steed (DOES NOT SAVE)\n"+
+						"    CONTROL S = Save document (DOES NOT EXIT)\n"+
+						"    HOME = returns the cursor to the beginning of the document\n"+
+						"    END = brings the cursor to the end of the document\n"+
+						"    BACKSPACE = Remove character behind cursor\n"+
+						"    DELETE = Remove character in front of cursor\n"+
+						"    PAGE UP = Scroll steed up\n"+
+						"    PAGE DOWN = Scroll steed down\n"+
+						"    CONTROL C = Copy entire document to clipboard, this allows you to paste into a\n                  full text editor such as Notepad or Microsoft Word\n"+
+						"    CONTROL V = Pastes text in clipboard into the document (WARNING: THIS WILL\n                  OVERWRITE THE ENTIRE DOCUMENT, even if the text in the clipboard\n                  is shorter than the document)\n"+
+						"  NOTE: No hints or warnings are displayed before saving or exiting, be careful not\n         to loose your work or overwrite anything important.";
 		};
 		case(str(_cmd)==str("USERADD")):{
 			_output = "";

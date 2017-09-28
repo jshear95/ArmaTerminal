@@ -55,8 +55,8 @@ private _lineHeight = 0.00281 * 11;	//This is the height of a line of text. Form
 
 switch true do {
 	case (_return) : {
-		//Add <br/>
-		_preText set[count _preText, "<br/>"];
+		//Add \n
+		_preText set[count _preText, "\n"];
 		_steed set[2, _preText];
 	};
 	case (_backSpace) : {
@@ -176,14 +176,14 @@ switch true do {
 	case (_paste) : {
 		private _txt = copyFromClipboard;
 		
-		private _brs = [];									//Indexes of all <br/>'s
+		private _brs = [];									//Indexes of all \n's
 		private _tmp = toUpper _txt;
-		private _ind = _tmp find "<BR/>";
+		private _ind = _tmp find "\n";
 		
-		while{_ind != -1}do{						//While there is another <br/>
+		while{_ind != -1}do{						//While there is another \n
 			_brs set[count _brs, _ind];
 			_tmp = [_tmp, _ind + 1] call BIS_fnc_trimString;
-			_ind = (_tmp find "<BR/>");
+			_ind = (_tmp find "\n");
 		};
 		
 		private _stuff = [];
@@ -193,7 +193,7 @@ switch true do {
 		private _val = 0;
 		{
 			_val = _val + _x;				//Offset the index in _brs to account for the algorithm above which substringed
-			_stuff set [_val, "<br/>"];		//Set zeroth char to line break char
+			_stuff set [_val, "\n"];		//Set zeroth char to line break char
 			_stuff set [_val + 1, ""];		//Set remaining to empty string
 			_stuff set [_val + 2, ""];
 			_stuff set [_val + 3, ""];
@@ -211,6 +211,7 @@ switch true do {
 	};
 	case (_exit) : {
 		//control and z have been pressed, init exit
+		closeDialog 2;
 		_state = "COMMANDLINE";
 	};
 	case (!(_userInput == "")) : {

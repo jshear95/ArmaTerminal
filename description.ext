@@ -1,3 +1,6 @@
+#include "defines.hpp"
+#include "dialog.hpp"
+
 class CfgFunctions {
     class Computer {
         class Computer {
@@ -5,6 +8,7 @@ class CfgFunctions {
             class close {};
 			class getUserInput {};
 			class print {};
+			class changeLineCount{};
         };
 	};
 	class CommandLine {

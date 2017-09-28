@@ -21,12 +21,24 @@ private _user = _this select 1;
 private _curDir =_this select 2;
 private _realFile = _this select 2;
 
-private _header = _fileName + "<br/>Control+Z to exit (will not save, to keep progress, manually save first)<br/>Control+S to save<br/>";
+private _header = _fileName + "\nControl+Z to exit (will not save, to keep progress, manually save first)\nControl+S to save\n";
 
 private _prevText = [""];
 private _postText = _fileContents;
 private _yOffset = 0;
 
-private _steed = [_fileName, _header, _prevText, _postText, _yOffset, _owner,_curDir];
+private _lineCount = 3;											//How many lines are visible in the terminal
+
+createDialog "Editor";
+_KeyUp2 = (findDisplay 2) displayAddEventHandler ["KeyUp", {
+	pressedKey = _this select 1;
+	shift = _this select 2;
+	control = _this select 3;
+}];
+_KeyDown2 =(findDisplay 2) displayAddEventHandler ["KeyDown", {
+	true
+}];
+
+private _steed = [_fileName, _header, _prevText, _postText, _yOffset, _owner,_curDir,_lineCount];
 
 _steed;

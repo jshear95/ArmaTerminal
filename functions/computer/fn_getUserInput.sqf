@@ -11,7 +11,7 @@
  *		NONE
  */
 
-private _ctrl = _this select 0;													//Not used
+private _ctrl = _this select 0;													//not used
 private _dikCode = _this select 1;
 private _shift = _this select 2;
 private _ctrlKey = _this select 3;
@@ -126,16 +126,16 @@ if(_dikCode == 47 && _shift)then{_userInput = "V";};
 if(_dikCode == 48 && _shift)then{_userInput = "B";};
 if(_dikCode == 49 && _shift)then{_userInput = "N";};
 if(_dikCode == 50 && _shift)then{_userInput = "M";};
-//if(_dikCode == 51 && _shift)then{_userInput = "<";};
+if(_dikCode == 51 && _shift)then{_userInput = (toString [60]);};			//'<'
 if(_dikCode == 52 && _shift)then{_userInput = ">";};
 if(_dikCode == 53 && _shift)then{_userInput = "?";};
 
-//Num pad
+//num pad
 if(_dikCode == 181)then{_userInput = "/";};
 if(_dikCode == 55)then{_userInput = "*";};
 if(_dikCode == 74)then{_userInput = "-";};
 if(_dikCode == 78)then{_userInput = "+";};
-if(_dikCode == 156)then{_return = true;};									//Num pad enter
+if(_dikCode == 156)then{_return = true;};									//num pad enter
 if(_dikCode == 83)then{_userInput = ".";};
 if(_dikCode == 73)then{_userInput = "9";};
 if(_dikCode == 72)then{_userInput = "8";};

@@ -13,15 +13,7 @@
 
 private _comp = _this select 0;
 private _state = _this select 0 select 4;
-private _yOffset = 0;
 private _safe = _this select 0 select 5 select 7;
-
-if(_state == "COMMANDLINE")then{
-	_yOffset = _this select 0 select 5 select 5;
-};
-if(_state == "EDITOR")then{
-	_yOffset = _this select 0 select 7 select 4;
-};
 
 private _xCord = 0*safeZoneW;
 private _yCord = 0*safeZoneH;
@@ -34,16 +26,14 @@ _printText = {											//print [_text] in the terminal
 	
 	switch(_txtColor)do{
 		case("#33CC33"):{	//Green
-			_displayText = format ["<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
+			_displayText = "<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>" + _text + "\n</t>";
 		};
 		case("#FFFFFF"):{	//White
-			_displayText = format ["<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>%1<br /></t>", _text];
+			_displayText = "<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>" + _text + "\n</t>";
 		};
 	};
 	
-	null = [_displayText,_xCord,_yCord + _yOffset - (0.00051 * 11),0.09,0] spawn BIS_fnc_dynamicText;
-	//null = [text,X,Y,Fade Out Time,Fade In Time] spawn BIS_fnc_dynamicText;
-	
+	_foo = ctrlSetText [101, _text];
 	_displayText;
 };
 
@@ -60,7 +50,7 @@ switch (true) do {
 			{
 				_pText = _pText + _x;
 			}forEach _x;
-			_pText = _pText + "<br />";
+			_pText = _pText + "\n";
 		}forEach _prevLines;
 		
 		private _bool = false;	//Weather the loop below has passed index 0
@@ -93,7 +83,7 @@ switch (true) do {
 		
 		if(floor(time) mod 2 == 0)then{						//Toggles cursor at cursor position every second
 			switch (true) do {
-				case (str(_postText select 0) == str("<br/>")) : {
+				case (str(_postText select 0) == str("\n")) : {
 					_pText = _pText + "_";
 					{
 						_pText = _pText + _x;

@@ -16,7 +16,6 @@
  *		Computer_fnc_print
  *		Computer_fnc_close
  */
- 
 
 //Get params
 _target = _this select 0;					//Computer
@@ -34,14 +33,29 @@ pressedKey = -1;
  */
 shift = false;
 control = false;
-
-_KeyUp = (findDisplay 46) displayAddEventHandler ["KeyUp", {pressedKey = _this select 1; shift = _this select 2; control = _this select 3;}];
-/*Handles input for program, searches for key release events*/
-_KeyDown =(findDisplay 46) displayAddEventHandler ["KeyDown", {if((_this select 1) != 1)then{_handled = true; _handled}}];
-/*Handles blocking input from affecting character in game while terminal is running*/
-
 //Creates computer object
 _computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fnc_open;
+
+
+_KeyUp46 = (findDisplay 46) displayAddEventHandler ["KeyUp", {
+	pressedKey = _this select 1;
+	shift = _this select 2;
+	control = _this select 3;
+}];
+_KeyUp1 = (findDisplay 1) displayAddEventHandler ["KeyUp", {
+	pressedKey = _this select 1;
+	shift = _this select 2;
+	control = _this select 3;
+}];
+
+/*Handles input for program, searches for key release events*/
+_KeyDown46 =(findDisplay 46) displayAddEventHandler ["KeyDown", {
+	true
+}];
+_KeyDown1 =(findDisplay 1) displayAddEventHandler ["KeyDown", {
+	true
+}];
+
 
 /**
  * Execution loop
@@ -49,13 +63,9 @@ _computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fn
  * Has a switch statement to get the given state and execute the proper commands for that given state (Command line, login, editor)
  */
  while{_computer select 4 != "QUIT"}do{
-	if(floor(time) mod 9 == 0)then{							//Refreshes black background every 9 seconds
-		cutText ["", "BLACK FADED",0];						//fade screen to black
-	};
-	
 	//Gets key and logs it
 	_input = -1;
-	
+
 	if(pressedKey != -1 && pressedKey != 54 && pressedKey != 42)then{
 		_input = [0, pressedKey, shift, control,false] call Computer_fnc_getUserInput;
 		
@@ -76,8 +86,11 @@ _computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fn
 };
 
 //Removes key event handlers so player can resume normal play
-(findDisplay 46) displayRemoveEventHandler ["KeyDown", _KeyDown];
-(findDisplay 46) displayRemoveEventHandler ["KeyUp", _KeyUp];
+(findDisplay 1) displayRemoveEventHandler ["KeyDown", _KeyDown1];
+(findDisplay 1) displayRemoveEventHandler ["KeyUp", _KeyUp1];
+(findDisplay 46) displayRemoveEventHandler ["KeyDown", _KeyDown46];
+(findDisplay 46) displayRemoveEventHandler ["KeyUp", _KeyUp46];
+
 
 //Archives data into add action for future use
 [_target,_caller,_devMode] call Computer_fnc_close;
