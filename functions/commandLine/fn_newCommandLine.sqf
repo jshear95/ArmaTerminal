@@ -21,7 +21,6 @@ private _prevCommandIndex = 0;									//Index of which previous command the use
 private _cache = [false];										//Array for passing data to subsequent lines in a multi line operation
 																//Index 0 of cache is weather or not to look at it
 private _safeMode = false;										//Weather or not to star out text input (*****)
-private _lineCount = 3;											//How many lines are visible in the terminal
 
 private _temp = "Welcome to Arma Terminal! (version 0.1.1)\n"+
 		"Use 'page up' and 'page down' to scroll. "+
@@ -39,6 +38,5 @@ createDialog "Terminal";
 	_prevCommands,
 	_prevCommandIndex,
 	_cache,
-	_safeMode,
-	_lineCount
+	_safeMode
 ];

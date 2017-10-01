@@ -28,14 +28,12 @@ private _header = _fileName + "\nControl+Z to exit (will not save, to keep progr
 
 private _prevText = [""];
 private _postText = _fileContents;
-private _yOffset = 0;
-
-private _lineCount = 3;											//How many lines are visible in the terminal
+										//How many lines are visible in the terminal
 
 createDialog "Editor";
 _KeyUp2 = KEYLOGUP(2);
 _KeyDown2 = KEYLOGDOWN(2);
 
-private _steed = [_fileName, _header, _prevText, _postText, _yOffset, _owner,_curDir,_lineCount];
+private _steed = [_fileName, _header, _prevText, _postText, _owner,_curDir];
 
 _steed;

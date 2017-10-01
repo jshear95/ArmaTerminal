@@ -16,6 +16,8 @@
 */
 
 #define GET _target getVariable
+#define KEYLOGUP(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyUp", { player setVariable ["pressedKey", (_this select 1)]; player setVariable ["shift", (_this select 2)]; player setVariable ["control", (_this select 3)];}]
+#define KEYLOGDOWN(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyDown", {true}]
 
 private _target = _this select 0;						//Computer
 private _caller = _this select 1;						//Player Activating computer
@@ -34,12 +36,15 @@ private _currentUser = GET "CurUser";					//UserID or PUBLIC (If no user logged 
 private _computerName = GET "ComputerName";				//name of the computer (UNUSED UNTILL NETWORKING UPDATE)
 private _state = "COMMANDLINE";							//State that the computer is in (COMMANDLINE, EDITOR, QUIT)
 private _commandLine = GET "CommandLine";				//Command Line object stored
-//if(str(_commandLine) == str([]))then{
+if(str(_commandLine) == str([]))then{
 	_commandLine = [] call CommandLine_fnc_newCommandLine;	//Creates the command line for the system
-//};
+}else{
+	createDialog "Terminal";
+};
 private _color = GET "ComputerColor";					//Text color (by default green) (can be toggled to white)
 private _steed = GET "STEED";							//Text editor stored ([] by default)
 private _devMode = GET "devMode";						//Whether armaTerminal is in dev mode
+
 
 
 

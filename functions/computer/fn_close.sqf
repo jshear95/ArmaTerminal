@@ -21,7 +21,7 @@ _target setVariable ["AFS", _computer select 1];
 _target setVariable ["CurUser", _computer select 2];
 _target setVariable ["ComputerName", _computer select 3];
 _target setVariable ["ComputerState", "COMMANDLINE"];
-_target setVariable ["CommandLine", []];// _computer select 5];
+_target setVariable ["CommandLine",  _computer select 5];
 _target setVariable ["ComputerColor", _computer select 6];
 _target setVariable ["STEED", _computer select 7];
 _target setVariable ["devMode", _computer select 8];
