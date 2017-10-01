@@ -54,7 +54,7 @@ if(!(_cache select 0))then{
 				"  CONTROL X = Clears all previous lines printed in the terminal\n"+
 				"  TIME = Displays the current date and time   m/d/y hr:min\n"+
 				"  WHOAMI = Displays the current active user's user name \n"+
-				"  COLOR = Toggles color of text between green and white\n"+
+				//"  COLOR = Toggles color of text between green and white\n"+
 				"  LS = Displays all files in current active directory\n" +
 				"  LS -L = Displays all files in current active directory in the following\n        format: mod user file name\n" +
 				"  CD [DirName] = Opens the specified directory, no [] braces,\n        'cd ..' returns you to the parent directory\n" +
@@ -101,10 +101,12 @@ if(!(_cache select 0))then{
 			
 			if(_color == "#33CC33")then{
 				_color = "#FFFFFF";			//White
-				//ctrlSetTextColor[101,[1,1,1,1]];
+				//101 ctrlSetTextColor [1,1,1,1];
+				//102 ctrlSetTextColor [1,1,1,1];
 			}else{
 				_color = "#33CC33";			//Green
-				//ctrlSetTextColor[101,[0,1,0,1]];
+				//101 ctrlSetTextColor [0,1,0,1];
+				//102 ctrlSetTextColor[0,1,0,1];
 			};
 			
 			_computer set [6, _color];

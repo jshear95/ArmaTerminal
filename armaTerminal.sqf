@@ -4,7 +4,7 @@
  * By Joshua Shear
  * Allows users to open computers and interface with virtual files and data through a Linux inspired command line and text editor
  *	
- *	How to call : With in-game add action OR  [_target, _caller,_actionID,_Users,_Files,_devMode] execVM "armaTerminal.sqf";
+ *	How to call : With in-game add action OR  [_target, _caller,_actionID] execVM "armaTerminal.sqf";
  *	
  *	Returns : Nothing
  *	
@@ -17,45 +17,29 @@
  *		Computer_fnc_close
  */
 
+#define KEYLOGUP(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyUp", { player setVariable ["pressedKey", (_this select 1)]; player setVariable ["shift", (_this select 2)]; player setVariable ["control", (_this select 3)];}]
+#define KEYLOGDOWN(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyDown", {true}]
+
+
 //Get params
 _target = _this select 0;					//Computer
 _caller = _this select 1;					//Player Activating computer
 _actionID = _this select 2;					//Action ID
-_users = _this select 3 select 0;			//Users registered with computer
-_files = _this select 3 select 1;			//Starting File Structure
-_devMode = _this select 3 select 2;			//Weather armaTerminal is in dev mode
+_users = _target getVariable "Users";		//Users registered with computer
+_files = _target getVariable "AFS";			//Starting File Structure
+_devMode = _target getVariable "devMode";	//Whether armaTerminal is in dev mode
 
-//Initializes Key Logger for basic input (THIS ONLY RECORDS INGAME KEYS DONT WORRY)
-
-pressedKey = -1;
-/*
- *This is the ID of the key from the action listener below
- */
-shift = false;
-control = false;
 //Creates computer object
-_computer = [_target,_caller,_actionID,_users,_files, _devMode] call Computer_fnc_open;
+_computer = [_target,_caller,_actionID] call Computer_fnc_open;
 
-
-_KeyUp46 = (findDisplay 46) displayAddEventHandler ["KeyUp", {
-	pressedKey = _this select 1;
-	shift = _this select 2;
-	control = _this select 3;
-}];
-_KeyUp1 = (findDisplay 1) displayAddEventHandler ["KeyUp", {
-	pressedKey = _this select 1;
-	shift = _this select 2;
-	control = _this select 3;
-}];
-
-/*Handles input for program, searches for key release events*/
-_KeyDown46 =(findDisplay 46) displayAddEventHandler ["KeyDown", {
-	true
-}];
-_KeyDown1 =(findDisplay 1) displayAddEventHandler ["KeyDown", {
-	true
-}];
-
+//Initializes Key Logger for basic input (THIS ONLY RECORDS INGAME KEYS)
+_caller setVariable ["pressedKey",-1];
+_caller setVariable ["shift",false];
+_caller setVariable ["control",false];
+_KeyUp46 = KEYLOGUP(46);
+_KeyUp1 = KEYLOGUP(1);
+_KeyDown46 = KEYLOGDOWN(46);
+_KeyDown1 = KEYLOGDOWN(1);
 
 /**
  * Execution loop
@@ -65,10 +49,17 @@ _KeyDown1 =(findDisplay 1) displayAddEventHandler ["KeyDown", {
  while{_computer select 4 != "QUIT"}do{
 	//Gets key and logs it
 	_input = -1;
-
-	if(pressedKey != -1 && pressedKey != 54 && pressedKey != 42)then{
-		_input = [0, pressedKey, shift, control,false] call Computer_fnc_getUserInput;
+	
+	_pressedKey = (_caller getVariable "pressedKey");
+	if(_pressedKey != -1 && _pressedKey != 54 && _pressedKey != 42)then{
+		_shift = _caller getVariable "shift";
+		_control = _caller getVariable "control";
+		_input = [0, _pressedKey, _shift, _control,false] call Computer_fnc_getUserInput;
 		
+		_caller setVariable ["pressedKey",-1];
+		_caller setVariable ["shift",false];
+		_caller setVariable ["control",false];
+
 		//Executes proper code for current state
 		_state = _computer select 4;
 		switch(str(_state)) do {
@@ -93,4 +84,4 @@ _KeyDown1 =(findDisplay 1) displayAddEventHandler ["KeyDown", {
 
 
 //Archives data into add action for future use
-[_target,_caller,_devMode] call Computer_fnc_close;
+[_target,_caller,_computer] call Computer_fnc_close;
