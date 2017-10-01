@@ -28,7 +28,7 @@ private _cmd = _arg select 0;
 private _computer = _this select 1;
 
 private _commandLine = _computer select 5;
-private _cache = _commandLine select 6;
+private _cache = _commandLine select 5;
 
 private _users = _computer select 0;
 private _user = _computer select 2;
@@ -306,7 +306,7 @@ if(!(_cache select 0))then{
 						_addLines = 2;
 						_output = "Deleting this file will permanently erase all of its contents.";
 						_cache = [true, "RM", "Confirm you want to delete this file (y/n) : ",_rmFile];
-						_commandLine set[6,_cache];
+						_commandLine set[5,_cache];
 						//Doesn't actually remove the file in this function, simply caches data for later
 					};
 				};
@@ -392,14 +392,14 @@ if(!(_cache select 0))then{
 		case(str(_cmd)==str("USERADD")):{
 			_output = "";
 			_cache = [true, "USERADD0", "Specify User Name (Specify nothing to terminate command) : "];
-			_commandLine set[6,_cache];
+			_commandLine set[5,_cache];
 			_output;
 		};
 		case(str(_cmd)==str("LOGIN")):{
 			if(str(_user) == str("PUBLIC"))then{
 				_output = "";
 				_cache = [true, "LOGIN0", "Enter User Name : "];
-				_commandLine set[6,_cache];
+				_commandLine set[5,_cache];
 			}else{
 				_output = "User already logged in, log out before you log on to another user"
 			};
@@ -413,8 +413,8 @@ if(!(_cache select 0))then{
 				default {
 					_output = "";
 					_cache = [true, "PSWD0", "Enter Your Current Password: "];
-					_commandLine set [6,_cache];
-					_commandLine set[7, true];
+					_commandLine set [5,_cache];
+					_commandLine set[6, true];
 				};
 			};
 		};
@@ -545,7 +545,7 @@ if(!(_cache select 0))then{
 			_output = "";
 			if(str(_user)!=str("PUBLIC"))then{
 				_cache = [true, "USERDEL0", "Specify User Name of the account to delete (Specify nothing to terminate command) : "];
-				_commandLine set[6,_cache];
+				_commandLine set[5,_cache];
 			}else{
 				_output = "You are not logged in";
 			};
@@ -583,7 +583,7 @@ if(!(_cache select 0))then{
 			};
 			
 			_cache = [false];
-			_commandLine set[6,_cache];
+			_commandLine set[5,_cache];
 			_output;
 		};
 		case(str(_cache select 1)==str("USERADD0")):{
@@ -591,12 +591,12 @@ if(!(_cache select 0))then{
 				case(str(_cache select 3)==str([""])):{		//Input was null
 					_output = "Action cancelled";
 					_cache = [false];
-					_commandLine set[6,_cache];
+					_commandLine set[5,_cache];
 				};
 				case(str([_cache select 3] call Line_fnc_inputToString)==str("PUBLIC")):{	//Input was "PUBLIC"
 					_output = "User name cannot be 'PUBLIC'";
 					_cache = [false];
-					_commandLine set[6,_cache];
+					_commandLine set[5,_cache];
 				};
 				case(str([_cache select 3] call Line_fnc_inputToString)!=str("PUBLIC")):{
 					private _userName = [_cache select 3] call Line_fnc_inputToString;
@@ -609,11 +609,11 @@ if(!(_cache select 0))then{
 					if(_bool)then{							//If username already in use
 						_output = "User name already in use.";
 						_cache = [true, "USERADD0", "Specify another User Name (Specify nothing to terminate command) : "];
-						_commandLine set[6,_cache];
+						_commandLine set[5,_cache];
 					}else{									//If username not in use
 						_cache = [true, "USERADD1", "Specify User Password:",_userName];
-						_commandLine set[6,_cache];
-						_commandLine set[7, true];		//Set input to be stared out
+						_commandLine set[5,_cache];
+						_commandLine set[6, true];		//Set input to be stared out
 						_output = "";
 					};
 				};
@@ -624,7 +624,7 @@ if(!(_cache select 0))then{
 		case(str(_cache select 1)==str("USERADD1")):{
 			private _password = [_cache select 4] call Line_fnc_inputToString;
 			_cache = [true, "USERADD2", "Confirm Password:", (_cache select 3), _password];
-			_commandLine set[6,_cache];
+			_commandLine set[5,_cache];
 			_output = "";
 			_output;
 		};
@@ -632,19 +632,19 @@ if(!(_cache select 0))then{
 			private _confPassword =	[_cache select 5] call Line_fnc_inputToString;
 			if(str(_confPassword)==str(_cache select 4))then{
 				//Passwords match
-				_commandLine set[7, false];		//make input not stared out
+				_commandLine set[6, false];		//make input not stared out
 				_users set [count _users, [_confPassword, (_cache select 3)]];
 				_computer set [0, _users];
 				
 				_cache = [false];
-				_commandLine set[6,_cache];
+				_commandLine set[5,_cache];
 				
 				_output = "User created";
 			}else{
 				//Passwords dont match
 				_cache = [true, "USERADD1", "Specify User Password:", (_cache select 3)];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "Passwords do not match.";
 			};
 			_output;
@@ -663,13 +663,13 @@ if(!(_cache select 0))then{
 			
 			if(_bool)then{
 				_cache = [true, "LOGIN1", "Enter Password : ", _userName];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "";
 			}else{
 				_output = "Specified User Name does not exist";
 				_cache = [false];
-				_commandLine set[6,_cache];
+				_commandLine set[5,_cache];
 			};
 			
 			_output;
@@ -694,8 +694,8 @@ if(!(_cache select 0))then{
 			};
 			
 			_cache = [false];
-			_commandLine set[6,_cache];
-			_commandLine set[7, false];
+			_commandLine set[5,_cache];
+			_commandLine set[6, false];
 			_computer set [2, _user];
 			
 			_output;
@@ -714,14 +714,14 @@ if(!(_cache select 0))then{
 			
 			if(_bool)then{
 				_cache = [true, "PSWD1", "Enter New Password: "];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "";
 			}else{
 				_output = "Password incorrect";
 				_cache = [false];
-				_commandLine set[6,_cache];
-				_commandLine set[7, false];
+				_commandLine set[5,_cache];
+				_commandLine set[6, false];
 			};
 			
 			_output;
@@ -730,8 +730,8 @@ if(!(_cache select 0))then{
 			private _newPassword = [_cache select 3] call Line_fnc_inputToString;
 			_output = "";
 			_cache = [true, "PSWD2", "Confirm New Password: ",_newPassword];
-			_commandLine set[6,_cache];
-			_commandLine set[7,true];
+			_commandLine set[5,_cache];
+			_commandLine set[6,true];
 			_output;
 		};
 		case(str(_cache select 1)==str("PSWD2")):{
@@ -746,12 +746,12 @@ if(!(_cache select 0))then{
 				}forEach _users;
 				_output = "Password changed";
 				_cache = [false];
-				_commandLine set[6,_cache];
-				_commandLine set[7, false];
+				_commandLine set[5,_cache];
+				_commandLine set[6, false];
 			}else{
 				_cache = [true, "PSWD1", "Passwords did not match. Enter New Password: "];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "";
 			};
 		};
@@ -768,12 +768,12 @@ if(!(_cache select 0))then{
 			
 			if(_bool and _delUser != 'admin')then{
 				_cache = [true, "USERDEL1", "Specify User Password : ",_delUser];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "";
 			}else{
 				_cache = [false];
-				_commandLine set[6,_cache];
+				_commandLine set[5,_cache];
 				if(_delUser == 'admin')then{
 					_output = "Cannot delete admin"
 				}else{
@@ -798,13 +798,13 @@ if(!(_cache select 0))then{
 			
 			if(_bool)then{
 				_cache = [true, "USERDEL2", "Enter your password to complete : ",_delUser, _delPswd];
-				_commandLine set[6,_cache];
-				_commandLine set[7, true];		//Set input to be stared out
+				_commandLine set[5,_cache];
+				_commandLine set[6, true];		//Set input to be stared out
 				_output = "";
 			}else{
 				_cache = [false];
-				_commandLine set[6,_cache];
-				_commandLine set[7, false];
+				_commandLine set[5,_cache];
+				_commandLine set[6, false];
 				_output = "Incorrect password";
 			};
 		};
@@ -850,9 +850,9 @@ if(!(_cache select 0))then{
 				_output = "Incorrect password";
 			};
 			
-			_commandLine set[7, false];
+			_commandLine set[6, false];
 			_cache = [false];
-			_commandLine set[6,_cache];
+			_commandLine set[5,_cache];
 		};
 	};
 	_output;

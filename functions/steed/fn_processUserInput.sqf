@@ -47,11 +47,8 @@ private _zfileName = _steed select 0;
 private _header = _steed select 1;
 private _preText = _steed select 2;
 private _postText = _steed select 3;
-private _yOffset = _steed select 4;
-private _owner = _steed select 5;
-private _curDir = _steed select 6;
-
-private _lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
+private _owner = _steed select 4;
+private _curDir = _steed select 5;
 
 switch true do {
 	case (_return) : {
@@ -131,16 +128,6 @@ switch true do {
 		
 		_steed set[2, _preText];
 		_steed set[3,_postText];
-	};
-	case (_scrollUp) : {
-		//Scrolls page up
-		_yOffset = (_yOffset + _lineHeight);
-		_steed set [4,_yOffset];
-	};
-	case (_scrollDown) : {
-		//Scrolls page down
-		_yOffset = (_yOffset - _lineHeight);
-		_steed set [4,_yOffset];
 	};
 	case (_save) : {
 		//control and s have been pressed, init saving if the user has permission

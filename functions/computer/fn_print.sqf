@@ -13,28 +13,13 @@
 
 private _comp = _this select 0;
 private _state = _this select 0 select 4;
-private _safe = _this select 0 select 5 select 7;
-
-private _xCord = 0*safeZoneW;
-private _yCord = 0*safeZoneH;
+private _safe = _this select 0 select 5 select 6;
 
 
 _printText = {											//print [_text] in the terminal
 	private _text = _this select 0;
 	private _txtColor = _comp select 6;
-	private _displayText = "";
-	
-	switch(_txtColor)do{
-		case("#33CC33"):{	//Green
-			_displayText = "<t size='0.4' color='#33CC33' align='left' font='EtelkaMonospacePro'>" + _text + "\n</t>";
-		};
-		case("#FFFFFF"):{	//White
-			_displayText = "<t size='0.4' color='#FFFFFF' align='left' font='EtelkaMonospacePro'>" + _text + "\n</t>";
-		};
-	};
-	
 	_foo = ctrlSetText [101, _text];
-	_displayText;
 };
 
 switch (true) do {
@@ -67,7 +52,7 @@ switch (true) do {
 			_pText = _pText + "_";
 		};
 		
-		private _return = [_pText] call _printText;
+		[_pText] call _printText;
 	};
 	case (_state == "EDITOR"):{
 		//Gets text to print
@@ -109,6 +94,6 @@ switch (true) do {
 			}forEach _postText;
 		};
 		
-		_return = [_pText] call _printText;
+		[_pText] call _printText;
 	};
 };

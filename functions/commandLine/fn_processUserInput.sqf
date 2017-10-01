@@ -43,16 +43,13 @@ private _curLine = _commandLine select 1;
 private _filePath = _commandLine select 2;
 private _prevCommands = _commandLine select 3;
 private _prevCommandIndex = _commandLine select 4;
-private _yOffset = _commandLine select 5;
-private _cache = _commandLine select 6;
-private _safe = _commandLine select 7;
-
-private _lineHeight = 0.00281 * 11;	//This is the height of a line of text. Format = scale * pix height on 1920x1080 monitor. Might be off after several hundred lines, cannot test that far out.
+private _cache = _commandLine select 5;
+private _safe = _commandLine select 6;
 
 switch true do {
 	case (_return) : {
 		//push curLine to prevLines
-		_cache = _commandLine select 6;
+		_cache = _commandLine select 5;
 		_temp = _curLine - [_curLine select 0];
 		if(!(_cache select 0))then{				//If cache is not in use, push curLine to prevCommands
 			_prevCommands = [_prevCommands, [_temp]] call Line_fnc_push;
@@ -87,7 +84,7 @@ switch true do {
 			_prevLines = [_prevLines,[_output]] call Line_fnc_push;
 		};
 		
-		_cache = _commandLine select 6;
+		_cache = _commandLine select 5;
 		if(!(_cache select 0))then{										//If cache is not in use, then create a normal next line
 			_filePath = _commandLine select 2;
 			_curLine = [[_filePath] call Line_fnc_parseFilePath] call Line_fnc_newLine;
@@ -101,7 +98,7 @@ switch true do {
 		_commandLine set [2,_filePath];
 		_commandLine set [3,_prevCommands];
 		_commandLine set [4,_prevCommandIndex];
-		_commandLine set [6,_cache];
+		_commandLine set [5,_cache];
 	};
 	case (_backSpace) : {
 		//Pop char from curLine
@@ -148,20 +145,6 @@ switch true do {
 		_commandLine set [1,_curLine];
 		_commandLine set [4,_prevCommandIndex];
 	};
-	case (_scrollUp) : {
-		//Scrolls page up
-		_yOffset = _yOffset + _lineHeight;
-		
-		//Update all changed variables in commandLine
-		_commandLine set [5,_yOffset];
-	};
-	case (_scrollDown) : {
-		//Scrolls page down
-		_yOffset = _yOffset - _lineHeight;
-		
-		//Update all changed variables in commandLine
-		_commandLine set [5,_yOffset];
-	};
 	case (_control && _userInput == "x") : {
 		//Clear all previous lines and resets offset so curLine is visible
 		_prevLines = [];
@@ -169,7 +152,6 @@ switch true do {
 		
 		//Update all changed variables in commandLine
 		_commandLine set [0, _prevLines];
-		_commandLine set [5,_yOffset];
 	};
 	case (!(_userInput == "")) : {
 		//Key has been pressed
