@@ -16,7 +16,7 @@
  *		CommandLine_fnc_executeLine
 */
 
-private _computer = _this select 0;
+private _computer = _this select 1;
 
 private _return = _this select 0 select 0;
 private _backSpace = _this select 0 select 1;

@@ -71,6 +71,9 @@ if(!(_cache select 0))then{
 				"  CHOWN [FileName] [NewOwner] = Sets the file owner to the new owner. The new\n        owner is specified as the new owner's username. In order to execute\n        this, you must be logged in as the admin or the file's owner. If the\n        file's owner is PUBLIC, then only the admin can change the owner.\n" +
 				"  QUIT = Exits the terminal\n"+
 				"When specifying arguments, the '\' key is the escape character. You can press this to allow for spaces in your arguments by typing '\ '";
+			if(_computer select 8)then{
+				_output = _output + "\n  CTC = Copy To Clipboard (Only available in dev mode),\n        will copy the current terminal instance to the clipboard to use in\n        your missions.";
+			};
 		};
 		case(str(_cmd) == str("TIME")):{
 			private _date = date;				// [year, month, day, hour, minute]
@@ -552,7 +555,16 @@ if(!(_cache select 0))then{
 			_output;
 		};
 		case(str(_cmd)==str("CTC") && _computer select 8):{
-			_str = "this enableSimulation false;this addAction["+str("Use Computer")+","+str("armaTerminal.sqf")+",["+str(_computer select 0)+","+str(_computer select 1)+",false]];";
+			_str = 			"this setVariable [" + str("Users") + ", " + str(_computer select 0) + "];";
+			_str = _str + 	"this setVariable [" + str("AFS") + ", " + str(_computer select 1) + "];";
+			_str = _str + 	"this setVariable [" + str("CurUser") + ", " + str(_computer select 2) + "];";
+			_str = _str + 	"this setVariable [" + str("ComputerName") + ", " + str(_computer select 3) + "];";
+			_str = _str + 	"this setVariable [" + str("ComputerState") + ", " + str(_computer select 4) + "];";
+			_str = _str + 	"this setVariable [" + str("CommandLine") + ", " + str(_computer select 5) + "];";
+			_str = _str + 	"this setVariable [" + str("Computercolor") + ", " + str(_computer select 6) + "];";
+			_str = _str + 	"this setVariable [" + str("STEED") + ", " + str(_computer select 7) + "];";
+			_str = _str + 	"this setVariable [" + str("devMode") + ", " + str(false) + "];";
+			_str = _str +	"this addAction["+str("Use Computer")+","+str("armaTerminal.sqf")+", []];";
 			copyToClipboard _str;
 			_output = "Copied";
 		};

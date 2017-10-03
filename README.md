@@ -1,14 +1,14 @@
-#ArmaTerminal V0.1.1
-# 
+# ArmaTerminal V0.1.1 #
+
 **Arma Terminal** is a Linux based command line operating system mod for Arma 3. Currently the project is not open source, however once core features are finished, the project will be made open source.
 
 Please note that compatibility between different versions of ArmaTerminal is very hard to guarantee given the massive changes that often need to be implemented for adding new features.
 
 ### Core Features
- - **Virtual file structure** that users can create, delete and modify files in
+ - **Virtual file structure** that users can create, delete and modify files
  - **Virtual Users** complete with read, write and execute permissions
  - **In game text editor** for creating and modifying text files
- - **Copy to clipboard function for developers** to flesh out the OS (create users, documents and directories) and then copy the init code for it to the clipboard so they can just paste it in the init file of a laptop or similar object in game. (The copied version won't allow this feature so players on your map can't get the file system)
+ - **Copy to clipboard function for developers** to flesh out the OS (create users, documents and directories) and then copy the init code for it to the clipboard so they can paste it in the init file of a laptop or similar object in game. (The copied version won't allow this feature so players on your map can't get the file system, see below for details)
 
 ### Major planned features
  - **Networking** allowing players in a multi-player environment to message and hack into different terminals on the same virtual network
@@ -35,25 +35,57 @@ Arma Terminal has been designed to be easy to learn, difficult to master. To ope
 
 To use a command line, type a command into the line. Once the command is fully typed out, you hit enter/return to confirm it. Once confirmed the computer processes the line and executes the command. Once it is finished processing, it will either prompt the user for more input or display another empty line.
 
+Do note, that passwords are not hashed (they are stored in plain text). This is the least secure way to store a password. As such please do not use any passwords you use in real life in the terminal. For instance instead of using your real life license plate number use a password like the longest in game shot you have made or your ingame character's name.
+
 ## How to use armaTerminal in your mission as a mission creator
 
- - Take the armaTerminal.sqf, functions folder, and description.ext and drag them into your mission folder.
-   - If your mission already has a description.ext, you can just copy all the code in my description.ext into yours.
- - Place down a computer (any object in game will do, even a pile of bricks or player, but a computer will add to the authenticity) and add the code from the end of this section of the readme to the init field of the object.
- - Go in game and open up Arma Terminal. Use the in game commands to create the users and file structure that you want.
- - Once you have the computer in the state you want it, type `ctc` into the command line and hit enter. This will copy all the data you need to your clip board. This is only possible from dev mode. When you copy the code to your clipboard, it will set the boolean for dev mode false so that players cannot do this in the mission.
- - With the code copied go into your mission and take out all the code you added in step 2 to its init field. Paste in the code that you got from in game.
- - Test your mission and the computer to make sure they are working properly.
- - If you need to make any more modifications to the terminal, just go into the init field and change the last boolean in the add action from false to true. Then you can continue to edit your terminal until its the way you want it.
+ 1. Take the `armaTerminal.sqf`, `functions` folder, `description.ext`, `defines.hpp`, and `dialog.hpp` and drag them into your mission folder.
+    1. If your mission already has any of those files, you can just copy all the code from my version into yours (be careful with the .hpp files, these are very easy to mess up).
+ 2. Place down a computer (any object in game will do, even a pile of bricks or player, but a computer will add to the authenticity) and add the code from the end of this section of the readme to the init field of the object.
+ 3. Go in game and open up Arma Terminal. Use the terminal to customize it to your liking. Users, files, directories, permissions, logged in users and previous commands are all customizable. For now only wory about users and files, everything else we will be modifying in a later step.
+    1. Note that if you do not log a user out, when the terminal is opened in the mission, the player will be logged in as that user
+    2. You will probably want to change the password on the administratior to something less obvious than password to prevent players in your mission from accessing the administrator acount and wreaking havoc.
+    3. Do note that passwords are not hashed (they are stored in plain text). This is the least secure way to store a password. As such, please do not use any passwords you use in real life in the terminal.
+ 4. Once you have the computer in the state you want it, type `ctc` into the command line and hit enter. This will copy all the data you need to your clip board. This is only possible from dev mode. When you copy the code to your clipboard, it will set the boolean for dev mode false so that players cannot do this in the mission.
+ 5. With the auto generated code from the console, go into a seperate text editor like notepad++, notepad or Visual Studio Code and paste the contents.
+    1. First, look for all the semi colons (`;`) and indent new lines after them. (This step is not nessicary but greatly increases the readability).
+    2. Second, find the `this setVariable ["CommandLine"` section.
+    3. Next, replace this entire line with `this setVariable ["CommandLine", []];`.
+    4. Do the same for `this setVariable ["STEED"` section, replace the entire section with `this setVariable ["STEED", []];`
+    5. If you want to present the user with a new blank terminal, you can proceed to step 6 (of the outer indented area).
+    6. Find the line that says `this setVariable ["devMode", false];` and change the `false` to `true`. This will allow us to continue editing the terminal in game.
+    7. Take this code and paste it over the original code on your computer
+    8. Go in game and continue cusomizing the terminal, this time type the commands you want the player to see into the terminal (i.e. show a user logging in, checking a text file and logging out)
+    9. Once you are done type `ctc` into the command line and hit enter. This will copy all the data you input into your clip board.
+    0. Paste this code into your text editor over the previous code. It is recomended to use a text editor that will highlight opening and closing braces.
+    1. Find all the semi colons (`;`) and indent new lines after them (once again for readability)
+    2. Find the line with `this setVariable ["CommandLine"`
+    3. It is recomended to use a text editor that will highlight opening and closing braces
+    4. Find the second set of sub braces, you should see something like the following `["MASTER/test : ","c","t","c"],`
+    5. Remove the `,"c","t","c"`
+    6. Find the end of the fourth set of sub braces, you should see the following `,[["c","t","c"]]`
+    7. Remove `,[["c","t","c"]]`
+    8. After the end of the fourth set of sub braces should be a number, decrement the number by one (i.e. if it was 32 replace it with 31) 
+    9. Copy all of this code
+ 6. With the code copied go into your mission and replace all the code you added in step 2 with this code.
+ 7. Test your mission and the computer to make sure they are working properly.
+ 8. If you need to make any more modifications to the terminal, just go into the init field and change the last boolean in the add action from false to true. Then you can continue to edit your terminal until it is the way you want it.
 
 Code for initializing the terminal:
-`this enableSimulation false; this addAction["Use Computer","armaTerminal.sqf",[[["password","admin"]],["MASTER",[],"PUBLIC",[7,7,7]],true]];`
+`this setVariable ["Users", [["password","admin"]]];
+this setVariable ["AFS", ["MASTER",[],"PUBLIC",[7,7,7]]];
+this setVariable ["CurUser", "PUBLIC"];
+this setVariable ["ComputerName", "ION Secure Device"];
+this setVariable ["ComputerState", "COMMANDLINE"];
+this setVariable ["CommandLine", []];
+this setVariable ["Computercolor", "#33CC33"];
+this setVariable ["STEED", []];
+this setVariable ["devMode", true];
+this addAction["Use Computer","armaTerminal.sqf", []];`
 
 ## Known Bugs
  - It is unknown if this is MP compatible. I am currently not able to test on a server with multiple people. If it does break in MP let me know and I will try to fix this. I do want this to work in MP.
- - Typing '<' in the terminal or in STEED will prevent any text after the `<` from being displayed unless followed by `br/>`. This is believed to be a limitation of the engine with the display method I am using. As such, you cannot type `<` in Arma Terminal.
- - The text will truncate after a certain length is reached (over 2000 characters, possibly as far out as 5000). The text is still processed just not rendered. Pressing Control + X in the terminal, will wipe all previous lines so new text will be rendered for the time being.
- - Key modifiers (control and shift) sometimes don't register when pressed. This is an engine limitation. If I find a better solution, I will fix it, but just be persistent for now.
+   - V 0.1.1 and earlier will definitely not work properly in MP, later versions have not been tested in MP
 
 ## Change Log
  - V 0.1.0 : FIRST RELEASE
@@ -97,3 +129,12 @@ Code for initializing the terminal:
    - Admin User Added
    - Readme Got Some Love
    - General Error Fixing (Arma updates caused several non critical errors that were fixed)
+- V 0.1.2 : UI update
+   - Changed how the terminal was displayed improving responsiveness (in most cases)
+   - Changed how the terminal stores and retrieves session data to add more relivant cross session data
+   - Updated README.md to reflect terminal data store changes
+   - Changed how key presses are registered to increase the likelyhood of MP compatibility
+   - Updated testing enviornment
+   - Temporarily removed the Color command (it was not working with the new display method)
+   - Fixed text truncating after a certian length (due to printing algorithm)
+   - Fixed `<` character not being typable due to display method

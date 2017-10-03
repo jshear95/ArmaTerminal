@@ -25,9 +25,6 @@
 _target = _this select 0;					//Computer
 _caller = _this select 1;					//Player Activating computer
 _actionID = _this select 2;					//Action ID
-_users = _target getVariable "Users";		//Users registered with computer
-_files = _target getVariable "AFS";			//Starting File Structure
-_devMode = _target getVariable "devMode";	//Whether armaTerminal is in dev mode
 
 //Creates computer object
 _computer = [_target,_caller,_actionID] call Computer_fnc_open;

@@ -16,8 +16,6 @@
 */
 
 #define GET _target getVariable
-#define KEYLOGUP(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyUp", { player setVariable ["pressedKey", (_this select 1)]; player setVariable ["shift", (_this select 2)]; player setVariable ["control", (_this select 3)];}]
-#define KEYLOGDOWN(DISPLAY) (findDisplay DISPLAY) displayAddEventHandler["KeyDown", {true}]
 
 private _target = _this select 0;						//Computer
 private _caller = _this select 1;						//Player Activating computer
