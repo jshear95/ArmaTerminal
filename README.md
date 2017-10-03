@@ -39,6 +39,7 @@ Do note, that passwords are not hashed (they are stored in plain text). This is 
 
 ## How to use armaTerminal in your mission as a mission creator
 
+<<<<<<< HEAD
  1. Take the `armaTerminal.sqf`, `functions` folder, `description.ext`, `defines.hpp`, and `dialog.hpp` and drag them into your mission folder.
     1. If your mission already has any of those files, you can just copy all the code from my version into yours (be careful with the .hpp files, these are very easy to mess up).
  2. Place down a computer (any object in game will do, even a pile of bricks or player, but a computer will add to the authenticity) and add the code from the end of this section of the readme to the init field of the object.
@@ -70,6 +71,20 @@ Do note, that passwords are not hashed (they are stored in plain text). This is 
  6. With the code copied go into your mission and replace all the code you added in step 2 with this code.
  7. Test your mission and the computer to make sure they are working properly.
  8. If you need to make any more modifications to the terminal, just go into the init field and change the last boolean in the add action from false to true. Then you can continue to edit your terminal until it is the way you want it.
+=======
+ - Take the armaTerminal.sqf, functions folder, and description.ext and drag them into your mission folder.
+   - If your mission already has a description.ext, you can just copy all the code in my description.ext into yours.
+ - Place down a computer (any object in game will do, even a pile of bricks or player, but a computer will add to the authenticity) and add the code from the end of this section of the readme to the init field of the object.
+ - Go in game and open up Arma Terminal. Use the in game commands to create the users and file structure that you want.
+   - The login for the admin is:
+     - Username: admin
+     - Password: password
+   - It is recomended that you change the password for the admin, otherwise players will have unlimited access to the system, you can do this with a command within the terminal
+ - Once you have the computer in the state you want it, type `ctc` into the command line and hit enter. This will copy all the data you need to your clip board. This is only possible from dev mode. When you copy the code to your clipboard, it will set the boolean for dev mode false so that players cannot do this in the mission.
+ - With the code copied go into your mission and take out all the code you added in step 2 to its init field. Paste in the code that you got from in game.
+ - Test your mission and the computer to make sure they are working properly.
+ - If you need to make any more modifications to the terminal, just go into the init field and change the last boolean in the add action from false to true. Then you can continue to edit your terminal until its the way you want it.
+>>>>>>> 88c26cf8be5ffa5cfd9a989190a9077b1dcf8579
 
 Code for initializing the terminal:
 `this setVariable ["Users", [["password","admin"]]];
@@ -129,6 +144,7 @@ this addAction["Use Computer","armaTerminal.sqf", []];`
    - Admin User Added
    - Readme Got Some Love
    - General Error Fixing (Arma updates caused several non critical errors that were fixed)
+<<<<<<< HEAD
 - V 0.1.2 : UI update
    - Changed how the terminal was displayed improving responsiveness (in most cases)
    - Changed how the terminal stores and retrieves session data to add more relivant cross session data
@@ -138,3 +154,5 @@ this addAction["Use Computer","armaTerminal.sqf", []];`
    - Temporarily removed the Color command (it was not working with the new display method)
    - Fixed text truncating after a certian length (due to printing algorithm)
    - Fixed `<` character not being typable due to display method
+=======
+>>>>>>> 88c26cf8be5ffa5cfd9a989190a9077b1dcf8579
