@@ -22,7 +22,7 @@ private _cache = [false];										//Array for passing data to subsequent lines 
 																//Index 0 of cache is weather or not to look at it
 private _safeMode = false;										//Weather or not to star out text input (*****)
 
-private _temp = "Welcome to Arma Terminal! (version 0.1.1)\n"+
+private _temp = "Welcome to Arma Terminal! (version 0.1.2)\n"+
 		"Use 'page up' and 'page down' to scroll. "+
 		"If you don't know any commands, type 'HELP' to display a list of all available commands. "+
 		"\n";
